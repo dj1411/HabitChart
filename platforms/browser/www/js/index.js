@@ -1,4 +1,4 @@
-﻿function testcode()
+function testcode()
 {
     data = JSON.parse(localStorage.getItem("data"));
     if (data == null)
@@ -139,7 +139,7 @@ function removeHabit()
 
     refreshTable();
     DataSelectedHabitUpdate("");
-    hideToolbarSelection();
+    toggleToolbar();
 }
 
 function toggleToolbar()
