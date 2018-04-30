@@ -3,7 +3,7 @@ var data;
 var dataCloud;
 var dataInit = {
     "DataFormatVer": 2,
-    "MyJsonID": "14gl63",
+    "MyJsonID": ACTIVE_JSON_ID,
     "UserID": "test",
     "Timestamp": "01/01/2000",
     "CurrentID": "",
@@ -68,19 +68,19 @@ function DataValidate(d)
 
 function DataCheckInternet()
 {
-    $.get("https://api.myjson.com/bins/" + TEST_JSON_ID, function (result, textStatus, xhdr)
+    $.get("https://api.myjson.com/bins/" + CONNECTION_JSON_ID, function (result, textStatus, xhdr)
     {
         if (result.DJApps == "TestData")
             DataRefresh(1);     /* connection successful. continue with sync */
         else
-            return;             /* something went wrong. abort sync */
+            DataRefresh(3);;    /* No internet connection. just update the table */
     });
 }
 
 function DataSaveCloud() {
     if (data.MyJsonID == "")    /* First time storing data to cloud */
     {
-        $.get("https://api.myjson.com/bins/" + MASTER_JSON_ID, function (result, textStatus, xhdr) {
+        $.get("https://api.myjson.com/bins/" + ACTIVE_JSON_ID, function (result, textStatus, xhdr) {
             DataSetMyJsonID(result[data.UserID]);
         });
     }
@@ -110,7 +110,7 @@ function DataLoadCloud()
     /*  First time accessing cloud data, get the id and then retrieve the data. */
     if (data.MyJsonID == "")
     {
-        $.get("https://api.myjson.com/bins/" + MASTER_JSON_ID, function (result, textStatus, xhdr)
+        $.get("https://api.myjson.com/bins/" + ACTIVE_JSON_ID, function (result, textStatus, xhdr)
         {
             DataSetMyJsonID(result[data.UserID]);
             $.get("https://api.myjson.com/bins/" + data.MyJsonID, ReadCloudData);
