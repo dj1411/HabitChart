@@ -1,0 +1,4 @@
+
+/platforms/android/app/build/generated
+/platforms/android/app/build/intermediates
+/platforms/android/CordovaLib/build
