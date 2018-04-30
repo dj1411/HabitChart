@@ -195,7 +195,7 @@ function DataRefresh(step)
             datePrev.setDate(data.CurrentID.split("_")[0]);
             datePrev.setMonth(data.CurrentID.split("_")[1]);
             var date = new Date();
-            for (date.setDate(datePrev.getDate() + 1); date.getDate() <= dateCur.getDate(); date.setDate(date.getDate() + 1)) {
+            for (date.setDate(datePrev.getDate() + 1); date <= dateCur; date.setDate(date.getDate() + 1)) {
                 DataSetCurrentID(date);
 
                 var arr = new Array();
@@ -272,7 +272,7 @@ function DataReset(ramData, localData, cloudData)
         $.ajax({
             url: "https://api.myjson.com/bins/" + dataInit.MyJsonID,
             type: "PUT",
-            data: JSON.stringify(data),
+            data: JSON.stringify({}),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result, status, xhdr)
