@@ -11,6 +11,7 @@
 - checkboxes are center aligned
 
 ## add page
+- Title bar
 - alignment of text and input fields
 - buttons size, position, alignment
 
@@ -30,7 +31,7 @@ check the size of
 - Uncheck a box. Reopen the application. See if the box is still checked
 
 # Add Habit
-- new page should open with text entry field and an add and cancel button
+- new page should open with text entry field with an add and cancel button
 - clicking cancel should go to main page
 - clicking add should add a new row with all checkboxes unchecked
 - pressing enter should also add the habit
@@ -46,7 +47,8 @@ check the size of
 - upon closing and opening the app, the deleted habit should not re-appear
 
 # update habit
-- textbox should be prefilled. Update button should be visible.
+- textbox should be prefilled. 
+- 'Update' button should be visible instead of 'Add'.
 - clicking cancel should go to main page
 - clicking update, habit name should change
 - all checkboxes should have the previous values
