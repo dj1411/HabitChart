@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Habit</title>
+    <style type="text/css">
+        @import url("css/header.css");
+        @import url("css/add.css");
+    </style>
+    
+    <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="scripts/style.js"></script>
+    <script type="text/javascript" src="scripts/config.js"></script>
+    <script type="text/javascript" src="scripts/libdialog.js"></script>
+    <script type="text/javascript" src="scripts/libdata.js"></script>
+
+    <script type="text/javascript" src="scripts/add.js"></script>
+
+    <script type="text/javascript">
+        function main()
+        {
+            setStyleAdd();
+            DataLoad(); /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
+
+            if (selectedHabit != "")
+            {
+                /* This is update page not add */
+                prefillPage();
+            }
+                
+        }
+
+        function onEnter(e)
+        {
+            if (e.keyCode == 13)
+            {
+                if (selectedHabit != "")
+                    updateHabit();
+                else
+                    addHabit();
+            }
+        }
+    </script>
+</head>
+<body onload="main()" onresize="setStyleAdd()">
+    <div name="divHeader" id="divHeader">
+        <span name="title" id="title">HabitsDJ</span>
+        <div name="buttonBack" id="buttonBack" onclick="history.back()">&#8617;</div>
+    </div>
+
+    <div name="divMain" id="divMain">
+
+        <div name="divForm" id="divForm">
+
+            <div class="left">
+                <div class="label">Habit</div>
+            </div>
+            <div class="right">
+                <div class="input"><input type="text" name="textHabit" id="textHabit" autofocus onkeypress="onEnter(event)" /></div>
+            </div>
+
+        </div> <!-- divForm -->
+
+        <div name="divButtonGroup" id="divButtonGroup">
+
+            <div class="left">
+                <div class="divButton" onclick="location.assign('index.html')">Cancel</div>
+            </div>
+            <div class="right">
+                <div class="divButton" name="buttonAdd" id="buttonAdd" onclick="addHabit()" style="display:block;">Add</div>
+                <div class="divButton" name="buttonUpdate" id="buttonUpdate" onclick="updateHabit()" style="display:none;">Update</div>
+            </div>
+            <div name="divDialog" id="divDialog">
+            </div>
+
+        </div> <!-- divButtonGroup -->
+
+    </div> <!-- divMain -->
+</body>
+</html>
