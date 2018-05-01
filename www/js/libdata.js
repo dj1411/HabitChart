@@ -190,18 +190,17 @@ function DataRefresh(step)
             DataFormatConversion();
 
             /* bring data up to date */
-            var dateCur = new Date();
-            var datePrev = new Date();
-            datePrev.setDate(data.CurrentID.split("_")[0]);
-            datePrev.setMonth(data.CurrentID.split("_")[1]);
-            var date = new Date();
-            for (date.setDate(datePrev.getDate() + 1); date <= dateCur; date.setDate(date.getDate() + 1)) {
-                DataSetCurrentID(date);
+            var dateCur = moment();
+            var datePrev = moment( data.CurrentID.split("_")[0] + "/" + data.CurrentID.split("_")[1] + "/2018" , "DD/MM/YYYY" ); // todo fix year
+            for( var date = datePrev.add(1, "day"); date.isBefore(dateCur); date = date.add(1, "day") )
+            {
+                var d = new Date(date.format());
+                DataSetCurrentID(d);
 
                 var arr = new Array();
                 for (var i = 0; i < data.HabitList.length; i++)
-                    arr.push(0);
-                DataAdd(date, arr);
+                     arr.push(0);
+                DataAdd(d, arr);
             }
 
             /* finish up */

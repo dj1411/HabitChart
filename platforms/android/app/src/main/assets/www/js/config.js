@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿const color1 = "#5D9CBB"; /* darkest */
+=======
+const color1 = "#5D9CBB"; /* darkest */
+>>>>>>> develop
 const color2 = "#b7d7e8";
 const color3 = "#cfe0e8";
 const color4 = "#F7FBFA"; /* lightest */
