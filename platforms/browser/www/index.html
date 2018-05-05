@@ -36,7 +36,7 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/default.css">
 -->
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style type="text/css">
             @import url("css/w3/w3.css");
             @import url("css/w3/w3-theme-blue-grey.css");
@@ -55,18 +55,18 @@
             
             <div name="divToolbar" id="divToolbar" class="w3-right">
                 <div name="divToolbarNormal" id="divToolbarNormal">
-                    <a name="buttonSync" id="buttonSync" class="w3-bar-item w3-button" href="#"><i class="fa fa-bars"></i></a>
+                    <a name="buttonSync" id="buttonSync" class="w3-bar-item w3-button" href="#"><i class="fa fa-refresh"></i></a>
+                </div>
+                <div name="divToolbarSelection" id="divToolbarSelection">
+                    <a name="buttonDelete" id="buttonDelete" class="w3-bar-item w3-button" href="#"><i class="fa fa-trash"></i></a>
                 </div>
             </div>
         </div>
         
         <div id="divMain" name="divMain">
             <div name="divHeader" id="divHeader">
+<!--
                 <div name="divToolbar" id="divToolbar">
-                    <div name="divToolbarNormal" id="divToolbarNormal">
-                        <img name="buttonSync" id="buttonSync" class="iconToolbar" src="img/sync.png" onclick="DataRefresh(0)" />
-                    </div>
-
                     <div name="divToolbarSelection" id="divToolbarSelection">
                         <img name="buttonUp" id="buttonUp" class="iconToolbar" src="img/move up.png" />
                         <img name="buttonDown" id="buttonDown" class="iconToolbar" src="img/move down.png" />
@@ -74,7 +74,7 @@
                         <img name="buttonDelete" id="buttonDelete" class="iconToolbar" src="img/delete.png" onclick="removeHabit()" />
                     </div>
                 </div>
-    
+-->
             </div> <!-- Header -->
 
             <table name="tableMain" id="tableMain"></table>

@@ -24,6 +24,9 @@ function setStyleIndex()
     /* set the style common to all pages */
     setStyleCommon();
 
+    /* hide the selection toolbar */
+    $(".divToolbarSelection").css("display", "none");
+    
     /* color settings */
     $("#divAdd").css("background-color", color1);
     $("#divDialog").css("background-color", color4);
@@ -34,14 +37,6 @@ function setStyleIndex()
         REF = "vw";
     else
         REF = "vh";
-
-    /* Toolbar Selection */
-    $("#divToolbarSelection").css("height", "10" + REF);
-    $("#divToolbarSelection").css("line-height", "10" + REF);
-
-    /* iconToolbar */
-    $(".iconToolbar").css("width", "4" + REF);
-    $(".iconToolbar").css("height", "4" + REF);
 
     /* the (+) button */
     $("#divAdd").css("width", "13" + REF);

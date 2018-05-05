@@ -2,57 +2,6 @@
     float: left;
 }
 
-#divToolbar {
-    float: right;
-}
-
-#divToolbarNormal {
-    display: block;
-}
-
-#divToolbarSelection {
-    display: none;
-}
-
-.iconToolbar {
-    cursor: pointer;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.iconToolbar:active {
-    background-color: white;
-}
-
-#buttonMenu {   /* ellipsis */
-    padding-left: 10px;
-    padding-right: 10px;
-    float: right;
-    cursor: pointer;
-}
-
-    #buttonMenu:active {
-        color: black;
-    }
-
-#divMenu {
-    box-shadow: 1px 1px 5px #888888;
-    width: 150px;
-    position: absolute;
-    z-index: 1;
-    top: 25px;
-    right: 30px;
-    display: none;
-    padding: 5px;
-    overflow: hidden;
-    font-size: 120%;
-    cursor: pointer;
-}
-
-.divMenuItem {
-    padding: 5px;
-}
-
 #divAdd {
     color: white;
     font-weight: bolder;
