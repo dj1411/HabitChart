@@ -2,7 +2,7 @@
 {
     /* set the app name */
     document.title = APP_NAME;
-    document.getElementById("title").textContent = APP_NAME;
+    document.getElementById("title").innerText = APP_NAME;
     
     /* Styles which depend on window size */
     var REF;
