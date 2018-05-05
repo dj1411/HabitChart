@@ -108,12 +108,16 @@ function selectHabit(habitId)
     var selectedHabitId = DataSelectedHabitGetId();
 
     if (selectedHabitId != null)
-        document.getElementById(selectedHabitId).style.backgroundColor = color4;
+    {
+        document.getElementById(selectedHabitId).classList.add("w3-text-theme");        
+        document.getElementById(selectedHabitId).classList.remove("w3-theme-light");
+    }
+    
 
     if (habitId == selectedHabitId) /* de-selection */
     {
         /* reset selection */
-        DataSelectedHabitUpdate("");
+        DataSelectedHabitReset();
 
         /* change toolbar icons */
         toggleToolbar();
@@ -121,7 +125,8 @@ function selectHabit(habitId)
     else  /* selection */
     {
         /* set selection */
-        document.getElementById(habitId).style.backgroundColor = color2; 
+        document.getElementById(habitId).classList.add("w3-theme-light"); 
+        document.getElementById(habitId).classList.remove("w3-text-theme"); 
         DataSelectedHabitUpdate(habitId);
 
         /* change toolbar icons */
@@ -138,7 +143,7 @@ function removeHabit()
         DataHabitRemove(DataSelectedHabitGetStr());
 
     refreshTable();
-    DataSelectedHabitUpdate("");
+    DataSelectedHabitReset();
     toggleToolbar();
 }
 
@@ -156,18 +161,53 @@ function toggleToolbar()
     }
 }
 
-function onclickMenu()
+function onclickAddButton()
 {
-    return; // disable untill any of the menu function is implemented properly
-
-    if ($("#divMenu").css("display") == "block")
-        $("#divMenu").css("display", "none");
-    else
-        $("#divMenu").css("display", "block");
+    DataSelectedHabitReset(); 
+    document.getElementById("titleModalHabit").innerText = "Add habit";
+    document.getElementById("divAdd").style.display = "block";
+    document.getElementById("textHabit").focus();
 }
 
-function exitApp()
+function onclickEditButton()
 {
-    //self.close();
-    navigator.app.exitApp();
+    document.getElementById("titleModalHabit").innerText = "Update habit";
+    document.getElementById("textHabit").value = DataSelectedHabitGetStr();
+    document.getElementById("divAdd").style.display = "block";
+    document.getElementById("textHabit").focus();
+}
+
+function validateAddPage()
+{
+    if (document.getElementById("textHabit").value === "")
+    {
+        alert("Habit name is blank");
+        return false;
+    }
+
+    /* Check if habit already exists */
+    if (data.HabitList.indexOf(document.getElementById("textHabit").value) !== -1)
+    {
+        alert("Habit already exists");
+        return false;
+    }
+
+    return true;
+}
+
+function addHabit()
+{
+    if (!validateAddPage())
+        return;
+    
+    var habit = document.getElementById("textHabit").value;
+    if( DataSelectedHabitGetStr() == "" )
+    {
+        DataHabitAdd(habit);
+    }
+    else
+    {
+        DataHabitUpdate(DataSelectedHabitGetStr(), habit);
+        DataSelectedHabitReset();
+    }
 }

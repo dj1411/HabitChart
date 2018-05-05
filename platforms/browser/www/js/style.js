@@ -2,7 +2,7 @@
 {
     /* set the app name */
     document.title = APP_NAME;
-    document.getElementById("title").textContent = APP_NAME;
+    document.getElementById("title").innerText = APP_NAME;
     
     /* Styles which depend on window size */
     var REF;
@@ -10,10 +10,6 @@
         REF = "vw";
     else
         REF = "vh";
-
-    $("#divHeader").css("height", "10" + REF);
-    $("#divHeader").css("line-height", "10" + REF);
-    $("#divHeader").css("font-size", "5" + REF);
 }
 
 function setStyleIndex()
@@ -24,9 +20,13 @@ function setStyleIndex()
     /* hide the selection toolbar */
     $(".divToolbarSelection").css("display", "none");
     
-    /* color settings */
-    $("#divAdd").css("background-color", color1);
-    $("#divDialog").css("background-color", color4);
+    /* hide the add modal */
+    var modal = document.getElementById('divAdd');
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
     
     /* Styles which depend on window size */
     var REF;
@@ -34,27 +34,4 @@ function setStyleIndex()
         REF = "vw";
     else
         REF = "vh";
-
-    /* the (+) button */
-    $("#divAdd").css("width", "13" + REF);
-    $("#divAdd").css("height", "13" + REF);
-    $("#divAdd").css("line-height", "13" + REF);
-
-    /* colors for the menu */
-    $("#divMenu").css("background-color", color4);
-    var arrMenuItems = document.getElementsByClassName("divMenuItem"); /* for hover */
-    for (var i = 0; i < arrMenuItems.length; i++)
-    {
-        arrMenuItems[i].onmouseover = function () { this.style.backgroundColor = color2; }
-        arrMenuItems[i].onmouseleave = function () { this.style.backgroundColor = color4; }
-    }
-}
-
-function setStyleAdd()
-{
-    /* set the style common to all pages */
-    setStyleCommon();
-
-    /* color settings */
-    $(".divButton").css("background-color", color1);
 }

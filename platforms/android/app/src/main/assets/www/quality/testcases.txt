@@ -39,16 +39,17 @@ check the size of
 - new row checkbox status should be saved
 
 # delete habit
-- selection and de-selection of habit should work
+- click randomly and check if selection and de-selection of habit works. 
 - delete button should only be visible when a habit is selected.
 - confirmation dialog before delete
-- select and click delete to delete
-- after delete the button should disappear and no habit should be selected
+    - cancel delete should work
+    - delete should actually delete the habit and update the table
+- after deleting the button should disappear and no habit should be selected
 - upon closing and opening the app, the deleted habit should not re-appear
 
 # update habit
 - textbox should be prefilled. 
-- 'Update' button should be visible instead of 'Add'.
+- 'Update' label should be visible instead of 'Add'.
 - clicking cancel should go to main page
 - clicking update, habit name should change
 - all checkboxes should have the previous values
