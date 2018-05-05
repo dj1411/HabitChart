@@ -45,7 +45,7 @@
         </style>
     </head>
     
-    <body onload="main()" onresize="refreshTable(); setStyleIndex()" class="w3-theme-light">
+    <body onload="main()" onresize="refreshTable(); setStyleIndex()" class="w3-text-theme">
         
         <div class="w3-bar w3-theme w3-xlarge">
             <a name="buttonSidebar" id="buttonSidebar" class="w3-bar-item w3-button" href="#"><i class="fa fa-bars"></i></a>
@@ -62,17 +62,34 @@
             <table name="tableMain" id="tableMain"></table>
         </div>
 
-        <button name="divAdd" id="divAdd" class="w3-button w3-xlarge w3-circle w3-theme w3-card-4 w3-ripple" onclick="DataSelectedHabitUpdate(''); location.assign('add.html')"><i class="fa fa-plus"></i></button>
+        <button name="buttonAdd" id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAdd()"><i class="fa fa-plus"></i></button>
+        
+        <div name="divAdd" id="divAdd" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                <div name="titleModalHabit" id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Habit Modal Title</div>
+                <form class="w3-container" onsubmit="addHabit()">
+                    <p>
+                        <label>Name</label>
+                        <input name="textHabit" id="textHabit" class="w3-input" type="text">
+                    </p>
+                    <p>
+                        <div class="w3-bar">
+                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('divAdd').style.display='none'">Cancel</button>
+                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
+                        </div>
+                    </p>
+                </form>
+            </div>
+        </div>
         
         <div name="divDialog" id="divDialog" class="w3-modal">
-            <div class="w3-modal-content w3-card-4">Syncing data with server</div>
+            <div class="w3-modal-content w3-card-4  w3-text-theme">Syncing data with server</div>
         </div>
 
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/moment/moment.min.js"></script>
         <script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="js/style.js"></script>
-        <script type="text/javascript" src="js/libdialog.js"></script>
         <script type="text/javascript" src="js/libdata.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">

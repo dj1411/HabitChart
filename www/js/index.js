@@ -156,18 +156,34 @@ function toggleToolbar()
     }
 }
 
-function onclickMenu()
+function onclickAdd()
 {
-    return; // disable untill any of the menu function is implemented properly
-
-    if ($("#divMenu").css("display") == "block")
-        $("#divMenu").css("display", "none");
-    else
-        $("#divMenu").css("display", "block");
+    DataSelectedHabitUpdate(""); 
+    document.getElementById("titleModalHabit").innerText = "Add habit";
+    document.getElementById("divAdd").style.display = "block";
+    document.getElementById("textHabit").focus();
 }
 
-function exitApp()
+function validateAddPage()
 {
-    //self.close();
-    navigator.app.exitApp();
+    if (document.getElementById("textHabit").value === "")
+        return false;
+
+    /* Check if habit already exists */
+    if (data.HabitList.indexOf(document.getElementById("textHabit").value) !== -1)
+    {
+        alert("Habit already exists");
+        return false;
+    }
+
+    return true;
+}
+
+function addHabit()
+{
+    if (!validateAddPage())
+        return;
+
+    var habit = document.getElementById("textHabit").value;
+    DataHabitAdd(habit);
 }
