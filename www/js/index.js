@@ -113,7 +113,7 @@ function selectHabit(habitId)
     if (habitId == selectedHabitId) /* de-selection */
     {
         /* reset selection */
-        DataSelectedHabitUpdate("");
+        DataSelectedHabitReset();
 
         /* change toolbar icons */
         toggleToolbar();
@@ -138,7 +138,7 @@ function removeHabit()
         DataHabitRemove(DataSelectedHabitGetStr());
 
     refreshTable();
-    DataSelectedHabitUpdate("");
+    DataSelectedHabitReset();
     toggleToolbar();
 }
 
@@ -156,10 +156,18 @@ function toggleToolbar()
     }
 }
 
-function onclickAdd()
+function onclickAddButton()
 {
-    DataSelectedHabitUpdate(""); 
+    DataSelectedHabitReset(); 
     document.getElementById("titleModalHabit").innerText = "Add habit";
+    document.getElementById("divAdd").style.display = "block";
+    document.getElementById("textHabit").focus();
+}
+
+function onclickEditButton()
+{
+    document.getElementById("titleModalHabit").innerText = "Update habit";
+    document.getElementById("textHabit").value = DataSelectedHabitGetStr();
     document.getElementById("divAdd").style.display = "block";
     document.getElementById("textHabit").focus();
 }
@@ -167,7 +175,10 @@ function onclickAdd()
 function validateAddPage()
 {
     if (document.getElementById("textHabit").value === "")
+    {
+        alert("Habit name is blank");
         return false;
+    }
 
     /* Check if habit already exists */
     if (data.HabitList.indexOf(document.getElementById("textHabit").value) !== -1)
@@ -183,7 +194,15 @@ function addHabit()
 {
     if (!validateAddPage())
         return;
-
+    
     var habit = document.getElementById("textHabit").value;
-    DataHabitAdd(habit);
+    if( DataSelectedHabitGetStr() == "" )
+    {
+        DataHabitAdd(habit);
+    }
+    else
+    {
+        DataHabitUpdate(DataSelectedHabitGetStr(), habit);
+        DataSelectedHabitReset();
+    }
 }

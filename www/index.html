@@ -53,7 +53,7 @@
             <a name="buttonMenu" id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
             <div name="divToolbar" id="divToolbar" class="w3-right">
                 <a name="buttonSync" id="buttonSync" class="w3-bar-item w3-button divToolbarNormal" href="javascript:DataRefresh(0)"><i class="fa fa-refresh"></i></a>
-                <a name="buttonEdit" id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="add.html"><i class="fa fa-edit"></i></a>
+                <a name="buttonEdit" id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="javascript:onclickEditButton()"><i class="fa fa-edit"></i></a>
                 <a name="buttonDelete" id="buttonDelete" class="w3-bar-item w3-button divToolbarSelection" href="javascript:removeHabit()"><i class="fa fa-trash"></i></a>
             </div>
         </div>
@@ -62,7 +62,7 @@
             <table name="tableMain" id="tableMain"></table>
         </div>
 
-        <button name="buttonAdd" id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAdd()"><i class="fa fa-plus"></i></button>
+        <button name="buttonAdd" id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddButton()"><i class="fa fa-plus"></i></button>
         
         <div name="divAdd" id="divAdd" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
