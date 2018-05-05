@@ -108,7 +108,11 @@ function selectHabit(habitId)
     var selectedHabitId = DataSelectedHabitGetId();
 
     if (selectedHabitId != null)
-        document.getElementById(selectedHabitId).style.backgroundColor = color4;
+    {
+        document.getElementById(selectedHabitId).classList.add("w3-text-theme");        
+        document.getElementById(selectedHabitId).classList.remove("w3-theme-light");
+    }
+    
 
     if (habitId == selectedHabitId) /* de-selection */
     {
@@ -121,7 +125,8 @@ function selectHabit(habitId)
     else  /* selection */
     {
         /* set selection */
-        document.getElementById(habitId).style.backgroundColor = color2; 
+        document.getElementById(habitId).classList.add("w3-theme-light"); 
+        document.getElementById(habitId).classList.remove("w3-text-theme"); 
         DataSelectedHabitUpdate(habitId);
 
         /* change toolbar icons */
