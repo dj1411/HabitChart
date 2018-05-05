@@ -6,7 +6,7 @@
     float: left;
 }
 
-#divAdd {
+#buttonAdd {
     position: fixed;
     right: 15px;
     bottom: 15px;
@@ -39,17 +39,3 @@ tr {
 .habitColumn {
     padding-left: 5px;
 }
-
-#divDialog {
-    box-shadow: 1px 1px 5px #888888;
-    width: 75%;
-    position: absolute;
-    z-index: 1;
-    top: 40vh;
-    left: 10vw;
-    display: none;
-    padding: 5px;
-    overflow: hidden;
-    font-size: 120%;
-}
-

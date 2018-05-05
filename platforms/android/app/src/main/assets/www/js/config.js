@@ -1,10 +1,5 @@
 const APP_NAME = "Habit Journal"
 
-const color1 = "#5D9CBB"; /* darkest */
-const color2 = "#b7d7e8";
-const color3 = "#cfe0e8";
-const color4 = "#F7FBFA"; /* lightest */
-
 const MS_IN_DAY = 86400000;
 const MAX_DATA_DISPLAY = 7;
 const SYNC_INTERVAL_S = 30;

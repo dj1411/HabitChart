@@ -10,7 +10,7 @@
 - table header thickness and alignment
 - checkboxes are center aligned
 
-## add page
+## add modal
 - Title bar
 - alignment of text and input fields
 - buttons size, position, alignment
@@ -31,7 +31,7 @@ check the size of
 - Uncheck a box. Reopen the application. See if the box is still checked
 
 # Add Habit
-- new page should open with text entry field with an add and cancel button
+- new modal should open with text entry field with an add and cancel button
 - clicking cancel should go to main page
 - clicking add should add a new row with all checkboxes unchecked
 - pressing enter should also add the habit

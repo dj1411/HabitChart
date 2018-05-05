@@ -163,7 +163,7 @@ function DataRefresh(step)
             break;
 
         case 1:     /* sync start */
-            DialogSimpleShow("Syncing data with cloud...");
+            document.getElementById("divDialog").style.display = "block";
             DataLoadCloud();
             break;
 
@@ -205,7 +205,7 @@ function DataRefresh(step)
 
             /* finish up */
             refreshTable();
-            DialogSimpleHide();
+            document.getElementById("divDialog").style.display = "none";;
             break;
 
         default:
