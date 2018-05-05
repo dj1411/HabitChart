@@ -25,7 +25,6 @@ function setStyleIndex()
     $(".divToolbarSelection").css("display", "none");
     
     /* color settings */
-    $("#divAdd").css("background-color", color1);
     $("#divDialog").css("background-color", color4);
     
     /* Styles which depend on window size */
@@ -34,11 +33,6 @@ function setStyleIndex()
         REF = "vw";
     else
         REF = "vh";
-
-    /* the (+) button */
-    $("#divAdd").css("width", "13" + REF);
-    $("#divAdd").css("height", "13" + REF);
-    $("#divAdd").css("line-height", "13" + REF);
 
     /* colors for the menu */
     $("#divMenu").css("background-color", color4);

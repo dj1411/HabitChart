@@ -449,41 +449,25 @@ function DataSelectedHabitReset()
 
 function DataSelectedHabitUpdate(habitId)
 {
-    if (location.href.split("/").slice(-1) != "index.html")
-    {
-        alert("DataSelectedHabitUpdate() shall be called only from index.html");
-        return null;
-    }
+    if (habitId == "")
+        selectedHabit = "";
     else
-    {
-        if (habitId == "")
-            selectedHabit = "";
-        else
-            selectedHabit = document.getElementById(habitId).innerText;
+        selectedHabit = document.getElementById(habitId).innerText;
 
-        DataSave(false);
-    }
+    DataSave(false);
 }
 
 function DataSelectedHabitGetId()
 {
-    if (location.href.split("/").slice(-1) != "index.html")
-    {
-        alert("DataSelectedHabitGetId() shall be called only from index.html");
-        return null;
-    }
-    else
-    {
-        var arr = document.getElementsByClassName("habitColumn");
+    var arr = document.getElementsByClassName("habitColumn");
 
-        for (var i = 0; i < arr.length; i++)
-        {
-            if (arr[i].innerText == selectedHabit)
-                return arr[i].id;
-        }
-
-        return null;
+    for (var i = 0; i < arr.length; i++)
+    {
+        if (arr[i].innerText == selectedHabit)
+            return arr[i].id;
     }
+
+    return null;
 }
 
 function DataSelectedHabitGetStr()

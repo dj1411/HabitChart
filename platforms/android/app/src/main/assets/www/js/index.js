@@ -146,13 +146,13 @@ function toggleToolbar()
 {
     if (selectedHabit == "")
     {
-        $("#divToolbarSelection").css("display", "none");
-        $("#divToolbarNormal").css("display", "block");
+        $(".divToolbarSelection").css("display", "none");
+        $(".divToolbarNormal").css("display", "block");
     }
     else
     {
-        $("#divToolbarSelection").css("display", "block");
-        $("#divToolbarNormal").css("display", "none");
+        $(".divToolbarSelection").css("display", "block");
+        $(".divToolbarNormal").css("display", "none");
     }
 }
 

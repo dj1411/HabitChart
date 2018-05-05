@@ -7,25 +7,11 @@
 }
 
 #divAdd {
-    color: white;
-    font-weight: bolder;
-    font-size: 300%;
     position: fixed;
     right: 15px;
     bottom: 15px;
-    border-radius: 50%;
-    text-align: center;
-    box-shadow: 3px 3px 5px #888888;
 }
 
-    #divAdd:hover {
-        cursor: pointer;
-    }
-
-    #divAdd:active {
-        color: black;
-    } 
-    
 table {
     width: 100%;
     border-collapse: collapse;
