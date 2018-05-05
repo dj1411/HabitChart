@@ -82,8 +82,10 @@
             </div>
         </div>
         
-        <div name="divDialog" id="divDialog" class="w3-modal">
-            <div class="w3-modal-content w3-card-4  w3-text-theme">Syncing data with server</div>
+        <div name="divDialog" id="divDialog" class="w3-modal w3-center">
+            <span class="w3-modal-content w3-card-4 w3-theme">
+                <i class="fa fa-spinner w3-spin w3-xxxlarge"></i>
+            </span>
         </div>
 
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
@@ -95,14 +97,14 @@
         <script type="text/javascript">
             function main()
             {
-//                DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//                DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
                 //testcode();
 
                 DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
                 DataRefresh(0); /* see description about the function definition */
                 setStyleIndex();
 
-//                 setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
+                 setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
             }
         </script>
 
