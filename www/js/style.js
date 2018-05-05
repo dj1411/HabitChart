@@ -1,5 +1,9 @@
 ﻿function setStyleCommon()
 {
+    /* set the app name */
+    document.title = APP_NAME;
+    document.getElementById("title").textContent = APP_NAME;
+    
     /* Styles which depend on window size */
     var REF;
     if (window.innerHeight > window.innerWidth)

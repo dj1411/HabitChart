@@ -1,3 +1,5 @@
+const APP_NAME = "Habit Journal"
+
 const color1 = "#5D9CBB"; /* darkest */
 const color2 = "#b7d7e8";
 const color3 = "#cfe0e8";
