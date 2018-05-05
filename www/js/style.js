@@ -14,9 +14,6 @@
     $("#divHeader").css("height", "10" + REF);
     $("#divHeader").css("line-height", "10" + REF);
     $("#divHeader").css("font-size", "5" + REF);
-
-    $("body").css("background-color", color4);
-    $("#divHeader").css("background-color", color1);
 }
 
 function setStyleIndex()

@@ -38,20 +38,19 @@
 -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style type="text/css">
-            @import url("css/w3/w3.css");
-            @import url("css/w3/w3-theme-blue-grey.css");
+            @import url("https://www.w3schools.com/w3css/4/w3.css");
+            @import url("https://www.w3schools.com/lib/w3-theme-blue-grey.css");
             @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
             @import url("css/index.css");
         </style>
     </head>
     
-    <body onload="main()" onresize="refreshTable(); setStyleIndex()">
+    <body onload="main()" onresize="refreshTable(); setStyleIndex()" class="w3-theme-light">
         
         <div class="w3-bar w3-theme w3-xlarge">
             <a name="buttonSidebar" id="buttonSidebar" class="w3-bar-item w3-button" href="#"><i class="fa fa-bars"></i></a>
             <span class="w3-bar-item" name="title" id="title">Title</span>
             <a name="buttonMenu" id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
-            
             <div name="divToolbar" id="divToolbar" class="w3-right">
                 <a name="buttonSync" id="buttonSync" class="w3-bar-item w3-button divToolbarNormal" href="javascript:DataRefresh(0)"><i class="fa fa-refresh"></i></a>
                 <a name="buttonEdit" id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="add.html"><i class="fa fa-edit"></i></a>
