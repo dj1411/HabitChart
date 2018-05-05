@@ -38,19 +38,24 @@
 -->
         
         <style type="text/css">
-            @import url("css/bootstrap/bootstrap.min.css");
+            @import url("css/w3/w3.css");
+            @import url("css/w3/w3-theme-blue-grey.css");
+            @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
             @import url("css/header.css");
             @import url("css/index.css");
         </style>
     </head>
     
     <body onload="main()" onresize="refreshTable(); setStyleIndex()">
+        
+        <div class="w3-bar w3-theme w3-xlarge">
+            <a name="buttonSidebar" id="buttonSidebar" class="w3-bar-item w3-button" href="#"><i class="fa fa-bars"></i></a>
+            <span class="w3-bar-item" name="title" id="title">Title</span>
+            <a name="buttonMenu" id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
+        </div>
+        
         <div id="divMain" name="divMain">
             <div name="divHeader" id="divHeader">
-                <span name="title" id="title">Habit Builder</span>
-
-                <span name="buttonMenu" id="buttonMenu" onclick="onclickMenu()">&#8942;</span> 
-    
                 <div name="divToolbar" id="divToolbar">
                     <div name="divToolbarNormal" id="divToolbarNormal">
                         <img name="buttonSync" id="buttonSync" class="iconToolbar" src="img/sync.png" onclick="DataRefresh(0)" />
@@ -83,8 +88,6 @@
         
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/moment/moment.min.js"></script>
-        <script type="text/javascript" src="js/popper.js/dist/popper.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="js/style.js"></script>
         <script type="text/javascript" src="js/libdialog.js"></script>
