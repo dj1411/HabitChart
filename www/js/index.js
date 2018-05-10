@@ -21,32 +21,55 @@ function refreshTable()
     var table = document.getElementById("tableMain");
 
     /* delete existing rows */
-    var cntRows = table.rows.length;
-    for (var row = 0; row < cntRows; row++)
-        table.deleteRow(0);
+    for (var i = 0; i<table.childElementCount; i++)
+        table.removeChild(table.children[i]);
 
-    /* Fill the table */
+    /* calculate number of columns to display */
     var numDataCol = (window.innerWidth - HABIT_COL_WIDTH) / DATA_COL_WIDTH;
+    
+    /* Fill the table */
     for (var r = 0; r <= data.HabitList.length; r++)
     {
-        var row = table.insertRow(r);
-        var cell = row.insertCell(0);
-        cell.style.width = HABIT_COL_WIDTH + "px";
+        var row = document.createElement("div");
+        row.classList.add("w3-cell-row");
 
         /* date row */
-        if (r == 0)     /* The first cell is blank by design */
+        if (r == 0)
         {
+            /* The first cell is blank by design */
+            var cell = document.createElement("div");
+            cell.classList.add("w3-cell");
+            cell.style.width = HABIT_COL_WIDTH + "px";
+            row.appendChild(cell);
+            table.appendChild(row);
+            
+            
             for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++)
             {
-                cell = row.insertCell(c + 1);
+                var cell = document.createElement("div");
+                cell.classList.add("w3-cell");
+                cell.classList.add("w3-text-theme");
                 cell.style.width = DATA_COL_WIDTH + "px";
-
-                var date = new Date();
-                date.setDate(date.getDate() - c);
-                if (date.toLocaleDateString().split("/")[0] == date.getDate())  /* check locale setting */
-                    cell.innerHTML = "<div class='th thtop'>" + date.getDate() + "/" + (date.getMonth() + 1) + "</div>";
+                var text;
+                
+                if(c==0)
+                {
+                    text = document.createTextNode("Today");
+                }
                 else
-                    cell.innerHTML = "<div class='th thtop'>" + (date.getMonth() + 1) + "/" + date.getDate() + "</div>";
+                {
+                    var date = new Date();
+                    date.setDate(date.getDate() - c);
+                    if (date.toLocaleDateString().split("/")[0] == date.getDate())  /* check locale setting */
+                        text = document.createTextNode( date.getDate() + "/" + (date.getMonth()+1) );
+                    else
+                        text = document.createTextNode( (date.getMonth()+1) + "/" + date.getDate() );
+                }
+                
+                cell.classList.add("w3-small");
+                cell.appendChild(text);
+                row.appendChild(cell);
+                table.appendChild(row);
             }
         }
         else
@@ -59,6 +82,8 @@ function refreshTable()
             habit.setAttribute("onclick", "selectHabit('HabitList_" + (r - 1) + "')");
             //habit.setAttribute("onclick", "selectHabit('xx')");
             habit.textContent = data.HabitList[r - 1];
+            var cell = row.insertCell(0);
+            cell.style.width = HABIT_COL_WIDTH + "px";
             cell.appendChild(habit);
 
             /* Checkboxes */
