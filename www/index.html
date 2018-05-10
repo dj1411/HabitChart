@@ -60,7 +60,7 @@
         
         <div id="tableMain" name="tableMain" class="w3-container">
         </div>
-
+        
         <button name="buttonAdd" id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddButton()"><i class="fa fa-plus"></i></button>
         
         <div name="divAdd" id="divAdd" class="w3-modal">
@@ -100,11 +100,10 @@
                 //testcode();
 
                 DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
-//                DataRefresh(0); /* see description about the function definition */
-                refreshTable();
+                DataRefresh(0); /* see description about the function definition */
                 setStyleIndex();
 
-//                 setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
+                 setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
             }
         </script>
 

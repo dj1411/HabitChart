@@ -17,12 +17,10 @@ function refreshTable()
 		alert( "Your screen is too small for the app to run properly" );
 		return;
 	}
-	
-    var table = document.getElementById("tableMain");
 
-    /* delete existing rows */
-    for (var i = 0; i<table.childElementCount; i++)
-        table.removeChild(table.children[i]);
+    /* get the table and clear all contents */
+    var table = document.getElementById("tableMain");
+    table.innerHTML = "";
 
     /* calculate number of columns to display */
     var numDataCol = (window.innerWidth - HABIT_COL_WIDTH) / DATA_COL_WIDTH;
@@ -32,6 +30,9 @@ function refreshTable()
     {
         var row = document.createElement("div");
         row.classList.add("w3-cell-row");
+        row.classList.add("w3-border-bottom");
+        row.style.height = "30px";
+        row.style.lineHeight = "30px";
 
         /* date row */
         if (r == 0)
@@ -41,14 +42,14 @@ function refreshTable()
             cell.classList.add("w3-cell");
             cell.style.width = HABIT_COL_WIDTH + "px";
             row.appendChild(cell);
-            table.appendChild(row);
-            
             
             for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++)
             {
                 var cell = document.createElement("div");
                 cell.classList.add("w3-cell");
                 cell.classList.add("w3-text-theme");
+                cell.classList.add("w3-small");
+                cell.classList.add("w3-center");
                 cell.style.width = DATA_COL_WIDTH + "px";
                 var text;
                 
@@ -66,7 +67,6 @@ function refreshTable()
                         text = document.createTextNode( (date.getMonth()+1) + "/" + date.getDate() );
                 }
                 
-                cell.classList.add("w3-small");
                 cell.appendChild(text);
                 row.appendChild(cell);
                 table.appendChild(row);
@@ -75,41 +75,48 @@ function refreshTable()
         else
         {
             /* Habits */
-            var habit = document.createElement("div");
-            habit.setAttribute("class", "habitColumn");
-            habit.setAttribute("id", "HabitList_" + (r - 1));
-            habit.setAttribute("name", "HabitList_" + (r - 1));
-            habit.setAttribute("onclick", "selectHabit('HabitList_" + (r - 1) + "')");
-            //habit.setAttribute("onclick", "selectHabit('xx')");
-            habit.textContent = data.HabitList[r - 1];
-            var cell = row.insertCell(0);
+            var cell = document.createElement("div");
+            cell.classList.add("w3-cell");
+            cell.classList.add("habitColumn");
+            cell.setAttribute("id", "HabitList_" + (r - 1));
+            cell.setAttribute("name", "HabitList_" + (r - 1));
+            cell.setAttribute("onclick", "selectHabit('HabitList_" + (r - 1) + "')");
+            cell.textContent = data.HabitList[r - 1];
             cell.style.width = HABIT_COL_WIDTH + "px";
-            cell.appendChild(habit);
+//            cell.classList.add("w3-padding");
+            row.appendChild(cell);
 
-            /* Checkboxes */
+            /* the bar chart */
             for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++) {
-                cell = row.insertCell(c + 1);
+                var cell = document.createElement("div");
+                cell.classList.add("w3-cell");
                 cell.style.width = DATA_COL_WIDTH + "px";
+                cell.style.height = "20px";
 
-                checkbox = document.createElement("input");
-                checkbox.setAttribute("type", "checkbox");
-                checkbox.setAttribute("class", "td");
+//                if(c%2 == 0)
+//                    cell.classList.add("w3-green");
+//                else
+//                    cell.classList.add("w3-yellow");
 
-                var date = new Date();
-                date.setDate(date.getDate() - c);
-                var name = "checkbox_" + (r - 1) + "_" + date.getDate() + "_" + (date.getMonth()+1);
-                checkbox.setAttribute("id", name);
-                checkbox.setAttribute("name", name);
-                checkbox.setAttribute("onclick", "checkboxChange('" + name + "')");
-
+//                var date = new Date();
+//                date.setDate(date.getDate() - c);
+//                var name = "checkbox_" + (r - 1) + "_" + date.getDate() + "_" + (date.getMonth()+1);
+//                checkbox.setAttribute("id", name);
+//                checkbox.setAttribute("name", name);
+//                checkbox.setAttribute("onclick", "checkboxChange('" + name + "')");
+//
                 var date = new Date();
                 date.setDate(date.getDate() - c);
                 if (DataGetByDate(date)[r - 1])
-                    checkbox.checked = true;
-
-                cell.appendChild(checkbox);
+                    cell.classList.add("w3-green");
+//
+//                cell.appendChild(checkbox);
+                
+                row.appendChild(cell);
             }
         }
+        
+        table.appendChild(row);
     }
 }
 
