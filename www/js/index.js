@@ -89,7 +89,7 @@ function refreshTable()
             var cell = document.createElement("div");
             row.appendChild(cell);
             cell.classList.add("w3-cell");
-            cell.setAttribute("onclick", "");
+            cell.setAttribute("onclick", "onclickDataCell(" + r + "," + c + ")");
             cell.style.width = DATA_COL_WIDTH + "px";
 
             /* creating the bar chart */
@@ -187,7 +187,7 @@ function onclickAddButton()
 {
     DataSelectedHabitReset(); 
     document.getElementById("titleModalHabit").innerText = "Add habit";
-    document.getElementById("divAdd").style.display = "block";
+    document.getElementById("modalAddHabit").style.display = "block";
     document.getElementById("textHabit").focus();
 }
 
@@ -195,8 +195,18 @@ function onclickEditButton()
 {
     document.getElementById("titleModalHabit").innerText = "Update habit";
     document.getElementById("textHabit").value = DataSelectedHabitGetStr();
-    document.getElementById("divAdd").style.display = "block";
+    document.getElementById("modalAddHabit").style.display = "block";
     document.getElementById("textHabit").focus();
+}
+
+function onclickDataCell(r, c)
+{
+    document.getElementById("modalEditData").style.display = "block";
+    
+    var date = moment();
+    date = date.subtract(c, "days");
+    document.getElementById("labelDate").innerText = date.format("dddd, Do MMMM YYYY");
+    document.getElementById("labelHabit").innerText = data.HabitList[r];
 }
 
 function validateAddPage()

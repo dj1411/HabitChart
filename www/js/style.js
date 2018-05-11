@@ -21,7 +21,7 @@ function setStyleIndex()
     $(".divToolbarSelection").css("display", "none");
     
     /* hide the add modal */
-    var modal = document.getElementById('divAdd');
+    var modal = document.getElementById('modalAddHabit');
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

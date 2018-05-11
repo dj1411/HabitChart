@@ -63,7 +63,7 @@
         
         <button name="buttonAdd" id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddButton()"><i class="fa fa-plus"></i></button>
         
-        <div name="divAdd" id="divAdd" class="w3-modal">
+        <div name="modalAddHabit" id="modalAddHabit" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
                 <div name="titleModalHabit" id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Title</div>
                 <form class="w3-container" onsubmit="addHabit()">
@@ -73,7 +73,7 @@
                     </p>
                     <p>
                         <div class="w3-bar">
-                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('divAdd').style.display='none'">Cancel</button>
+                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalAddHabit').style.display='none'">Cancel</button>
                             <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
                         </div>
                     </p>
@@ -81,6 +81,32 @@
             </div>
         </div>
         
+        <div name="modalEditData" id="modalEditData" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                <div class="w3-container w3-theme w3-large w3-padding">Edit data</div>
+                <form class="w3-container" onsubmit="">
+                    <p>
+                        <label>Enter value</label>
+                        <input name="textData" id="textData" class="w3-input" type="text">
+                    </p>
+                    <p>
+                        <div class="w3-bar">
+                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalEditData').style.display='none'">Cancel</button>
+                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
+                        </div>
+                    </p>
+                    <p>
+                        <label>Date: </label>
+                        <label class="labelDate" id="labelDate"></label>
+                    </p>
+                    <p>
+                        <label>Habit: </label>
+                        <label class="labelHabit" id="labelHabit"></label>
+                    </p>
+                </form>
+            </div>
+        </div>
+
         <div name="divDialog" id="divDialog" class="w3-modal w3-center">
             <span class="w3-modal-content w3-card-4 w3-theme">
                 <i class="fa fa-spinner w3-spin w3-xxxlarge"></i>

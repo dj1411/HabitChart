@@ -31,13 +31,12 @@
 - after deleting the button should disappear and no habit should be selected
 - upon closing and opening the app, the deleted habit should not re-appear
 
-# Data dropdown
-- every cell in the table should have a dropdown
-- the dropdown should open and close upon clicking the cell
-- the dropdown should close when clicked on any value of dropdown
-- the dropdown should close when clicked outside
-- dropdowns should have the special entry "..." at the end
-- the values in the dropdown should be displayed as below:
+# Edit Data Modal
+- Clicking in every cell should open the modal
+- clicking cancel should go to main page without doing anything
+- the modal should close upon clicking outside
+- The date and habit should correspond to the cell clicked
+- the prefilled values in the dropdown should be displayed as below:
     - The most recent value should be displayed
     - If the goal is to improve: 
         - values in order of increment should be displayed
@@ -45,6 +44,7 @@
     - If the goal is to reduce: 
         - values in order of decrement should be displayed
         - there should be some data in the increment phase also
+- clicking pre-filled data should close the modal
 - test with different data sets
     - no data
     - 1 day data
