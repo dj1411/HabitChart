@@ -397,6 +397,13 @@ function DataGetByDate(date)
             return data.DataList[key];
 }
 
+function DataGetByRC(r, c) {
+    var mom = moment();
+    var date = mom.subtract(c, "day").toDate();
+    var arr = DataGetByDate(date);
+    return arr[r];
+}
+
 function DataSetByDate(date, arr) {
     var k = "Date_" + date.getDate() + "_" + (date.getMonth() + 1);
     for (var key in data.DataList)

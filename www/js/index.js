@@ -93,12 +93,25 @@ function refreshTable()
             cell.style.width = DATA_COL_WIDTH + "px";
 
             /* creating the bar chart */
-            var date = new Date();
-            date.setDate(date.getDate() - c);
-            if (DataGetByDate(date)[r])
-            {
-                cell.style.borderBottom = ROW_HEIGHT + "px solid";
+            var curData = DataGetByRC(r, c);
+            var arrData = DataGetByRow(r);
+            var max = Math.max(...arrData);
+            var min = Math.min(...arrData);
+            var height = 0;
+            if(curData == 0) {
+                height = 0;
             }
+            else if(curData <= min) {
+                height = 1;
+            }
+            else if(curData >= max) {
+                height = ROW_HEIGHT;
+            }
+            else {
+                var step = ROW_HEIGHT / (max - min);
+                height = min + curData*step;
+            }
+            cell.style.borderBottom = height + "px solid";
         }
     }
 }
@@ -121,7 +134,7 @@ function populateDataVal(r, c)
     arrDropdown.push(max - Math.round((max-min)/3));
     
     /* removing duplicates */
-    arrDropdown = ( arrDropdown.sort().filter( function(currentValue, index, arr) {
+    arrDropdown = ( arrDropdown.sort(function(a, b){return a-b}).filter( function(currentValue, index, arr) {
         return ( index == arr.lastIndexOf(currentValue) );
     }));
     
@@ -215,7 +228,7 @@ function onclickDataCell(r, c)
         button.classList.add("w3-button");
         button.classList.add("w3-border");
         button.classList.add("w3-tiny");
-        button.classList.add("w3-margin-right");
+        button.style.margin = "5px";
         button.innerText = arr[i];
         button.setAttribute("onclick", "onclickEditDataVal(" + r + "," + c + "," + arr[i] + ")");
     }
