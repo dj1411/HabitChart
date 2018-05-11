@@ -103,7 +103,7 @@ function refreshTable()
     }
 }
 
-function populateDropdown(r, c)
+function populateDataVal(r, c)
 {
     var arrData = DataGetByRow(r);
     var arrDropdown = new Array();
@@ -112,6 +112,7 @@ function populateDropdown(r, c)
     arrDropdown.push(arrData[0]);
     var max = Math.max(...arrData);
     var min = Math.min(...arrData);
+    if(max == 0) arrDropdown.push(1);
     arrDropdown.push(max);
     arrDropdown.push(min);
     arrDropdown.push(Math.ceil(max + max*0.1));
@@ -123,6 +124,8 @@ function populateDropdown(r, c)
     arrDropdown = ( arrDropdown.sort().filter( function(currentValue, index, arr) {
         return ( index == arr.lastIndexOf(currentValue) );
     }));
+    
+    return arrDropdown;
 }
 
 function selectHabit(habitId)
@@ -202,6 +205,19 @@ function onclickEditButton()
 function onclickDataCell(r, c)
 {
     document.getElementById("modalEditData").style.display = "block";
+    
+    var div = document.getElementById("divEditDataVal");
+    div.innerHTML = "";
+    var arr = populateDataVal(r,c);
+    for( var i=0; i<arr.length; i++) {
+        var button = document.createElement("span");
+        div.appendChild(button);
+        button.classList.add("w3-button");
+        button.classList.add("w3-border");
+        button.classList.add("w3-tiny");
+        button.classList.add("w3-margin-left");
+        button.innerText = arr[i];
+    }
     
     var date = moment();
     date = date.subtract(c, "days");
