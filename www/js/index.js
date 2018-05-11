@@ -43,6 +43,7 @@ function refreshTable()
             cell.style.width = HABIT_COL_WIDTH + "px";
             row.appendChild(cell);
             
+            /* fill the dates */
             for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++)
             {
                 var cell = document.createElement("div");
@@ -86,40 +87,46 @@ function refreshTable()
             cell.style.width = HABIT_COL_WIDTH + "px";
             row.appendChild(cell);
             
-            /* the bar chart */
+            /* Display Data */
             for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++) {
                 var cell = document.createElement("div");
+                row.appendChild(cell);
                 cell.classList.add("w3-cell");
+                cell.classList.add("w3-dropdown-click");
+                cell.setAttribute("onclick", "document.getElementById('dropdown').classList.add('w3-show')")
                 cell.style.width = DATA_COL_WIDTH + "px";
                 
+                /* creating the bar chart */
                 var date = new Date();
                 date.setDate(date.getDate() - c);
                 if (DataGetByDate(date)[r - 1])
                 {
-                    cell.style.borderBottom = "50px solid";
+                    cell.style.borderBottom = ROW_HEIGHT + "px solid";
                 }
 
-                row.appendChild(cell);
+                /* dropdown menu */
+                if(r==1 && c==3)
+                {
+                    var drop = document.createElement("div");
+                    cell.appendChild(drop);
+                    drop.setAttribute("id", "dropdown");
+                    drop.classList.add("w3-dropdown-content");
+                    drop.classList.add("w3-bar-block");
+                    drop.classList.add("w3-border");
+                    drop.classList.add("w3-right");
+
+                    var a = document.createElement("a");
+                    drop.appendChild(a);
+                    a.classList.add("w3-bar-item");
+                    a.classList.add("w3-button");
+                    a.innerText = "1000";
+                    a.setAttribute("href", "#");
+                }
             }
         }
         
         table.appendChild(row);
     }
-}
-
-function checkboxChange(name)
-{
-    var idHabit = name.split("_")[1];
-
-    var date = new Date();
-    date.setMonth(parseInt(name.split("_")[3]) -1);
-    date.setDate(name.split("_")[2]);
-
-    var stCheck = document.getElementById(name).checked;
-
-    var arr = DataGetByDate(date);
-    arr[idHabit] = (stCheck) ? 1 : 0;
-    DataSetByDate(date, arr);
 }
 
 function selectHabit(habitId)
