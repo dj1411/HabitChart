@@ -29,7 +29,7 @@ function refreshTable()
     var row = document.createElement("div");
     table.appendChild(row);
     row.classList.add("w3-cell-row");
-    row.classList.add("w3-bottombar");
+    row.classList.add("w3-border-bottom");
     
     /* blank cell */
     var cell = document.createElement("div");
@@ -215,14 +215,31 @@ function onclickDataCell(r, c)
         button.classList.add("w3-button");
         button.classList.add("w3-border");
         button.classList.add("w3-tiny");
-        button.classList.add("w3-margin-left");
+        button.classList.add("w3-margin-right");
         button.innerText = arr[i];
+        button.setAttribute("onclick", "onclickEditDataVal(" + r + "," + c + "," + arr[i] + ")");
     }
     
     var date = moment();
     date = date.subtract(c, "days");
     document.getElementById("labelDate").innerText = date.format("dddd, Do MMMM YYYY");
     document.getElementById("labelHabit").innerText = data.HabitList[r];
+    
+    document.getElementById("formEditData").setAttribute("onsubmit", "onsubmitEditData(" + r + "," + c + ")");
+}
+
+function onclickEditDataVal(r, c, val) {
+    document.getElementById("textData").value = val;
+    $("#formEditData").submit(); // for strange reasons, without jquery onsubmitEditData() is not getting called!
+}
+
+function onsubmitEditData(r, c) {
+    var mom = moment();
+    var date = mom.subtract(c, "day").toDate();
+    
+    var arr = DataGetByDate(date);
+    arr[r] = parseInt(document.getElementById("textData").value);
+    DataSetByDate(date, arr);
 }
 
 function validateAddPage()

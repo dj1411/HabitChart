@@ -9,7 +9,8 @@
 # Add Habit
 - new modal should open with text entry field with an add and cancel button
 - clicking cancel should go to main page
-- clicking add should add a new row with all checkboxes unchecked
+- Clicking submit/enter on invalid data should stay on the modal
+- clicking submit should add a new row with all checkboxes unchecked
 - pressing enter should also add the habit
 - new habit should be saved on exit
 - new row checkbox status should be saved
@@ -44,7 +45,12 @@
     - If the goal is to reduce: 
         - values in order of decrement should be displayed
         - there should be some data in the increment phase also
-- clicking pre-filled data should close the modal
+- in the textbox only number should be allowed to enter
+- Clicking submit/enter on invalid data should stay on the modal
+- Clicking submit/enter should submit the number entered in textbox
+- clicking pre-filled data:
+    - fill the textbox with the data
+    - submit
 - test with different data sets
     - no data
     - 1 day data
@@ -54,8 +60,8 @@
     - 1 year data
     
 # Data bar
-- The height of bar should be based on last 3 months data
-- upon chaning the value in dropdown, the bar should display according height
+- The height of a bar should be based on last 3 months data
+- upon chaning the value in modal, the bar should display according height
     - test by chosing lower value
     - test by chosing higher value
 - test with different data sets

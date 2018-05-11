@@ -69,7 +69,7 @@
                 <form class="w3-container" onsubmit="addHabit()">
                     <p>
                         <label>Name</label>
-                        <input name="textHabit" id="textHabit" class="w3-input" type="text">
+                        <input name="textHabit" id="textHabit" class="w3-input" type="text" required>
                     </p>
                     <p>
                         <div class="w3-bar">
@@ -84,11 +84,11 @@
         <div name="modalEditData" id="modalEditData" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
                 <div class="w3-container w3-theme w3-large w3-padding">Edit data</div>
-                <form class="w3-container" onsubmit="">
+                <form name="formEditData" id="formEditData" class="w3-container">
                     <p>
                         <label>Enter value</label>
                         <div name="divEditDataVal" id="divEditDataVal"></div>
-                        <input name="textData" id="textData" class="w3-input" type="text">
+                        <input name="textData" id="textData" class="w3-input" type="number" required>
                     </p>
                     <p>
                         <div class="w3-bar">
