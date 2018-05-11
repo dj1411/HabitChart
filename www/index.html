@@ -65,7 +65,7 @@
         
         <div name="divAdd" id="divAdd" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
-                <div name="titleModalHabit" id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Habit Modal Title</div>
+                <div name="titleModalHabit" id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Title</div>
                 <form class="w3-container" onsubmit="addHabit()">
                     <p>
                         <label>Name</label>
@@ -102,8 +102,8 @@
                 DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
                 DataRefresh(0); /* see description about the function definition */
                 setStyleIndex();
-
-                 setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
+                
+//                setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
             }
         </script>
 

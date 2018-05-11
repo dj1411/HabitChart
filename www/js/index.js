@@ -1,8 +1,6 @@
-function testcode()
-{
+function testcode() {
     data = JSON.parse(localStorage.getItem("data"));
-    if (data == null)
-        data = dataInit;
+    if (data == null) data = dataInit;
 
     data.Timestamp = "";
 
@@ -93,7 +91,7 @@ function refreshTable()
                 row.appendChild(cell);
                 cell.classList.add("w3-cell");
                 cell.classList.add("w3-dropdown-click");
-                cell.setAttribute("onclick", "document.getElementById('dropdown').classList.add('w3-show')")
+                cell.setAttribute("onclick", "toggleDropdown(" + r + "," + c + ")")
                 cell.style.width = DATA_COL_WIDTH + "px";
                 
                 /* creating the bar chart */
@@ -105,28 +103,55 @@ function refreshTable()
                 }
 
                 /* dropdown menu */
-                if(r==1 && c==3)
-                {
-                    var drop = document.createElement("div");
-                    cell.appendChild(drop);
-                    drop.setAttribute("id", "dropdown");
-                    drop.classList.add("w3-dropdown-content");
-                    drop.classList.add("w3-bar-block");
-                    drop.classList.add("w3-border");
-                    drop.classList.add("w3-right");
+                var drop = document.createElement("div");
+                cell.appendChild(drop);
+                drop.setAttribute("id", "dropdown_" + r + "_" + c);
+                drop.classList.add("w3-dropdown-content");
+                drop.classList.add("w3-bar-block");
+                drop.classList.add("w3-border");
+                drop.classList.add("w3-right");
 
-                    var a = document.createElement("a");
-                    drop.appendChild(a);
-                    a.classList.add("w3-bar-item");
-                    a.classList.add("w3-button");
-                    a.innerText = "1000";
-                    a.setAttribute("href", "#");
-                }
+                /* dropdown menu items */
+                populateDropdown(r-1,c);
             }
         }
         
         table.appendChild(row);
     }
+}
+
+function toggleDropdown(row, col)
+{
+    var elem = document.getElementById("dropdown_" + row + "_" + col);
+    if( elem.classList.contains("w3-show") )
+        elem.classList.remove("w3-show");
+    else
+        elem.classList.add("w3-show");
+}
+
+function populateDropdown(row, col)
+{
+    console.log("populating dropdown for row: " + row);
+    var arrData = DataGetByRow(row);
+    var arrDropdown = new Array();
+    
+    arrDropdown.push(0);
+    arrDropdown.push(arrData[0]);
+    var max = Math.max(...arrData);
+    var min = Math.min(...arrData);
+    arrDropdown.push(max);
+    arrDropdown.push(min);
+    arrDropdown.push(Math.ceil(max + max*0.1));
+    arrDropdown.push(Math.floor(min - min*0.1));
+    arrDropdown.push(min + Math.round((max-min)/3));
+    arrDropdown.push(max - Math.round((max-min)/3));
+    
+    /* removing duplicates */
+    arrDropdown = ( arrDropdown.sort().filter( function(currentValue, index, arr) {
+        return ( index == arr.lastIndexOf(currentValue) );
+    }));
+    
+    console.log(arrDropdown);
 }
 
 function selectHabit(habitId)

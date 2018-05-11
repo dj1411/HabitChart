@@ -286,31 +286,6 @@ function DataReset(ramData, localData, cloudData)
     }
 }
 
-function DataShowAll(tag)
-{
-    if (typeof tag === undefined)
-        tag = document.body;
-
-    tag.innerHTML = "<b>All available data:</b><br />";
-
-    for( var key in data )
-    {
-        if(key !== "DataList")
-            tag.innerHTML += key;
-            tag.innerHTML += "=";
-            tag.innerHTML += data[key];
-            tag.innerHTML += "<br />";
-    }
-
-    for( key in data.DataList )
-    {
-        tag.innerHTML += key;
-        tag.innerHTML += "=";
-        tag.innerHTML += data.DataList[key];
-        tag.innerHTML += "<br />";
-    }
-}
-
 function DataHabitAdd(habit)
 {
     /* Update HabitList */
@@ -428,6 +403,15 @@ function DataSetByDate(date, arr) {
         if (k === key)
             data.DataList[key] = arr;
     DataSave(true);
+}
+
+function DataGetByRow(row)
+{
+    var arr = new Array();
+    for (var key in data.DataList) {
+        arr.push(data.DataList[key][row]);
+    }
+    return arr.reverse();
 }
 
 function DataFormatConversion()

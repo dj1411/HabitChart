@@ -18,6 +18,4 @@ function updateHabit()
     
     DataHabitUpdate(selectedHabit, document.getElementById("textHabit").value);
     DataSelectedHabitReset();
-
-    location.replace("index.html");
 }
