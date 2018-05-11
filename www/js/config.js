@@ -11,3 +11,4 @@ const ACTIVE_JSON_ID = TEST_JSON_ID;    /* if you change this, you have to reset
 
 const HABIT_COL_WIDTH = 200;
 const DATA_COL_WIDTH = 50;
+const ROW_HEIGHT = 50;

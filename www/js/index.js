@@ -31,8 +31,8 @@ function refreshTable()
         var row = document.createElement("div");
         row.classList.add("w3-cell-row");
         row.classList.add("w3-border-bottom");
-        row.style.height = "30px";
-        row.style.lineHeight = "30px";
+        row.style.height = ROW_HEIGHT + "px";
+        row.style.lineHeight = ROW_HEIGHT + "px";
 
         /* date row */
         if (r == 0)
@@ -70,6 +70,7 @@ function refreshTable()
                 cell.appendChild(text);
                 row.appendChild(cell);
                 table.appendChild(row);
+                row.classList.add("w3-border-bottom");
             }
         }
         else
@@ -83,35 +84,21 @@ function refreshTable()
             cell.setAttribute("onclick", "selectHabit('HabitList_" + (r - 1) + "')");
             cell.textContent = data.HabitList[r - 1];
             cell.style.width = HABIT_COL_WIDTH + "px";
-//            cell.classList.add("w3-padding");
             row.appendChild(cell);
-
+            
             /* the bar chart */
             for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++) {
                 var cell = document.createElement("div");
                 cell.classList.add("w3-cell");
                 cell.style.width = DATA_COL_WIDTH + "px";
-                cell.style.height = "20px";
-
-//                if(c%2 == 0)
-//                    cell.classList.add("w3-green");
-//                else
-//                    cell.classList.add("w3-yellow");
-
-//                var date = new Date();
-//                date.setDate(date.getDate() - c);
-//                var name = "checkbox_" + (r - 1) + "_" + date.getDate() + "_" + (date.getMonth()+1);
-//                checkbox.setAttribute("id", name);
-//                checkbox.setAttribute("name", name);
-//                checkbox.setAttribute("onclick", "checkboxChange('" + name + "')");
-//
+                
                 var date = new Date();
                 date.setDate(date.getDate() - c);
                 if (DataGetByDate(date)[r - 1])
-                    cell.classList.add("w3-green");
-//
-//                cell.appendChild(checkbox);
-                
+                {
+                    cell.style.borderBottom = "50px solid";
+                }
+
                 row.appendChild(cell);
             }
         }
