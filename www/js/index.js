@@ -36,12 +36,19 @@ function refreshTable()
     row.appendChild(cell);
     cell.classList.add("w3-cell");
     cell.style.width = SIGN_WIDTH + "px";
+    var sign = document.createElement("i");
+    cell.appendChild(sign);
+    sign.classList.add("fa");
+    sign.classList.add("fa-circle");
+    sign.style.color = "transparent";
 
     /* blank cell - habit */
     var cell = document.createElement("div");
     row.appendChild(cell);
     cell.classList.add("w3-cell");
+    cell.textContent = "HabitList";
     cell.style.width = HABIT_COL_WIDTH + "px";
+    cell.style.color = "transparent";
 
     /* fill the dates */
     for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++)
@@ -101,7 +108,6 @@ function refreshTable()
         cell.setAttribute("onclick", "selectHabit('HabitList_" + r + "')");
         cell.textContent = data.HabitList[r].Name;
         cell.style.width = HABIT_COL_WIDTH + "px";
-        row.appendChild(cell);
 
         /* Display Data */
         for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++) {
