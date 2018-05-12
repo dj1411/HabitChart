@@ -2,12 +2,13 @@
 var data;
 var dataCloud;
 var dataInit = {
-    "DataFormatVer": 2,
+    "DataFormatVer": 3,
     "MyJsonID": ACTIVE_JSON_ID,
     "UserID": "test",
     "Timestamp": "01/01/2000",
     "CurrentID": "",
     "HabitList": [],
+    "TargetList": [],
     "Custom": "",
     "DataList": {
     }
@@ -16,7 +17,8 @@ var dataInit = {
 var selectedHabit = "";
 
 /*  this function validates the data passed as pamaeter.
-    very likely this is the local storage.
+    return true: validation success
+    return false: validation failed
 */
 function DataValidate(d)
 {
@@ -24,7 +26,7 @@ function DataValidate(d)
     if (d === null || d === undefined)
         return false;
 
-    ///* parse for further validations */
+    /* parse for further validations */
     d = JSON.parse(d);
 
     /* CurrentID should not be greater than current date */
@@ -39,7 +41,6 @@ function DataValidate(d)
         return false;
     if (d.Timestamp == "" || d.Timestamp == null || d.Timestamp == undefined)
         return false;
-
 
     /* validation of the DataList */
     var prevEntry = 0;
@@ -62,6 +63,12 @@ function DataValidate(d)
     }
     if (keyCurrentID == false)
         return false;
+    
+    if(d.DataFormatVer == 3) {
+        /* Check for each Habit there is a Target */
+        
+        /* All targets should be either Improve or Reduce */
+    }
     
     return true;
 }
@@ -314,7 +321,7 @@ function DataHabitRemove(habit)
     data.HabitList = data.HabitList.filter(
         function( element, index, array )
         {
-            if (element === habit)
+            if (element.Name === habit)
             {
                 id = index;
                 return false;
@@ -426,9 +433,22 @@ function DataFormatConversion()
     /*  By now RAM data, local storage and cloud data are in sync and is valid.
         Assuming no other operation on the data is started yet.
     */
-    if (dataInit.DataFormatVer > data.DataFormatVer)
+    
+    /* converting from ver 2 to 3 */
+    if (data.DataFormatVer == 2 && dataInit.DataFormatVer == 3)
     {
-        alert("New version of data format available. Conversion is necessary.");
+        var oldHabitList = data.HabitList;
+        var newHabitList = new Array();
+        for(var i=0; i<oldHabitList.length; i++) {
+            var obj = new Object();
+            obj.Name = oldHabitList[i];
+            obj.Target = "Improve";
+            newHabitList.push(obj);
+        }
+        data.HabitList = newHabitList;
+        data.DataFormatVer = 3;
+        DataSave(true);
+        location.reload();
     }
 }
 

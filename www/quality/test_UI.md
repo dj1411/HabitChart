@@ -23,5 +23,11 @@ check the size of
 - number of columns in table
 
 # test on different screen sizes
+- test on small screen phone
+- test on large screen phone
+- test on tab
+- test on desktop browser
+- test on mobile browser
+- test on iPad browser
 
 # test on iOS

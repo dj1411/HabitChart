@@ -80,7 +80,7 @@ function refreshTable()
         cell.setAttribute("id", "HabitList_" + r);
         cell.setAttribute("name", "HabitList_" + r);
         cell.setAttribute("onclick", "selectHabit('HabitList_" + r + "')");
-        cell.textContent = data.HabitList[r];
+        cell.textContent = data.HabitList[r].Name;
         cell.style.width = HABIT_COL_WIDTH + "px";
         row.appendChild(cell);
 
@@ -236,7 +236,7 @@ function onclickDataCell(r, c)
     var date = moment();
     date = date.subtract(c, "days");
     document.getElementById("labelDate").innerText = date.format("dddd, Do MMMM YYYY");
-    document.getElementById("labelHabit").innerText = data.HabitList[r];
+    document.getElementById("labelHabit").innerText = data.HabitList[r].Name;
     
     document.getElementById("formEditData").setAttribute("onsubmit", "onsubmitEditData(" + r + "," + c + ")");
 }

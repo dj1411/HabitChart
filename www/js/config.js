@@ -2,7 +2,7 @@ const APP_NAME = "Habit Journal"
 
 const MS_IN_DAY = 86400000;
 const MAX_DATA_DISPLAY = 7;
-const SYNC_INTERVAL_S = 30;
+const SYNC_INTERVAL_S = 300;
 
 const CONNECTION_JSON_ID = "d55un";
 const MASTER_JSON_ID = "mlerr";

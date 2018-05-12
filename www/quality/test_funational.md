@@ -1,6 +1,11 @@
+# Data format change
+- prompt for data conversion.
+- check if local/server data is updated with the new/modified entries with default values.
+- Data validation
+- Check how data version change work without internet.
 
 # populate table
-- When the app opens, the table should be filled with previous habits, dates, checkboxes
+- When the app opens, the table should be filled with previous habits, dates, bar charts
 
 # Save changes in checkbox.
 - Check a box. Reopen the application. See if the box is still checked.
@@ -14,6 +19,8 @@
 - pressing enter should also add the habit
 - new habit should be saved on exit
 - new row checkbox status should be saved
+- Dropdown to select improve/reduce habits
+- selecting improve/reduce should reflect in the data
 
 # update habit
 - textbox should be prefilled. 
@@ -89,6 +96,7 @@
 - pressing the exit button should quit the program
 
 # sync data to server (check in browser)
+- The app should work perfectly without any internet connection
 - reset RAM data, local storage and cloud storage individually. check if the table is re-constructible.
 - reset all three storages. table should become empty.
 - sync should happen at app start
