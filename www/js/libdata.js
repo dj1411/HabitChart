@@ -77,13 +77,10 @@ function DataValidate(d)
 
 function DataCheckInternet()
 {
-    $.get("https://api.myjson.com/bins/" + CONNECTION_JSON_ID, function (result, textStatus, xhdr)
-    {
-        if (result.DJApps == "TestData")
-            DataRefresh(1);     /* connection successful. continue with sync */
-        else
-            DataRefresh(3);;    /* No internet connection. just update the table */
-    });
+    if (navigator.onLine)
+        DataRefresh(1);     /* connection successful. continue with sync */
+    else
+        DataRefresh(3);    /* No internet connection. just update the table */
 }
 
 function DataSaveCloud() {

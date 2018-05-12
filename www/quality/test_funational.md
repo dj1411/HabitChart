@@ -1,5 +1,4 @@
 # Data format change
-- prompt for data conversion.
 - check if local/server data is updated with the new/modified entries with default values.
 - Data validation
 - Check how data version change work without internet.
