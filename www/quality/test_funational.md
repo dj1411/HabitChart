@@ -31,9 +31,9 @@
 - pressing enter should also add the habit
 - duplicate habit names should not be allowed
 - new habit should be saved on exit
-- new row checkbox status should be saved
-- Dropdown to select improve/reduce habits
-- selecting improve/reduce should reflect in the data
+- new habit change in data should be saved to cloud
+- Display dropdown to select improve/reduce habits
+- selecting improve/reduce should reflect in the cloud data
 
 # update habit
 - textbox should be prefilled. 

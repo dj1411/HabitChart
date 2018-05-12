@@ -126,6 +126,9 @@ function refreshTable()
             if(curData == 0) {
                 height = 0;
             }
+            else if(arrData.length == 1) {
+                height = ROW_HEIGHT;
+            }
             else if(curData <= min) {
                 height = 1;
             }
@@ -144,26 +147,26 @@ function refreshTable()
 function populateDataVal(r, c)
 {
     var arrData = DataGetByRow(r);
-    var arrDropdown = new Array();
+    var arrButton = new Array();
     
-    arrDropdown.push(0);
-    arrDropdown.push(arrData[0]);
+    arrButton.push(0);
+    arrButton.push(arrData[0]);
     var max = Math.max(...arrData);
     var min = Math.min(...arrData);
-    if(max == 0) arrDropdown.push(1);
-    arrDropdown.push(max);
-    arrDropdown.push(min);
-    arrDropdown.push(Math.ceil(max + max*0.1));
-    arrDropdown.push(Math.floor(min - min*0.1));
-    arrDropdown.push(min + Math.round((max-min)/3));
-    arrDropdown.push(max - Math.round((max-min)/3));
+    if(max == 0) arrButton.push(1);
+    arrButton.push(max);
+    arrButton.push(min);
+    arrButton.push(Math.ceil(max + max*0.1));
+    arrButton.push(Math.floor(min - min*0.1));
+    arrButton.push(min + Math.round((max-min)/3));
+    arrButton.push(max - Math.round((max-min)/3));
     
     /* removing duplicates */
-    arrDropdown = ( arrDropdown.sort(function(a, b){return a-b}).filter( function(currentValue, index, arr) {
+    arrButton = ( arrButton.sort(function(a, b){return a-b}).filter( function(currentValue, index, arr) {
         return ( index == arr.lastIndexOf(currentValue) );
     }));
     
-    return arrDropdown;
+    return arrButton;
 }
 
 function selectHabit(habitId)
@@ -238,6 +241,10 @@ function onclickEditButton()
     document.getElementById("textHabit").value = DataSelectedHabitGetStr();
     document.getElementById("modalAddHabit").style.display = "block";
     document.getElementById("textHabit").focus();
+    
+    /* display the Target as per data */
+    var r = parseInt(DataSelectedHabitGetId().slice(DataSelectedHabitGetId().lastIndexOf("_") + 1));
+    document.getElementById("optionTarget").value = data.HabitList[r].Target;
 }
 
 function onclickDataCell(r, c)
