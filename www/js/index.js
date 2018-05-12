@@ -257,30 +257,25 @@ function onsubmitEditData(r, c) {
 
 function validateAddPage()
 {
-    if (document.getElementById("textHabit").value === "")
-    {
-        alert("Habit name is blank");
-        return false;
-    }
-
     /* Check if habit already exists */
-    if (data.HabitList.indexOf(document.getElementById("textHabit").value) !== -1)
-    {
-        alert("Habit already exists");
-        return false;
+    for(var i=0; i<data.HabitList.length; i++) {
+        if(data.HabitList[i].Name == document.getElementById("textHabit").value) {
+            alert("Habit already exists");
+            return false;
+        }
     }
-
+    
     return true;
 }
 
-function addHabit()
+function addupdateHabit()
 {
-    if (!validateAddPage())
-        return;
-    
-    var habit = document.getElementById("textHabit").value;
+    var habit = new Object();
+    habit.Name = document.getElementById("textHabit").value;
+    habit.Target = document.getElementById("optionTarget").value;
     if( DataSelectedHabitGetStr() == "" )
     {
+        if (!validateAddPage()) return;
         DataHabitAdd(habit);
     }
     else

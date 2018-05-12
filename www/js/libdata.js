@@ -352,13 +352,12 @@ function DataHabitRemove(habit)
 function DataHabitUpdate(oldHabit, newHabit)
 {
     /* validations */
-    if (oldHabit == "" || newHabit == "")
-        return;
-    if (oldHabit == newHabit)
-        return;
+    if (oldHabit.Name == "" || newHabit.Name == "") return;
+    if (oldHabit.Name == newHabit.Name && oldHabit.Target == newHabit.Target) return;
 
-    var id = data.HabitList.indexOf(oldHabit);
-    data.HabitList[id] = newHabit;
+    for(var i=0; i<data.HabitList.length; i++) {
+        if(data.HabitList[i].Name == oldHabit) data.HabitList[i] = newHabit;
+    }
 
     DataSave(true);
 }

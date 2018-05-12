@@ -17,6 +17,7 @@
 - Clicking submit/enter on invalid data should stay on the modal
 - clicking submit should add a new row with all checkboxes unchecked
 - pressing enter should also add the habit
+- duplicate habit names should not be allowed
 - new habit should be saved on exit
 - new row checkbox status should be saved
 - Dropdown to select improve/reduce habits
@@ -27,7 +28,9 @@
 - 'Update' label should be visible instead of 'Add'.
 - clicking cancel should go to main page
 - clicking update, habit name should change
-- all checkboxes should have the previous values
+- only changing the Target without changing Name should be allowed
+- update without changing anything should have no impact
+- all bars should have the previous values
 - restarting the app should retain the updated habit
 
 # delete habit

@@ -66,9 +66,16 @@
         <div name="modalAddHabit" id="modalAddHabit" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
                 <div name="titleModalHabit" id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Title</div>
-                <form class="w3-container" onsubmit="addHabit()">
+                <form class="w3-container" onsubmit="addupdateHabit()">
                     <p>
-                        <label>Name</label>
+                        <label class="w3-small">Target</label>
+                        <select name="optionTarget" id="optionTarget" class="w3-select">
+                            <option value="Improve" selected>I want to improve</option>
+                            <option value="Reduce">I want to reduce</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label class="w3-small">Name</label>
                         <input name="textHabit" id="textHabit" class="w3-input" type="text" required>
                     </p>
                     <p>
