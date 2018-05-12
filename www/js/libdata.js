@@ -65,9 +65,11 @@ function DataValidate(d)
         return false;
     
     if(d.DataFormatVer == 3) {
-        /* Check for each Habit there is a Target */
-        
-        /* All targets should be either Improve or Reduce */
+        for(var i=0; i<d.HabitList.length; i++) {
+            if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") return false;
+            if(d.HabitList[i].Target == null || d.HabitList[i].Target == undefined || d.HabitList[i].Target == "") return false;
+            if(d.HabitList[i].Target != "Improve" && d.HabitList[i].Target != "Reduce") return false;
+        }
     }
     
     return true;
