@@ -58,23 +58,29 @@
             </div>
         </div>
         
-        <div id="divMain" name="divMain" class="w3-container">
-            <table name="tableMain" id="tableMain"></table>
+        <div id="tableMain" name="tableMain" class="w3-container">
         </div>
-
+        
         <button name="buttonAdd" id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddButton()"><i class="fa fa-plus"></i></button>
         
-        <div name="divAdd" id="divAdd" class="w3-modal">
+        <div name="modalAddHabit" id="modalAddHabit" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
-                <div name="titleModalHabit" id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Habit Modal Title</div>
-                <form class="w3-container" onsubmit="addHabit()">
+                <div name="titleModalHabit" id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Title</div>
+                <form class="w3-container" onsubmit="addupdateHabit()">
                     <p>
-                        <label>Name</label>
-                        <input name="textHabit" id="textHabit" class="w3-input" type="text">
+                        <label class="w3-small">Target</label>
+                        <select name="optionTarget" id="optionTarget" class="w3-select">
+                            <option value="Improve" selected>I want to improve</option>
+                            <option value="Reduce">I want to reduce</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label class="w3-small">Name</label>
+                        <input name="textHabit" id="textHabit" class="w3-input" type="text" required>
                     </p>
                     <p>
                         <div class="w3-bar">
-                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('divAdd').style.display='none'">Cancel</button>
+                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalAddHabit').style.display='none'">Cancel</button>
                             <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
                         </div>
                     </p>
@@ -82,6 +88,33 @@
             </div>
         </div>
         
+        <div name="modalEditData" id="modalEditData" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                <div class="w3-container w3-theme w3-large w3-padding">Edit data</div>
+                <form name="formEditData" id="formEditData" class="w3-container">
+                    <p>
+                        <label>Enter value</label>
+                        <div name="divEditDataVal" id="divEditDataVal"></div>
+                        <input name="textData" id="textData" class="w3-input" type="number" required>
+                    </p>
+                    <p>
+                        <div class="w3-bar">
+                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalEditData').style.display='none'">Cancel</button>
+                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
+                        </div>
+                    </p>
+                    <p>
+                        <label>Date: </label>
+                        <label class="labelDate" id="labelDate"></label>
+                    </p>
+                    <p>
+                        <label>Habit: </label>
+                        <label class="labelHabit" id="labelHabit"></label>
+                    </p>
+                </form>
+            </div>
+        </div>
+
         <div name="divDialog" id="divDialog" class="w3-modal w3-center">
             <span class="w3-modal-content w3-card-4 w3-theme">
                 <i class="fa fa-spinner w3-spin w3-xxxlarge"></i>
@@ -97,14 +130,14 @@
         <script type="text/javascript">
             function main()
             {
-//                DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//                DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
                 //testcode();
 
                 DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
                 DataRefresh(0); /* see description about the function definition */
                 setStyleIndex();
-
-                 setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
+                
+                setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
             }
         </script>
 

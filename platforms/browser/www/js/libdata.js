@@ -2,12 +2,13 @@
 var data;
 var dataCloud;
 var dataInit = {
-    "DataFormatVer": 2,
+    "DataFormatVer": 3,
     "MyJsonID": ACTIVE_JSON_ID,
     "UserID": "test",
     "Timestamp": "01/01/2000",
     "CurrentID": "",
     "HabitList": [],
+    "TargetList": [],
     "Custom": "",
     "DataList": {
     }
@@ -16,7 +17,8 @@ var dataInit = {
 var selectedHabit = "";
 
 /*  this function validates the data passed as pamaeter.
-    very likely this is the local storage.
+    return true: validation success
+    return false: validation failed
 */
 function DataValidate(d)
 {
@@ -24,7 +26,7 @@ function DataValidate(d)
     if (d === null || d === undefined)
         return false;
 
-    ///* parse for further validations */
+    /* parse for further validations */
     d = JSON.parse(d);
 
     /* CurrentID should not be greater than current date */
@@ -39,7 +41,6 @@ function DataValidate(d)
         return false;
     if (d.Timestamp == "" || d.Timestamp == null || d.Timestamp == undefined)
         return false;
-
 
     /* validation of the DataList */
     var prevEntry = 0;
@@ -63,18 +64,29 @@ function DataValidate(d)
     if (keyCurrentID == false)
         return false;
     
+    /* checks for data format version 3 */
+    if(d.DataFormatVer == 3) {
+        for(var i=0; i<d.HabitList.length; i++) {
+            /* check if habit is empty */
+            if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") return false;
+            
+            /* check if target is empty */
+            if(d.HabitList[i].Target == null || d.HabitList[i].Target == undefined || d.HabitList[i].Target == "") return false;
+            
+            /* check if target is either Improve or Reduce */
+            if(d.HabitList[i].Target != "Improve" && d.HabitList[i].Target != "Reduce") return false;
+        }
+    }
+    
     return true;
 }
 
 function DataCheckInternet()
 {
-    $.get("https://api.myjson.com/bins/" + CONNECTION_JSON_ID, function (result, textStatus, xhdr)
-    {
-        if (result.DJApps == "TestData")
-            DataRefresh(1);     /* connection successful. continue with sync */
-        else
-            DataRefresh(3);;    /* No internet connection. just update the table */
-    });
+    if (navigator.onLine)
+        DataRefresh(1);     /* connection successful. continue with sync */
+    else
+        DataRefresh(3);    /* No internet connection. just update the table */
 }
 
 function DataSaveCloud() {
@@ -286,31 +298,6 @@ function DataReset(ramData, localData, cloudData)
     }
 }
 
-function DataShowAll(tag)
-{
-    if (typeof tag === undefined)
-        tag = document.body;
-
-    tag.innerHTML = "<b>All available data:</b><br />";
-
-    for( var key in data )
-    {
-        if(key !== "DataList")
-            tag.innerHTML += key;
-            tag.innerHTML += "=";
-            tag.innerHTML += data[key];
-            tag.innerHTML += "<br />";
-    }
-
-    for( key in data.DataList )
-    {
-        tag.innerHTML += key;
-        tag.innerHTML += "=";
-        tag.innerHTML += data.DataList[key];
-        tag.innerHTML += "<br />";
-    }
-}
-
 function DataHabitAdd(habit)
 {
     /* Update HabitList */
@@ -339,7 +326,7 @@ function DataHabitRemove(habit)
     data.HabitList = data.HabitList.filter(
         function( element, index, array )
         {
-            if (element === habit)
+            if (element.Name === habit)
             {
                 id = index;
                 return false;
@@ -368,13 +355,12 @@ function DataHabitRemove(habit)
 function DataHabitUpdate(oldHabit, newHabit)
 {
     /* validations */
-    if (oldHabit == "" || newHabit == "")
-        return;
-    if (oldHabit == newHabit)
-        return;
+    if (oldHabit.Name == "" || newHabit.Name == "") return;
+    if (oldHabit.Name == newHabit.Name && oldHabit.Target == newHabit.Target) return;
 
-    var id = data.HabitList.indexOf(oldHabit);
-    data.HabitList[id] = newHabit;
+    for(var i=0; i<data.HabitList.length; i++) {
+        if(data.HabitList[i].Name == oldHabit) data.HabitList[i] = newHabit;
+    }
 
     DataSave(true);
 }
@@ -422,6 +408,13 @@ function DataGetByDate(date)
             return data.DataList[key];
 }
 
+function DataGetByRC(r, c) {
+    var mom = moment();
+    var date = mom.subtract(c, "day").toDate();
+    var arr = DataGetByDate(date);
+    return arr[r];
+}
+
 function DataSetByDate(date, arr) {
     var k = "Date_" + date.getDate() + "_" + (date.getMonth() + 1);
     for (var key in data.DataList)
@@ -430,14 +423,36 @@ function DataSetByDate(date, arr) {
     DataSave(true);
 }
 
+function DataGetByRow(row)
+{
+    var arr = new Array();
+    for (var key in data.DataList) {
+        arr.push(data.DataList[key][row]);
+    }
+    return arr.reverse();
+}
+
 function DataFormatConversion()
 {
     /*  By now RAM data, local storage and cloud data are in sync and is valid.
         Assuming no other operation on the data is started yet.
     */
-    if (dataInit.DataFormatVer > data.DataFormatVer)
+    
+    /* converting from ver 2 to 3 */
+    if (data.DataFormatVer == 2 && dataInit.DataFormatVer == 3)
     {
-        alert("New version of data format available. Conversion is necessary.");
+        var oldHabitList = data.HabitList;
+        var newHabitList = new Array();
+        for(var i=0; i<oldHabitList.length; i++) {
+            var obj = new Object();
+            obj.Name = oldHabitList[i];
+            obj.Target = "Improve";
+            newHabitList.push(obj);
+        }
+        data.HabitList = newHabitList;
+        data.DataFormatVer = 3;
+        DataSave(true);
+        location.reload();
     }
 }
 

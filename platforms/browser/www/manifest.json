@@ -1,8 +1,8 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "HabitJournal",
-  "short_name": "HabitJournal",
+  "name": "Habit Journal",
+  "short_name": "Habit Journal",
   "version": "com.debnath.habitjournal",
   "description": "Keep track of your habits.",
   "author": "Jayanta Debnath",
