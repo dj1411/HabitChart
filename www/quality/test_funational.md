@@ -1,20 +1,33 @@
 # Data format change
 - check if local/server data is updated with the new/modified entries with default values.
-- Data validation
 - Check how data version change work without internet.
 
-# populate table
-- When the app opens, the table should be filled with previous habits, dates, bar charts
+# Data validation checks for local data
+- check for empty data
+- parse for further validations
+- CurrentID should not be greater than current date
+- mandatory fields should not be blank
+- validation of the DataList
+	- There should be a key corresponding the current id
+	- Each item in DataList should have the same length as HabitList
+	- DataList entries should be contiguous
+- checks for data format version 3
+	- check if habit is empty
+	- check if target is empty
+	- check if target is either Improve or Reduce
 
-# Save changes in checkbox.
-- Check a box. Reopen the application. See if the box is still checked.
-- Uncheck a box. Reopen the application. See if the box is still checked
+# Save changes in bar
+- Set value of an empty cell. Reopen the application. See if the value is still there.
+- Change value of an existing cell with value. Reopen the application. See if the value is still there.
 
 # Add Habit
-- new modal should open with text entry field with an add and cancel button
+- new modal should open with the following:
+	- text entry field
+	- `Target` dropdown
+	- submit and cancel button
 - clicking cancel should go to main page
-- Clicking submit/enter on invalid data should stay on the modal
-- clicking submit should add a new row with all checkboxes unchecked
+- Clicking submit/enter on empty data should stay on the modal
+- clicking submit should add a new row with all data cleared
 - pressing enter should also add the habit
 - duplicate habit names should not be allowed
 - new habit should be saved on exit

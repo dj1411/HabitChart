@@ -173,7 +173,7 @@ function selectHabit(habitId)
     if (selectedHabitId != null)
     {
         document.getElementById(selectedHabitId).classList.add("w3-text-theme");        
-        document.getElementById(selectedHabitId).classList.remove("w3-theme-light");
+        document.getElementById(selectedHabitId).classList.remove("w3-theme-l4");
     }
     
 
@@ -188,7 +188,7 @@ function selectHabit(habitId)
     else  /* selection */
     {
         /* set selection */
-        document.getElementById(habitId).classList.add("w3-theme-light"); 
+        document.getElementById(habitId).classList.add("w3-theme-l4"); 
         document.getElementById(habitId).classList.remove("w3-text-theme"); 
         DataSelectedHabitUpdate(habitId);
 
@@ -285,8 +285,22 @@ function validateAddPage()
     /* Check if habit already exists */
     for(var i=0; i<data.HabitList.length; i++) {
         if(data.HabitList[i].Name == document.getElementById("textHabit").value) {
-            alert("Habit already exists");
-            return false;
+            if( DataSelectedHabitGetStr() == "" ) { // Add
+                alert("Habit already exists");
+                return false;
+            }
+            else { // update
+                if(data.HabitList[i].Target == document.getElementById("optionTarget").value) {
+                    alert("Habit already exists");
+                    return false;
+                }
+                else {
+                    if(DataSelectedHabitGetStr() != data.HabitList[i].Name) {
+                        alert("Habit already exists");
+                        return false;                        
+                    }
+                }
+            }
         }
     }
     
@@ -305,6 +319,7 @@ function addupdateHabit()
     }
     else
     {
+        if (!validateAddPage()) return;
         DataHabitUpdate(DataSelectedHabitGetStr(), habit);
         DataSelectedHabitReset();
     }

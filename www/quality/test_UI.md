@@ -1,3 +1,9 @@
+# populate table
+- When the app opens, the table should be filled with following previous items:
+	- habit list
+	- dates
+	- bar charts
+	
 # main page
 - Title bar should have enough width
 - Title bar font thickness and color
