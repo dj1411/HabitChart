@@ -31,7 +31,13 @@ function refreshTable()
     row.classList.add("w3-cell-row");
     row.classList.add("w3-border-bottom");
     
-    /* blank cell */
+    /* blank cell - sign */
+    var cell = document.createElement("div");
+    row.appendChild(cell);
+    cell.classList.add("w3-cell");
+    cell.style.width = SIGN_WIDTH + "px";
+
+    /* blank cell - habit */
     var cell = document.createElement("div");
     row.appendChild(cell);
     cell.classList.add("w3-cell");
@@ -43,7 +49,6 @@ function refreshTable()
         var cell = document.createElement("div");
         row.appendChild(cell);
         cell.classList.add("w3-cell");
-        cell.classList.add("w3-text-theme");
         cell.classList.add("w3-small");
         cell.classList.add("w3-center");
         cell.style.width = DATA_COL_WIDTH + "px";
@@ -72,9 +77,23 @@ function refreshTable()
         row.style.height = ROW_HEIGHT + "px";
         row.style.lineHeight = ROW_HEIGHT + "px";
 
+        /* Target achievement signs */
+        var cell = document.createElement("div");
+        row.appendChild(cell);
+        cell.classList.add("w3-cell");
+        cell.style.width = SIGN_WIDTH + "px";
+        var sign = document.createElement("i");
+        cell.appendChild(sign);
+        sign.classList.add("fa");
+        sign.classList.add("fa-circle");
+        sign.setAttribute("id", "sign_" + r);
+        sign.setAttribute("name", "sign_" + r);
+        sign.style.color = "transparent";
+        setColorSign(r);
+        
         /* Habits */
         var cell = document.createElement("div");
-        table.appendChild(row);
+        row.appendChild(cell);
         cell.classList.add("w3-cell");
         cell.classList.add("habitColumn");
         cell.setAttribute("id", "HabitList_" + r);
@@ -283,4 +302,53 @@ function addupdateHabit()
         DataHabitUpdate(DataSelectedHabitGetStr(), habit);
         DataSelectedHabitReset();
     }
+}
+
+function setColorSign(r) {
+    var arr = DataGetByRow(r);
+    
+    var oldavg = 0;
+    var curavg = 0;
+    if(arr.length == 0 || arr.length == 1) {
+        /* nothing to do */
+    }
+    else if(arr.length <= 7) {
+        curavg = arr[0];
+        
+        var sum = 0;
+        for(var i=1; i<arr.length; i++) sum += arr[i];
+        oldavg = sum / (arr.length-1);
+    }
+    else {
+        var sum = 0;
+        for(var i=0; i<7; i++) sum += arr[i];
+        curavg = sum / 7;
+        
+        sum = 0;
+        var i=7;
+        for( ; i<arr.length && i<30; i++) sum += arr[i];
+        oldavg = sum / (i-7);
+    }
+    
+    var hi = oldavg + 0.1*oldavg;
+    var lo = oldavg + 0.1*oldavg;
+    var color = "transparent";
+    switch(data.HabitList[r].Target) {
+        case "Improve":
+            if(curavg > hi) color = "lightgreen";
+            else if(curavg < lo) color = "red";
+            else color = "yellow";
+            break;
+            
+        case "Reduce":
+            if(curavg > hi) color = "red";
+            else if(curavg < lo) color = "lightgreen";
+            else color = "yellow";
+            break;
+            
+        default:
+            alert("Invalid Target data encountered");
+    }
+    
+    document.getElementById("sign_" + r).style.color = color;
 }
