@@ -36,7 +36,7 @@
 - selecting improve/reduce should reflect in the cloud data
 
 # update habit
-- textbox should be prefilled. 
+- habit name should be prefilled. 
 - 'Update' label should be visible instead of 'Add'.
 - clicking cancel should go to main page
 - clicking update, habit name should change
@@ -59,7 +59,7 @@
 - clicking cancel should go to main page without doing anything
 - the modal should close upon clicking outside
 - The date and habit should correspond to the cell clicked
-- the prefilled values in the dropdown should be displayed as below:
+- the prefilled values in the buttons should be displayed as below:
     - The most recent value should be displayed
     - If the goal is to improve: 
         - values in order of increment should be displayed
@@ -70,7 +70,7 @@
 - in the textbox only number should be allowed to enter
 - Clicking submit/enter on invalid data should stay on the modal
 - Clicking submit/enter should submit the number entered in textbox
-- clicking pre-filled data:
+- clicking pre-filled data buttons:
     - fill the textbox with the data
     - submit
 - test with different data sets
@@ -83,7 +83,7 @@
     
 # Data bar
 - The height of a bar should be based on last 3 months data
-- upon chaning the value in modal, the bar should display according height
+- upon changing the value in modal, the bar should display according height
     - test by chosing lower value
     - test by chosing higher value
 - test with different data sets

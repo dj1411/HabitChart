@@ -1,37 +1,19 @@
-﻿function setStyleCommon()
+﻿function setStyleIndex()
 {
     /* set the app name */
     document.title = APP_NAME;
     document.getElementById("title").innerText = APP_NAME;
-    
-    /* Styles which depend on window size */
-    var REF;
-    if (window.innerHeight > window.innerWidth)
-        REF = "vw";
-    else
-        REF = "vh";
-}
-
-function setStyleIndex()
-{
-    /* set the style common to all pages */
-    setStyleCommon();
 
     /* hide the selection toolbar */
     $(".divToolbarSelection").css("display", "none");
     
-    /* hide the add modal */
-    var modal = document.getElementById('modalAddHabit');
+    /* hide the modals */
+    var modal1 = document.getElementById("modalAddHabit");
+    var modal2 = document.getElementById("modalEditData");
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == modal1 || event.target == modal2) {
+            modal1.style.display = "none";
+            modal2.style.display = "none";
         }
     }
-    
-    /* Styles which depend on window size */
-    var REF;
-    if (window.innerHeight > window.innerWidth)
-        REF = "vw";
-    else
-        REF = "vh";
 }
