@@ -252,13 +252,19 @@ function onclickEditHabitButton()
     document.getElementById("titleModalHabit").innerText = "Update habit";
     document.getElementById("textHabit").value = DataSelectedHabitGetStr();
     document.getElementById("modalAddHabit").style.display = "block";
-    document.getElementById("textHabit").focus();
     
     /* determine seleted row */
     var r = parseInt(DataSelectedHabitGetId().slice(DataSelectedHabitGetId().lastIndexOf("_") + 1));
     
     /* display the Target as per data */
-    document.getElementById("optionTarget").value = data.HabitList[r].Target;
+    if(data.HabitList[r].Target.slice(0,5) == "Reach") {
+        document.getElementById("optionTarget").value = data.HabitList[r].Target.slice(0,5);
+        document.getElementById("textTimes").value = data.HabitList[r].Target.split("_")[1];
+        document.getElementById("textDays").value = data.HabitList[r].Target.split("_")[2];
+    }
+    else {
+        document.getElementById("optionTarget").value = data.HabitList[r].Target;
+    }
     
     /* display more fields for Reach */
     if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {

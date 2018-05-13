@@ -330,6 +330,29 @@ function DataHabitAdd(habit)
     DataSave(true);
 }
 
+function DataHabitUpdate(oldHabit, newHabit)
+{
+    /* basic validations */
+    if (oldHabit.Name == "" || newHabit.Name == "") return;
+    if (oldHabit.Name == newHabit.Name && oldHabit.Target == newHabit.Target) return;
+
+    /* check if habit already exists */
+    if(oldHabit.Name != newHabit.Name) {
+        for(var i=0; i<data.HabitList.length; i++) {
+            if(newHabit.Name == data.HabitList[i].Name) {
+                alert("Habit already exists");
+                return;
+            }
+        }    
+    }
+
+    for(var i=0; i<data.HabitList.length; i++) {
+        if(data.HabitList[i].Name == oldHabit) data.HabitList[i] = newHabit;
+    }
+
+    DataSave(true);
+}
+
 function DataHabitRemove(habit)
 {
     /* Update HabitList */
@@ -358,19 +381,6 @@ function DataHabitRemove(habit)
                 }
             );
         }
-    }
-
-    DataSave(true);
-}
-
-function DataHabitUpdate(oldHabit, newHabit)
-{
-    /* validations */
-    if (oldHabit.Name == "" || newHabit.Name == "") return;
-    if (oldHabit.Name == newHabit.Name && oldHabit.Target == newHabit.Target) return;
-
-    for(var i=0; i<data.HabitList.length; i++) {
-        if(data.HabitList[i].Name == oldHabit) data.HabitList[i] = newHabit;
     }
 
     DataSave(true);
