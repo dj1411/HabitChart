@@ -1,3 +1,15 @@
+function main()
+{
+//                DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+    //testcode();
+
+    DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
+    DataRefresh(0); /* see description about the function definition */
+    setStyleIndex();
+
+    setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
+}
+
 function testcode() {
     data = JSON.parse(localStorage.getItem("data"));
     if (data == null) data = dataInit;
@@ -242,9 +254,23 @@ function onclickEditButton()
     document.getElementById("modalAddHabit").style.display = "block";
     document.getElementById("textHabit").focus();
     
-    /* display the Target as per data */
+    /* determine seleted row */
     var r = parseInt(DataSelectedHabitGetId().slice(DataSelectedHabitGetId().lastIndexOf("_") + 1));
+    
+    /* display the Target as per data */
     document.getElementById("optionTarget").value = data.HabitList[r].Target;
+    
+    /* display more fields for Reach */
+    if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
+        document.getElementById("divReach").style.display = "block";
+        document.getElementById("textTimes").required = true;
+        document.getElementById("textDays").required = true;
+    }
+    else {
+        document.getElementById("divReach").style.display = "none";
+        document.getElementById("textTimes").required = false;
+        document.getElementById("textDays").required = false;
+    }
 }
 
 function onclickDataCell(r, c)
@@ -290,15 +316,20 @@ function onsubmitEditData(r, c) {
 function onchangeTarget() {
     if(document.getElementById("optionTarget").value == "Reach") {
         document.getElementById("divReach").style.display = "block";
+        document.getElementById("textTimes").required = true;
+        document.getElementById("textDays").required = true;        
     }
-    else
+    else {
         document.getElementById("divReach").style.display = "none";
+        document.getElementById("textTimes").required = false;
+        document.getElementById("textDays").required = false;
+    }
 }
 
 function validateAddPage()
 {
-    /* Check if habit already exists */
     for(var i=0; i<data.HabitList.length; i++) {
+        /* Check if habit already exists */
         if(data.HabitList[i].Name == document.getElementById("textHabit").value) {
             if( DataSelectedHabitGetStr() == "" ) { // Add
                 alert("Habit already exists");
