@@ -362,51 +362,56 @@ function addupdateHabit()
 function setColorSign(r) {
     var arr = DataGetByRow(r);
     
-    var oldavg = 0;
+    var sum = 0;
+    var i=0;
+    for(; i<arr.length && i<21; i++) sum += arr[i];
+    var oldavg = sum / i;
+    
     var curavg = 0;
     if(arr.length == 0 || arr.length == 1) {
         /* nothing to do */
     }
     else if(arr.length <= 7) {
         curavg = arr[0];
-        
-        var sum = 0;
-        for(var i=1; i<arr.length; i++) sum += arr[i];
-        oldavg = sum / (arr.length-1);
     }
     else {
         var sum = 0;
         for(var i=0; i<7; i++) sum += arr[i];
         curavg = sum / 7;
-        
-        sum = 0;
-        var i=7;
-        for( ; i<arr.length && i<21; i++) sum += arr[i];
-        oldavg = sum / (i-7);
     }
     
-    var hi = oldavg + 0.1*oldavg;
-    var lo = oldavg + 0.1*oldavg;
     var color = "transparent";
+    var hi = oldavg + 0.1*oldavg;
+    var lo = oldavg - 0.1*oldavg;
     switch(data.HabitList[r].Target) {
         case "Improve":
-            if(curavg > hi) color = "lightgreen";
-            else if(curavg < lo) color = "red";
-            else color = "yellow";
+            if(curavg > hi) color = COLOR_TARGET_GREEN;
+            else if(curavg < lo) color = COLOR_TARGET_RED;
+            else color = COLOR_TARGET_YELLOW;
             break;
             
         case "Reduce":
-            if(curavg > hi) color = "red";
-            else if(curavg < lo) color = "lightgreen";
-            else color = "yellow";
+            if(curavg > hi) color = COLOR_TARGET_RED;
+            else if(curavg < lo) color = COLOR_TARGET_GREEN;
+            else color = COLOR_TARGET_YELLOW;
             break;
             
         default:
             /* case Reach */
             if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
+                var target = data.HabitList[r].Target.split("_")[1] / data.HabitList[r].Target.split("_")[2];
+                var higreen = target + 0.1*target;
+                var logreen = target - 0.1*target;
+                var hiyellow = target + 0.25*target;
+                var loyellow = target - 0.25*target;
+                
+                if(oldavg > logreen && oldavg <higreen) color = COLOR_TARGET_GREEN;
+                else if(oldavg > loyellow && oldavg <hiyellow) color = COLOR_TARGET_YELLOW
+                else color = COLOR_TARGET_RED;
+                
                 break;
             }
-            else {
+            else { /* default */
                 alert("Invalid Target data encountered");                
             }
     }
