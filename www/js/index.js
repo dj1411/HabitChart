@@ -239,7 +239,7 @@ function toggleToolbar()
     }
 }
 
-function onclickAddButton()
+function onclickAddHabitButton()
 {
     DataSelectedHabitReset(); 
     document.getElementById("titleModalHabit").innerText = "Add habit";
@@ -247,7 +247,7 @@ function onclickAddButton()
     document.getElementById("textHabit").focus();
 }
 
-function onclickEditButton()
+function onclickEditHabitButton()
 {
     document.getElementById("titleModalHabit").innerText = "Update habit";
     document.getElementById("textHabit").value = DataSelectedHabitGetStr();
@@ -275,8 +275,12 @@ function onclickEditButton()
 
 function onclickDataCell(r, c)
 {
+    /* display the modal */
     document.getElementById("modalEditData").style.display = "block";
+    document.getElementById("textData").value = DataGetByRC(r,c );
+    document.getElementById("textData").select();
     
+    /* generate the value buttons */
     var div = document.getElementById("divEditDataVal");
     div.innerHTML = "";
     var arr = populateDataVal(r,c);
@@ -291,11 +295,13 @@ function onclickDataCell(r, c)
         button.setAttribute("onclick", "onclickEditDataVal(" + r + "," + c + "," + arr[i] + ")");
     }
     
+    /* fill the labels */
     var date = moment();
     date = date.subtract(c, "days");
     document.getElementById("labelDate").innerText = date.format("dddd, Do MMMM YYYY");
     document.getElementById("labelHabit").innerText = data.HabitList[r].Name;
     
+    /* fill onsubmit */
     document.getElementById("formEditData").setAttribute("onsubmit", "onsubmitEditData(" + r + "," + c + ")");
 }
 
