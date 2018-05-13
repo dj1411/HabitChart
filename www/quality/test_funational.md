@@ -80,7 +80,7 @@
     - no data
     - 1 day data
     - 1 week data
-    - 1 month data
+    - 21 days data
     - 3 months data
     - 1 year data
     
@@ -93,11 +93,15 @@
     - no data
     - 1 day data
     - 1 week data
-    - 1 month data
+    - 21 days data
     - 3 months data
     - 1 year data
     
-# Traffic light
+# Target sign colors
+- progress should be based on :
+    - last 7 days average compared to last 21 days average
+    - for less than 7 days: today's value compared to average of all days
+    - for "Reach" check average of 21 days
 - For good progress green light should be shown
 - For slow progress yellow light should be shown
 - for negative progress red light should be shown
@@ -105,7 +109,7 @@
     - no data
     - 1 day data
     - 1 week data
-    - 1 month data
+    - 21 days data
     - 3 months data
     - 1 year data
 

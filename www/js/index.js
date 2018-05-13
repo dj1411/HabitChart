@@ -1,7 +1,7 @@
 function main()
 {
-//                DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
-    //testcode();
+//    DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
     DataRefresh(0); /* see description about the function definition */
@@ -326,7 +326,7 @@ function onchangeTarget() {
     }
 }
 
-function validateAddPage()
+function validateAddHabitPage()
 {
     for(var i=0; i<data.HabitList.length; i++) {
         /* Check if habit already exists */
@@ -358,14 +358,19 @@ function addupdateHabit()
     var habit = new Object();
     habit.Name = document.getElementById("textHabit").value;
     habit.Target = document.getElementById("optionTarget").value;
+    
+    if(habit.Target == "Reach") {
+        habit.Target = habit.Target + "_" + document.getElementById("textTimes").value + "_" + document.getElementById("textDays").value;
+    }
+    
     if( DataSelectedHabitGetStr() == "" )
     {
-        if (!validateAddPage()) return;
+        if (!validateAddHabitPage()) return;
         DataHabitAdd(habit);
     }
     else
     {
-        if (!validateAddPage()) return;
+        if (!validateAddHabitPage()) return;
         DataHabitUpdate(DataSelectedHabitGetStr(), habit);
         DataSelectedHabitReset();
     }
@@ -393,7 +398,7 @@ function setColorSign(r) {
         
         sum = 0;
         var i=7;
-        for( ; i<arr.length && i<30; i++) sum += arr[i];
+        for( ; i<arr.length && i<21; i++) sum += arr[i];
         oldavg = sum / (i-7);
     }
     
@@ -413,11 +418,14 @@ function setColorSign(r) {
             else color = "yellow";
             break;
             
-        case "Reach":
-            break;
-            
         default:
-            alert("Invalid Target data encountered");
+            /* case Reach */
+            if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
+                break;
+            }
+            else {
+                alert("Invalid Target data encountered");                
+            }
     }
     
     document.getElementById("sign_" + r).style.color = color;
