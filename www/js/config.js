@@ -14,5 +14,5 @@ const ROW_HEIGHT = 50;
 const SIGN_WIDTH = 20;
 
 const COLOR_TARGET_GREEN = "lightgreen";
-const COLOR_TARGET_YELLOW = "yellow";
+const COLOR_TARGET_YELLOW = "#ffe900";
 const COLOR_TARGET_RED = "red";

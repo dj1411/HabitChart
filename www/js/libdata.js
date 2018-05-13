@@ -332,12 +332,8 @@ function DataHabitAdd(habit)
 
 function DataHabitUpdate(oldHabit, newHabit)
 {
-    /* basic validations */
-    if (oldHabit.Name == "" || newHabit.Name == "") return;
-    if (oldHabit.Name == newHabit.Name && oldHabit.Target == newHabit.Target) return;
-
     /* check if habit already exists */
-    if(oldHabit.Name != newHabit.Name) {
+    if(oldHabit != newHabit.Name) {
         for(var i=0; i<data.HabitList.length; i++) {
             if(newHabit.Name == data.HabitList[i].Name) {
                 alert("Habit already exists");

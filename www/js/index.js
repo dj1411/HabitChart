@@ -368,10 +368,7 @@ function setColorSign(r) {
     var oldavg = sum / i;
     
     var curavg = 0;
-    if(arr.length == 0 || arr.length == 1) {
-        /* nothing to do */
-    }
-    else if(arr.length <= 7) {
+    if(arr.length <= 7) {
         curavg = arr[0];
     }
     else {
