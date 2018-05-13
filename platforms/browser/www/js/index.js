@@ -1,3 +1,15 @@
+function main()
+{
+//    DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//    testcode();
+
+    DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
+    DataRefresh(0); /* see description about the function definition */
+    setStyleIndex();
+
+    setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
+}
+
 function testcode() {
     data = JSON.parse(localStorage.getItem("data"));
     if (data == null) data = dataInit;
@@ -109,7 +121,7 @@ function refreshTable()
         cell.textContent = data.HabitList[r].Name;
         cell.style.width = HABIT_COL_WIDTH + "px";
 
-        /* Display Data */
+        /* Display Data bars */
         for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++) {
             var cell = document.createElement("div");
             row.appendChild(cell);
@@ -227,7 +239,7 @@ function toggleToolbar()
     }
 }
 
-function onclickAddButton()
+function onclickAddHabitButton()
 {
     DataSelectedHabitReset(); 
     document.getElementById("titleModalHabit").innerText = "Add habit";
@@ -235,22 +247,46 @@ function onclickAddButton()
     document.getElementById("textHabit").focus();
 }
 
-function onclickEditButton()
+function onclickEditHabitButton()
 {
     document.getElementById("titleModalHabit").innerText = "Update habit";
     document.getElementById("textHabit").value = DataSelectedHabitGetStr();
     document.getElementById("modalAddHabit").style.display = "block";
-    document.getElementById("textHabit").focus();
+    
+    /* determine seleted row */
+    var r = parseInt(DataSelectedHabitGetId().slice(DataSelectedHabitGetId().lastIndexOf("_") + 1));
     
     /* display the Target as per data */
-    var r = parseInt(DataSelectedHabitGetId().slice(DataSelectedHabitGetId().lastIndexOf("_") + 1));
-    document.getElementById("optionTarget").value = data.HabitList[r].Target;
+    if(data.HabitList[r].Target.slice(0,5) == "Reach") {
+        document.getElementById("optionTarget").value = data.HabitList[r].Target.slice(0,5);
+        document.getElementById("textTimes").value = data.HabitList[r].Target.split("_")[1];
+        document.getElementById("textDays").value = data.HabitList[r].Target.split("_")[2];
+    }
+    else {
+        document.getElementById("optionTarget").value = data.HabitList[r].Target;
+    }
+    
+    /* display more fields for Reach */
+    if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
+        document.getElementById("divReach").style.display = "block";
+        document.getElementById("textTimes").required = true;
+        document.getElementById("textDays").required = true;
+    }
+    else {
+        document.getElementById("divReach").style.display = "none";
+        document.getElementById("textTimes").required = false;
+        document.getElementById("textDays").required = false;
+    }
 }
 
 function onclickDataCell(r, c)
 {
+    /* display the modal */
     document.getElementById("modalEditData").style.display = "block";
+    document.getElementById("textData").value = DataGetByRC(r,c );
+    document.getElementById("textData").select();
     
+    /* generate the value buttons */
     var div = document.getElementById("divEditDataVal");
     div.innerHTML = "";
     var arr = populateDataVal(r,c);
@@ -265,11 +301,13 @@ function onclickDataCell(r, c)
         button.setAttribute("onclick", "onclickEditDataVal(" + r + "," + c + "," + arr[i] + ")");
     }
     
+    /* fill the labels */
     var date = moment();
     date = date.subtract(c, "days");
     document.getElementById("labelDate").innerText = date.format("dddd, Do MMMM YYYY");
     document.getElementById("labelHabit").innerText = data.HabitList[r].Name;
     
+    /* fill onsubmit */
     document.getElementById("formEditData").setAttribute("onsubmit", "onsubmitEditData(" + r + "," + c + ")");
 }
 
@@ -287,31 +325,17 @@ function onsubmitEditData(r, c) {
     DataSetByDate(date, arr);
 }
 
-function validateAddPage()
-{
-    /* Check if habit already exists */
-    for(var i=0; i<data.HabitList.length; i++) {
-        if(data.HabitList[i].Name == document.getElementById("textHabit").value) {
-            if( DataSelectedHabitGetStr() == "" ) { // Add
-                alert("Habit already exists");
-                return false;
-            }
-            else { // update
-                if(data.HabitList[i].Target == document.getElementById("optionTarget").value) {
-                    alert("Habit already exists");
-                    return false;
-                }
-                else {
-                    if(DataSelectedHabitGetStr() != data.HabitList[i].Name) {
-                        alert("Habit already exists");
-                        return false;                        
-                    }
-                }
-            }
-        }
+function onchangeTarget() {
+    if(document.getElementById("optionTarget").value == "Reach") {
+        document.getElementById("divReach").style.display = "block";
+        document.getElementById("textTimes").required = true;
+        document.getElementById("textDays").required = true;        
     }
-    
-    return true;
+    else {
+        document.getElementById("divReach").style.display = "none";
+        document.getElementById("textTimes").required = false;
+        document.getElementById("textDays").required = false;
+    }
 }
 
 function addupdateHabit()
@@ -319,14 +343,17 @@ function addupdateHabit()
     var habit = new Object();
     habit.Name = document.getElementById("textHabit").value;
     habit.Target = document.getElementById("optionTarget").value;
+    
+    if(habit.Target == "Reach") {
+        habit.Target = habit.Target + "_" + document.getElementById("textTimes").value + "_" + document.getElementById("textDays").value;
+    }
+    
     if( DataSelectedHabitGetStr() == "" )
     {
-        if (!validateAddPage()) return;
         DataHabitAdd(habit);
     }
     else
     {
-        if (!validateAddPage()) return;
         DataHabitUpdate(DataSelectedHabitGetStr(), habit);
         DataSelectedHabitReset();
     }
@@ -335,47 +362,55 @@ function addupdateHabit()
 function setColorSign(r) {
     var arr = DataGetByRow(r);
     
-    var oldavg = 0;
+    var sum = 0;
+    var i=0;
+    for(; i<arr.length && i<21; i++) sum += arr[i];
+    var oldavg = sum / i;
+    
     var curavg = 0;
-    if(arr.length == 0 || arr.length == 1) {
-        /* nothing to do */
-    }
-    else if(arr.length <= 7) {
+    if(arr.length <= 7) {
         curavg = arr[0];
-        
-        var sum = 0;
-        for(var i=1; i<arr.length; i++) sum += arr[i];
-        oldavg = sum / (arr.length-1);
     }
     else {
         var sum = 0;
         for(var i=0; i<7; i++) sum += arr[i];
         curavg = sum / 7;
-        
-        sum = 0;
-        var i=7;
-        for( ; i<arr.length && i<30; i++) sum += arr[i];
-        oldavg = sum / (i-7);
     }
     
-    var hi = oldavg + 0.1*oldavg;
-    var lo = oldavg + 0.1*oldavg;
     var color = "transparent";
+    var hi = oldavg + 0.1*oldavg;
+    var lo = oldavg - 0.1*oldavg;
     switch(data.HabitList[r].Target) {
         case "Improve":
-            if(curavg > hi) color = "lightgreen";
-            else if(curavg < lo) color = "red";
-            else color = "yellow";
+            if(curavg > hi) color = COLOR_TARGET_GREEN;
+            else if(curavg < lo) color = COLOR_TARGET_RED;
+            else color = COLOR_TARGET_YELLOW;
             break;
             
         case "Reduce":
-            if(curavg > hi) color = "red";
-            else if(curavg < lo) color = "lightgreen";
-            else color = "yellow";
+            if(curavg > hi) color = COLOR_TARGET_RED;
+            else if(curavg < lo) color = COLOR_TARGET_GREEN;
+            else color = COLOR_TARGET_YELLOW;
             break;
             
         default:
-            alert("Invalid Target data encountered");
+            /* case Reach */
+            if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
+                var target = data.HabitList[r].Target.split("_")[1] / data.HabitList[r].Target.split("_")[2];
+                var higreen = target + 0.1*target;
+                var logreen = target - 0.1*target;
+                var hiyellow = target + 0.25*target;
+                var loyellow = target - 0.25*target;
+                
+                if(oldavg > logreen && oldavg <higreen) color = COLOR_TARGET_GREEN;
+                else if(oldavg > loyellow && oldavg <hiyellow) color = COLOR_TARGET_YELLOW
+                else color = COLOR_TARGET_RED;
+                
+                break;
+            }
+            else { /* default */
+                alert("Invalid Target data encountered");                
+            }
     }
     
     document.getElementById("sign_" + r).style.color = color;

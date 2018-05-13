@@ -53,7 +53,7 @@
             <a name="buttonMenu" id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
             <div name="divToolbar" id="divToolbar" class="w3-right">
                 <a name="buttonSync" id="buttonSync" class="w3-bar-item w3-button divToolbarNormal" href="javascript:DataRefresh(0)"><i class="fa fa-refresh"></i></a>
-                <a name="buttonEdit" id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="javascript:onclickEditButton()"><i class="fa fa-edit"></i></a>
+                <a name="buttonEdit" id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="javascript:onclickEditHabitButton()"><i class="fa fa-edit"></i></a>
                 <a name="buttonDelete" id="buttonDelete" class="w3-bar-item w3-button divToolbarSelection" href="javascript:removeHabit()"><i class="fa fa-trash"></i></a>
             </div>
         </div>
@@ -61,7 +61,7 @@
         <div id="tableMain" name="tableMain" class="w3-container">
         </div>
         
-        <button name="buttonAdd" id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddButton()"><i class="fa fa-plus"></i></button>
+        <button name="buttonAdd" id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddHabitButton()"><i class="fa fa-plus"></i></button>
         
         <div name="modalAddHabit" id="modalAddHabit" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
@@ -69,10 +69,17 @@
                 <form class="w3-container" onsubmit="addupdateHabit()">
                     <p>
                         <label class="w3-small">Target</label>
-                        <select name="optionTarget" id="optionTarget" class="w3-select">
+                        <select name="optionTarget" id="optionTarget" class="w3-select" onchange="onchangeTarget()">
                             <option value="Improve" selected>I want to improve</option>
                             <option value="Reduce">I want to reduce</option>
+                            <option value="Reach">I want to reach...</option>
                         </select>
+                        <div id="divReach" class="w3-cell-row w3-small" style="display: none">
+                            <span><input id="textTimes" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
+                            <span><label class="w3-cell w3-padding">times in</label></span>
+                            <span><input id="textDays" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
+                            <span><label class="w3-cell w3-padding">days</label></span>
+                        </div>
                     </p>
                     <p>
                         <label class="w3-small">Name</label>
@@ -127,20 +134,6 @@
         <script type="text/javascript" src="js/style.js"></script>
         <script type="text/javascript" src="js/libdata.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            function main()
-            {
-//                DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
-                //testcode();
-
-                DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
-                DataRefresh(0); /* see description about the function definition */
-                setStyleIndex();
-                
-                setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
-            }
-        </script>
-
         
         <!-- Cordova default code. Dont touch them -->
     <!--

@@ -6,7 +6,7 @@ const SYNC_INTERVAL_S = 300;
 
 const MASTER_JSON_ID = "mlerr";
 const TEST_JSON_ID = "14gl63";
-const ACTIVE_JSON_ID = TEST_JSON_ID;    /* if you change this, you have to reset the data */
+const ACTIVE_JSON_ID = MASTER_JSON_ID;    /* if you change this, you have to reset the data */
 
 const HABIT_COL_WIDTH = 200;
 const DATA_COL_WIDTH = 50;

@@ -16,7 +16,7 @@ var dataInit = {
 
 var selectedHabit = "";
 
-/*  this function validates the data passed as pamaeter.
+/*  this function validates the data(as string) passed as pamaeter.
     return true: validation success
     return false: validation failed
 */
@@ -47,7 +47,7 @@ function DataValidate(d)
     var keyCurrentID = false;
     for (var key in d.DataList)
     {
-        /* There should be a key corresponding the current id */
+        /* There should be a key corresponding the current id in DataList */
         if (key == ("Date_" + d.CurrentID))
             keyCurrentID = true;
 
@@ -183,9 +183,16 @@ function DataRefresh(step)
             break;
 
         case 2:     /* data received from cloud */
+            /* check if cloud data is valid. local data is already validated. */
+            if(!DataValidate(JSON.stringify(dataCloud))) {
+                DataSaveCloud();
+                break;
+            }
+            
             var dateLocal = new Date(data.Timestamp);
             var dateCloud = new Date(dataCloud.Timestamp);
 
+            /* check which is the latest data */
             if (dateLocal < dateCloud)
             {
                 /* copy cloud data to local */

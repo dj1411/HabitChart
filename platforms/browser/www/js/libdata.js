@@ -16,7 +16,7 @@ var dataInit = {
 
 var selectedHabit = "";
 
-/*  this function validates the data passed as pamaeter.
+/*  this function validates the data(as string) passed as pamaeter.
     return true: validation success
     return false: validation failed
 */
@@ -47,7 +47,7 @@ function DataValidate(d)
     var keyCurrentID = false;
     for (var key in d.DataList)
     {
-        /* There should be a key corresponding the current id */
+        /* There should be a key corresponding the current id in DataList */
         if (key == ("Date_" + d.CurrentID))
             keyCurrentID = true;
 
@@ -73,8 +73,11 @@ function DataValidate(d)
             /* check if target is empty */
             if(d.HabitList[i].Target == null || d.HabitList[i].Target == undefined || d.HabitList[i].Target == "") return false;
             
-            /* check if target is either Improve or Reduce */
-            if(d.HabitList[i].Target != "Improve" && d.HabitList[i].Target != "Reduce") return false;
+            /* check if target is either Improve, Reduce or Reach */
+            if(d.HabitList[i].Target != "Improve" && d.HabitList[i].Target != "Reduce"
+                && d.HabitList[i].Target.slice(0,5) != "Reach") {
+                return false;
+            }
         }
     }
     
@@ -180,9 +183,16 @@ function DataRefresh(step)
             break;
 
         case 2:     /* data received from cloud */
+            /* check if cloud data is valid. local data is already validated. */
+            if(!DataValidate(JSON.stringify(dataCloud))) {
+                DataSaveCloud();
+                break;
+            }
+            
             var dateLocal = new Date(data.Timestamp);
             var dateCloud = new Date(dataCloud.Timestamp);
 
+            /* check which is the latest data */
             if (dateLocal < dateCloud)
             {
                 /* copy cloud data to local */
@@ -300,6 +310,14 @@ function DataReset(ramData, localData, cloudData)
 
 function DataHabitAdd(habit)
 {
+    /* check if habit already exists */
+    for(var i=0; i<data.HabitList.length; i++) {
+        if(habit.Name == data.HabitList[i].Name) {
+            alert("Habit already exists");
+            return;
+        }
+    }
+    
     /* Update HabitList */
     data.HabitList.push(habit);
 
@@ -314,6 +332,25 @@ function DataHabitAdd(habit)
         /* First time */
         DataSetCurrentID(new Date());
         DataAdd(new Date(), [0]);
+    }
+
+    DataSave(true);
+}
+
+function DataHabitUpdate(oldHabit, newHabit)
+{
+    /* check if habit already exists */
+    if(oldHabit != newHabit.Name) {
+        for(var i=0; i<data.HabitList.length; i++) {
+            if(newHabit.Name == data.HabitList[i].Name) {
+                alert("Habit already exists");
+                return;
+            }
+        }    
+    }
+
+    for(var i=0; i<data.HabitList.length; i++) {
+        if(data.HabitList[i].Name == oldHabit) data.HabitList[i] = newHabit;
     }
 
     DataSave(true);
@@ -347,19 +384,6 @@ function DataHabitRemove(habit)
                 }
             );
         }
-    }
-
-    DataSave(true);
-}
-
-function DataHabitUpdate(oldHabit, newHabit)
-{
-    /* validations */
-    if (oldHabit.Name == "" || newHabit.Name == "") return;
-    if (oldHabit.Name == newHabit.Name && oldHabit.Target == newHabit.Target) return;
-
-    for(var i=0; i<data.HabitList.length; i++) {
-        if(data.HabitList[i].Name == oldHabit) data.HabitList[i] = newHabit;
     }
 
     DataSave(true);
