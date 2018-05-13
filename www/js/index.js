@@ -332,33 +332,6 @@ function onchangeTarget() {
     }
 }
 
-function validateAddHabitPage()
-{
-    for(var i=0; i<data.HabitList.length; i++) {
-        /* Check if habit already exists */
-        if(data.HabitList[i].Name == document.getElementById("textHabit").value) {
-            if( DataSelectedHabitGetStr() == "" ) { // Add
-                alert("Habit already exists");
-                return false;
-            }
-            else { // update
-                if(data.HabitList[i].Target == document.getElementById("optionTarget").value) {
-                    alert("Habit already exists");
-                    return false;
-                }
-                else {
-                    if(DataSelectedHabitGetStr() != data.HabitList[i].Name) {
-                        alert("Habit already exists");
-                        return false;                        
-                    }
-                }
-            }
-        }
-    }
-    
-    return true;
-}
-
 function addupdateHabit()
 {
     var habit = new Object();
@@ -371,12 +344,10 @@ function addupdateHabit()
     
     if( DataSelectedHabitGetStr() == "" )
     {
-        if (!validateAddHabitPage()) return;
         DataHabitAdd(habit);
     }
     else
     {
-        if (!validateAddHabitPage()) return;
         DataHabitUpdate(DataSelectedHabitGetStr(), habit);
         DataSelectedHabitReset();
     }

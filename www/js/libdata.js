@@ -303,6 +303,14 @@ function DataReset(ramData, localData, cloudData)
 
 function DataHabitAdd(habit)
 {
+    /* check if habit already exists */
+    for(var i=0; i<data.HabitList.length; i++) {
+        if(habit.Name == data.HabitList[i].Name) {
+            alert("Habit already exists");
+            return;
+        }
+    }
+    
     /* Update HabitList */
     data.HabitList.push(habit);
 
