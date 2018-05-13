@@ -69,10 +69,17 @@
                 <form class="w3-container" onsubmit="addupdateHabit()">
                     <p>
                         <label class="w3-small">Target</label>
-                        <select name="optionTarget" id="optionTarget" class="w3-select">
+                        <select name="optionTarget" id="optionTarget" class="w3-select" onchange="onchangeTarget()">
                             <option value="Improve" selected>I want to improve</option>
                             <option value="Reduce">I want to reduce</option>
+                            <option value="Reach">I want to reach...</option>
                         </select>
+                        <div id="divReach" class="w3-cell-row w3-small" style="display: none">
+                            <span><input id="textNum" type="text" class="w3-cell w3-padding" style="width: 50px"></span>
+                            <span><label class="w3-cell w3-padding">times in</label></span>
+                            <span><input id="textDays" type="text" class="w3-cell w3-padding" style="width: 50px"></span>
+                            <span><label class="w3-cell w3-padding">days</label></span>
+                        </div>
                     </p>
                     <p>
                         <label class="w3-small">Name</label>

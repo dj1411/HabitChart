@@ -287,6 +287,14 @@ function onsubmitEditData(r, c) {
     DataSetByDate(date, arr);
 }
 
+function onchangeTarget() {
+    if(document.getElementById("optionTarget").value == "Reach") {
+        document.getElementById("divReach").style.display = "block";
+    }
+    else
+        document.getElementById("divReach").style.display = "none";
+}
+
 function validateAddPage()
 {
     /* Check if habit already exists */
