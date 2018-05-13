@@ -382,6 +382,9 @@ function setColorSign(r) {
             else color = "yellow";
             break;
             
+        case "Reach":
+            break;
+            
         default:
             alert("Invalid Target data encountered");
     }

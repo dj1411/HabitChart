@@ -73,8 +73,13 @@ function DataValidate(d)
             /* check if target is empty */
             if(d.HabitList[i].Target == null || d.HabitList[i].Target == undefined || d.HabitList[i].Target == "") return false;
             
-            /* check if target is either Improve or Reduce */
-            if(d.HabitList[i].Target != "Improve" && d.HabitList[i].Target != "Reduce") return false;
+            /* check if target is either Improve, Reduce */
+            if(d.HabitList[i].Target != "Improve" && d.HabitList[i].Target != "Reduce") {
+                return false;
+            }
+            else {
+                /* check if target is Reach */
+            }
         }
     }
     

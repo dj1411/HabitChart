@@ -70,6 +70,9 @@
 - in the textbox only number should be allowed to enter
 - Clicking submit/enter on invalid data should stay on the modal
 - Clicking submit/enter should submit the number entered in textbox
+- After submit the following should be reflected in data:
+    - Improve/Reduce
+    - Reach_times_days
 - clicking pre-filled data buttons:
     - fill the textbox with the data
     - submit
@@ -96,7 +99,7 @@
     
 # Traffic light
 - For good progress green light should be shown
-- For slow progress orange light should be shown
+- For slow progress yellow light should be shown
 - for negative progress red light should be shown
 - test with different data sets
     - no data
