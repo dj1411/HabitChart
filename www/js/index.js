@@ -22,7 +22,7 @@ function testcode() {
 function refreshTable()
 {
 	/* check if mobile screen is too small */
-	if( window.innerWidth < (HABIT_COL_WIDTH + DATA_COL_WIDTH) )
+	if( window.innerWidth < (WIDTH_HABIT_COL + WIDTH_DATA_COL) )
 	{
 		alert( "Your screen is too small for the app to run properly" );
 		return;
@@ -33,7 +33,8 @@ function refreshTable()
     table.innerHTML = "";
 
     /* calculate number of columns to display */
-    var numDataCol = Math.min((window.innerWidth - HABIT_COL_WIDTH) / DATA_COL_WIDTH, MAX_HISTORY_DATA);
+    var numDataCol = Math.floor((window.innerWidth - WIDTH_HABIT_COL) / WIDTH_DATA_COL);
+    numDataCol = Math.min(numDataCol, DataListSize(), MAX_HISTORY_DATA);
     
     /** date row **/
 
@@ -47,7 +48,7 @@ function refreshTable()
     var cell = document.createElement("div");
     row.appendChild(cell);
     cell.classList.add("w3-cell");
-    cell.style.width = SIGN_WIDTH + "px";
+    cell.style.width = WIDTH_SIGN + "px";
     var sign = document.createElement("i");
     cell.appendChild(sign);
     sign.classList.add("fa");
@@ -59,18 +60,18 @@ function refreshTable()
     row.appendChild(cell);
     cell.classList.add("w3-cell");
     cell.textContent = "HabitList";
-    cell.style.width = HABIT_COL_WIDTH + "px";
+    cell.style.width = WIDTH_HABIT_COL + "px";
     cell.style.color = "transparent";
 
     /* fill the dates */
-    for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++)
+    for (var c = 0; c < numDataCol; c++)
     {
         var cell = document.createElement("div");
         row.appendChild(cell);
         cell.classList.add("w3-cell");
         cell.classList.add("w3-small");
         cell.classList.add("w3-center");
-        cell.style.width = DATA_COL_WIDTH + "px";
+        cell.style.width = WIDTH_DATA_COL + "px";
         
         var text;
         if(c==0) {
@@ -93,14 +94,14 @@ function refreshTable()
         table.appendChild(row);
         row.classList.add("w3-cell-row");
         row.classList.add("w3-border-bottom");
-        row.style.height = ROW_HEIGHT + "px";
-        row.style.lineHeight = ROW_HEIGHT + "px";
+        row.style.height = HEIGHT_ROW + "px";
+        row.style.lineHeight = HEIGHT_ROW + "px";
 
         /* Target achievement signs */
         var cell = document.createElement("div");
         row.appendChild(cell);
         cell.classList.add("w3-cell");
-        cell.style.width = SIGN_WIDTH + "px";
+        cell.style.width = WIDTH_SIGN + "px";
         var sign = document.createElement("i");
         cell.appendChild(sign);
         sign.classList.add("fa");
@@ -118,15 +119,15 @@ function refreshTable()
         cell.setAttribute("id", "HabitList_" + r);
         cell.setAttribute("onclick", "selectHabit('HabitList_" + r + "')");
         cell.textContent = data.HabitList[r].Name;
-        cell.style.width = HABIT_COL_WIDTH + "px";
+        cell.style.width = WIDTH_HABIT_COL + "px";
 
         /* Display Data bars */
-        for (var c = 0; (c < DataListSize()) && (c < numDataCol); c++) {
+        for (var c = 0; c < numDataCol; c++) {
             var cell = document.createElement("div");
             row.appendChild(cell);
             cell.classList.add("w3-cell");
             cell.setAttribute("onclick", "onclickDataCell(" + r + "," + c + ")");
-            cell.style.width = DATA_COL_WIDTH + "px";
+            cell.style.width = WIDTH_DATA_COL + "px";
 
             /* creating the bar chart */
             var curData = DataGetByRC(r, c);
@@ -138,16 +139,16 @@ function refreshTable()
                 height = 0;
             }
             else if(arrData.length == 1) {
-                height = ROW_HEIGHT;
+                height = HEIGHT_ROW;
             }
             else if(curData <= min) {
                 height = 1;
             }
             else if(curData >= max) {
-                height = ROW_HEIGHT;
+                height = HEIGHT_ROW;
             }
             else {
-                var step = ROW_HEIGHT / (max - min);
+                var step = HEIGHT_ROW / (max - min);
                 height = min + curData*step;
             }
             cell.style.borderBottom = height + "px solid";

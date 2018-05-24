@@ -8,10 +8,10 @@ const MASTER_JSON_ID = "mlerr";
 const TEST_JSON_ID = "14gl63";
 const ACTIVE_JSON_ID = TEST_JSON_ID;    /* if you change this, you have to reset the data */
 
-const HABIT_COL_WIDTH = 200;
-const DATA_COL_WIDTH = 50;
-const ROW_HEIGHT = 50;
-const SIGN_WIDTH = 20;
+const WIDTH_HABIT_COL = 200;
+const WIDTH_DATA_COL = 50;
+const WIDTH_SIGN = 20;
+const HEIGHT_ROW = 50;
 
 const COLOR_TARGET_GREEN = "lightgreen";
 const COLOR_TARGET_YELLOW = "#ffe900";
