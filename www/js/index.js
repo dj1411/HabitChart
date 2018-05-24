@@ -1,6 +1,6 @@
 function main()
 {
-//    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+   // DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
@@ -227,15 +227,17 @@ function removeHabit()
 
 function toggleToolbar()
 {
-    if (selectedHabit == "")
+    if (selectedHabit == "") /* habit not selected */
     {
         $(".divToolbarSelection").css("display", "none");
         $(".divToolbarNormal").css("display", "block");
+        document.getElementById("title").classList.remove("w3-hide-small");
     }
-    else
+    else /* habit selected */
     {
         $(".divToolbarSelection").css("display", "block");
         $(".divToolbarNormal").css("display", "none");
+        document.getElementById("title").classList.add("w3-hide-small");
     }
 }
 
