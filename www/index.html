@@ -47,7 +47,15 @@
     
     <body onload="main()" onresize="refreshTable(); setStyleIndex()" class="w3-text-theme">
         
-        <div class="w3-bar w3-theme w3-xlarge">
+        <div id="divSidebar" class="w3-sidebar w3-bar-block w3-theme-l5" style="width:300px">
+            <div id="titleSidebar" class="w3-bar-item w3-large w3-border-bottom">titleSidebar</div>
+            <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple">Settings</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple">Feedback</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple">About</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple">Exit</a>
+        </div>
+        
+        <div class="w3-bar w3-theme w3-xlarge w3-card">
             <a id="buttonSidebar" class="w3-bar-item w3-button" href="#"><i class="fa fa-bars"></i></a>
             <span class="w3-bar-item" id="title">Title</span>
             <a id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
