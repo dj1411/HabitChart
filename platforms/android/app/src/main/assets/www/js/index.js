@@ -32,8 +32,8 @@ function refreshTable()
     var table = document.getElementById("tableMain");
     table.innerHTML = "";
 
-    
-    /* date row */
+    /** date row **/
+    /* row */
     var row = document.createElement("div");
     table.appendChild(row);
     row.classList.add("w3-cell-row");
@@ -44,12 +44,19 @@ function refreshTable()
     row.appendChild(cell);
     cell.classList.add("w3-cell");
     cell.style.width = WIDTH_SIGN + "px";
+    var sign = document.createElement("i");
+    cell.appendChild(sign);
+    sign.classList.add("fa");
+    sign.classList.add("fa-circle");
+    sign.style.color = "transparent";
 
     /* blank cell - habit */
     var cell = document.createElement("div");
     row.appendChild(cell);
     cell.classList.add("w3-cell");
+    cell.textContent = "HabitList";
     cell.style.width = WIDTH_HABIT_COL + "px";
+    cell.style.color = "transparent";
 
     /* calculate number of columns to display */
     var numDataCol = Math.floor((row.clientWidth - WIDTH_HABIT_COL - WIDTH_SIGN) / WIDTH_DATA_COL);

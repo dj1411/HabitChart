@@ -1,0 +1,50 @@
+﻿#divForm {
+    height: 20px;
+    line-height: 20px;
+}
+
+    div.left {
+        width: 50%;
+        float: left;
+    }
+
+    div.right {
+        width: 50%;
+        float: right;
+    }
+
+div.input {
+    width: 100%;
+}
+
+input[type="text"] {
+    width: 100%;
+}
+
+.divButton {
+    text-align: center;
+    color: white;
+    border-radius: 10pt;
+    width: 150px;
+    margin: 0px auto;
+    box-shadow: 3px 3px 5px #888888;
+    height: 20px;
+    line-height: 20px;
+}
+
+    .divButton:hover, #buttonBack:hover {
+        cursor: pointer;
+    }
+
+    .divButton:active, #buttonBack:active {
+        color: black;
+    }
+
+#divButtonGroup {
+    padding-top: 20px;
+}
+
+#buttonBack {
+    float: right;
+    padding-right: 5px;
+}
