@@ -33,7 +33,7 @@ function refreshTable()
     table.innerHTML = "";
 
     /* calculate number of columns to display */
-    var numDataCol = (window.innerWidth - HABIT_COL_WIDTH) / DATA_COL_WIDTH;
+    var numDataCol = Math.min((window.innerWidth - HABIT_COL_WIDTH) / DATA_COL_WIDTH, MAX_HISTORY_DATA);
     
     /** date row **/
 
@@ -130,7 +130,7 @@ function refreshTable()
 
             /* creating the bar chart */
             var curData = DataGetByRC(r, c);
-            var arrData = DataGetByRow(r);
+            var arrData = DataGetByRow(r).slice(0,MAX_HISTORY_DATA);
             var max = Math.max(...arrData);
             var min = Math.min(...arrData);
             var height = 0;
@@ -157,7 +157,7 @@ function refreshTable()
 
 function populateDataVal(r, c)
 {
-    var arrData = DataGetByRow(r);
+    var arrData = DataGetByRow(r).slice(0,MAX_HISTORY_DATA);
     var arrButton = new Array();
     
     arrButton.push(0);
@@ -361,11 +361,11 @@ function addupdateHabit()
 }
 
 function setColorSign(r) {
-    var arr = DataGetByRow(r);
+    var arr = DataGetByRow(r).slice(0,MAX_HISTORY_DATA);
     
     var sum = 0;
     var i=0;
-    for(; i<arr.length && i<21; i++) sum += arr[i];
+    for(; i<arr.length; i++) sum += arr[i];
     var oldavg = sum / i;
     
     var curavg = 0;
