@@ -116,7 +116,6 @@ function refreshTable()
         cell.classList.add("w3-cell");
         cell.classList.add("habitColumn");
         cell.setAttribute("id", "HabitList_" + r);
-        cell.setAttribute("name", "HabitList_" + r);
         cell.setAttribute("onclick", "selectHabit('HabitList_" + r + "')");
         cell.textContent = data.HabitList[r].Name;
         cell.style.width = HABIT_COL_WIDTH + "px";
