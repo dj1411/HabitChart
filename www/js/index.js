@@ -32,12 +32,7 @@ function refreshTable()
     var table = document.getElementById("tableMain");
     table.innerHTML = "";
 
-    /* calculate number of columns to display */
-    var numDataCol = Math.floor((window.innerWidth - WIDTH_HABIT_COL) / WIDTH_DATA_COL);
-    numDataCol = Math.min(numDataCol, DataListSize(), MAX_HISTORY_DATA);
-    
     /** date row **/
-
     /* row */
     var row = document.createElement("div");
     table.appendChild(row);
@@ -62,6 +57,10 @@ function refreshTable()
     cell.textContent = "HabitList";
     cell.style.width = WIDTH_HABIT_COL + "px";
     cell.style.color = "transparent";
+
+    /* calculate number of columns to display */
+    var numDataCol = Math.floor((row.clientWidth - WIDTH_HABIT_COL - WIDTH_SIGN) / WIDTH_DATA_COL);
+    numDataCol = Math.min(numDataCol, DataListSize(), MAX_HISTORY_DATA);
 
     /* fill the dates */
     for (var c = 0; c < numDataCol; c++)
