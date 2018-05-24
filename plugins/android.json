@@ -9,6 +9,9 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.debnathapps.habitbuilder"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.debnath.habitjournal"
     }
   },
   "dependent_plugins": {}

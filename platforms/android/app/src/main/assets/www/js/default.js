@@ -33,6 +33,7 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 //        alert("Device is ready");
+//        alert(navigator.connection.type);
 //        var parentElement = document.getElementById(id);
 //        var listeningElement = parentElement.querySelector('.listening');
 //        var receivedElement = parentElement.querySelector('.received');

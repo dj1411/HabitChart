@@ -177,6 +177,7 @@ function selectHabit(habitId)
 {
     var selectedHabitId = DataSelectedHabitGetId();
 
+    /* clear the old selection */
     if (selectedHabitId != null)
     {
         document.getElementById(selectedHabitId).classList.add("w3-text-theme");        
@@ -184,7 +185,8 @@ function selectHabit(habitId)
     }
     
 
-    if (habitId == selectedHabitId) /* de-selection */
+    /* same habit is selected again --> de-selection */
+    if (habitId == selectedHabitId)
     {
         /* reset selection */
         DataSelectedHabitReset();
@@ -192,7 +194,7 @@ function selectHabit(habitId)
         /* change toolbar icons */
         toggleToolbar();
     }
-    else  /* selection */
+    else  /* A different habit is selected */
     {
         /* set selection */
         document.getElementById(habitId).classList.add("w3-theme-l4"); 

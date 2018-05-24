@@ -9,7 +9,7 @@ const TEST_JSON_ID = "14gl63";
 const ACTIVE_JSON_ID = TEST_JSON_ID;    /* if you change this, you have to reset the data */
 
 const WIDTH_HABIT_COL = 200;
-const WIDTH_DATA_COL = 50;
+const WIDTH_DATA_COL = 40;
 const WIDTH_SIGN = 20;
 const HEIGHT_ROW = 50;
 
