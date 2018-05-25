@@ -111,7 +111,7 @@ function DataSaveCloud() {
                 DataRefresh(3);
             },
             error: function (xhdr, status, msg) {
-                alert("There was an error saving data to cloud: " + msg);
+            	document.getElementById("iconSync").classList.add("fa-exclamation");
             }
         }); 
     }
@@ -178,7 +178,7 @@ function DataRefresh(step)
             break;
 
         case 1:     /* sync start */
-            document.getElementById("divDialog").style.display = "block";
+            document.getElementById("buttonSync").classList.add("w3-spin");
             DataLoadCloud();
             break;
 
@@ -227,7 +227,7 @@ function DataRefresh(step)
 
             /* finish up */
             refreshTable();
-            document.getElementById("divDialog").style.display = "none";;
+            document.getElementById("buttonSync").classList.remove("w3-spin");
             break;
 
         default:

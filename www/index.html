@@ -53,10 +53,10 @@
                 <span id="titleSidebar">titleSidebar</span>
                 <a class="w3-right" href="javascript:sidebarHide()"><i class="fa fa-close"></i></a>
             </div>
-            <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-gear w3-padding"></i>Settings</a>
-            <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-reply-all w3-padding"></i>Feedback</a>
-            <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-info-circle w3-padding"></i>About</a>
-            <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-power-off w3-padding"></i>Exit</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-gear w3-padding"></i>Settings</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-reply-all w3-padding"></i>Feedback</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-info-circle w3-padding"></i>About</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-power-off w3-padding"></i>Exit</a>
         </div>
         <div id="overlaySidebar" class="w3-overlay w3-animate-opacity" onclick="sidebarHide()"></div>
         
@@ -64,22 +64,28 @@
         <div class="w3-bar w3-theme w3-xlarge w3-card">
             <a id="buttonSidebar" class="w3-bar-item w3-button" href="javascript:sidebarShow()"><i class="fa fa-bars"></i></a>
             <span class="w3-bar-item" id="title">Title</span>
-            <a id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
             <div id="divToolbar" class="w3-right">
-                <a id="buttonSync" class="w3-bar-item w3-button divToolbarNormal" href="javascript:DataRefresh(0)"><i class="fa fa-refresh"></i></a>
+                
+                <a class="fa-stack divToolbarNormal" id="buttonSync" href="javascript:DataRefresh(0)">
+                    <i class="fa fa-refresh fa-stack-1x"></i>
+                    <i id="iconSync" class="fa fa-stack-1x" style="color:red"></i>
+                </a>
                 
                 <a id="buttonUp" class="w3-bar-item w3-button divToolbarSelection" href="#"><i class="fa fa-toggle-up"></i></a>
                 <a id="buttonDown" class="w3-bar-item w3-button divToolbarSelection" href="#"><i class="fa fa-toggle-down"></i></a>
                 <a id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="javascript:onclickEditHabitButton()"><i class="fa fa-edit"></i></a>
                 <a id="buttonDelete" class="w3-bar-item w3-button divToolbarSelection" href="javascript:removeHabit()"><i class="fa fa-trash"></i></a>
+                <a id="buttonStat" class="w3-bar-item w3-button divToolbarSelection" href="#"><i class="fa fa-line-chart"></i></a>
             </div>
         </div>
         
         <div id="tableMain" class="w3-container">
         </div>
         
+        <!-- floating (+) button -->
         <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddHabitButton()"><i class="fa fa-plus"></i></button>
         
+        <!-- add habit modal -->
         <div id="modalAddHabit" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
                 <div id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Title</div>
@@ -112,6 +118,7 @@
             </div>
         </div>
         
+        <!-- edit data modal -->
         <div id="modalEditData" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
                 <div class="w3-container w3-theme w3-large w3-padding">Edit data</div>
@@ -139,12 +146,7 @@
             </div>
         </div>
 
-        <div id="divDialog" class="w3-modal w3-center">
-            <span class="w3-modal-content w3-card-4 w3-theme">
-                <i class="fa fa-spinner w3-spin w3-xxxlarge"></i>
-            </span>
-        </div>
-
+        <!-- including all script files -->
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/moment/moment.min.js"></script>
         <script type="text/javascript" src="js/config.js"></script>
