@@ -84,6 +84,7 @@ function refreshTable()
     for (var r = 0; r < data.HabitList.length; r++) {
         var row = document.createElement("div");
         table.appendChild(row);
+        row.setAttribute("id", "row_" + r);
         row.classList.add("w3-cell-row");
         row.classList.add("w3-border-bottom");
         row.style.height = HEIGHT_ROW + "px";
@@ -175,17 +176,19 @@ function populateDataVal(r, c)
 
 function selectHabit(habitId)
 {
-    var selectedHabitId = DataSelectedHabitGetId();
+    var selectedHabitId = DataSelectedHabitGetId();  
+    var rowIdNew = "row_" + habitId.split("_")[1];
 
     /* clear the old selection */
     if (selectedHabitId != null)
     {
-        document.getElementById(selectedHabitId).classList.add("w3-text-theme");        
-        document.getElementById(selectedHabitId).classList.remove("w3-theme-l4");
+        var rowIdOld = "row_" + selectedHabitId.split("_")[1];
+        document.getElementById(rowIdOld).classList.add("w3-text-theme");        
+        document.getElementById(rowIdOld).classList.remove("w3-theme-l4");
     }
     
 
-    /* same habit is selected again --> de-selection */
+    /* selected habit is clicked again - de-selection */
     if (habitId == selectedHabitId)
     {
         /* reset selection */
@@ -197,8 +200,8 @@ function selectHabit(habitId)
     else  /* A different habit is selected */
     {
         /* set selection */
-        document.getElementById(habitId).classList.add("w3-theme-l4"); 
-        document.getElementById(habitId).classList.remove("w3-text-theme"); 
+        document.getElementById(rowIdNew).classList.add("w3-theme-l4"); 
+        document.getElementById(rowIdNew).classList.remove("w3-text-theme"); 
         DataSelectedHabitUpdate(habitId);
 
         /* change toolbar icons */
