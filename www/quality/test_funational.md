@@ -121,6 +121,7 @@
 
 # Release
 - set config to point to MASTER Json id
+- disable sync
 - cordova run browser
 - cordova build android
 - deploy to test web server

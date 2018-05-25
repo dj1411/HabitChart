@@ -65,18 +65,21 @@ function refreshTable()
         cell.classList.add("w3-center");
         cell.style.width = WIDTH_DATA_COL + "px";
         
-        var text;
-        if(c==0) {
-            text = document.createTextNode("Today");
+        var text, day;
+        var date = new Date();
+        date.setDate(date.getDate() - c);
+        switch(date.getDay()) {
+            case 0: day = "Sun"; break;
+            case 1: day = "Mon"; break;
+            case 2: day = "Tue"; break;
+            case 3: day = "Wed"; break;
+            case 4: day = "Thu"; break;
+            case 5: day = "Fri"; break;
+            case 6: day = "Sat"; break;
         }
-        else {
-            var date = new Date();
-            date.setDate(date.getDate() - c);
-            if (date.toLocaleDateString().split("/")[0] == date.getDate())  /* check locale setting */
-                text = document.createTextNode( date.getDate() + "/" + (date.getMonth()+1) );
-            else
-                text = document.createTextNode( (date.getMonth()+1) + "/" + date.getDate() );
-        }
+        if(c==0) day = "Today";
+        text = document.createElement("span");
+        text.innerHTML = day + "<br>" + date.getDay() + "/" + (date.getMonth()+1);
         cell.appendChild(text);
     }
 
