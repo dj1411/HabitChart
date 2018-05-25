@@ -411,3 +411,14 @@ function setColorSign(r) {
     
     document.getElementById("sign_" + r).style.color = color;
 }
+
+function sidebarShow() {
+	document.getElementById("divSidebar").style.display = "block";
+}
+
+function sidebarHide() {
+	document.getElementById("divSidebar").style.display = "none";
+}
+
+
+

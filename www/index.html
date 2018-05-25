@@ -48,8 +48,11 @@
     <body onload="main()" onresize="refreshTable(); setStyleIndex()" class="w3-text-theme">
         
         <!-- Sidebar -->
-        <div id="divSidebar" class="w3-sidebar w3-bar-block w3-theme-l5" style="width:300px">
-            <div id="titleSidebar" class="w3-bar-item w3-large w3-border-bottom">titleSidebar</div>
+        <div id="divSidebar" class="w3-sidebar w3-bar-block w3-theme-l5 w3-large" style="width:300px; display:none">
+            <div class="w3-bar-item w3-border-bottom">
+                <span id="titleSidebar">titleSidebar</span>
+                <a class="w3-right" href="javascript:sidebarHide()"><i class="fa fa-close"></i></a>
+            </div>
             <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-gear w3-padding"></i>Settings</a>
             <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-reply-all w3-padding"></i>Feedback</a>
             <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-info-circle w3-padding"></i>About</a>
@@ -58,7 +61,7 @@
         
         <!-- Header bar -->
         <div class="w3-bar w3-theme w3-xlarge w3-card">
-            <a id="buttonSidebar" class="w3-bar-item w3-button" href="#"><i class="fa fa-bars"></i></a>
+            <a id="buttonSidebar" class="w3-bar-item w3-button" href="javascript:sidebarShow()"><i class="fa fa-bars"></i></a>
             <span class="w3-bar-item" id="title">Title</span>
             <a id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
             <div id="divToolbar" class="w3-right">
