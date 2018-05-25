@@ -48,7 +48,7 @@
     <body onload="main()" onresize="refreshTable(); setStyleIndex()" class="w3-text-theme">
         
         <!-- Sidebar -->
-        <div id="divSidebar" class="w3-sidebar w3-bar-block w3-theme-l5 w3-large" style="width:300px; display:none">
+        <div id="divSidebar" class="w3-sidebar w3-bar-block w3-theme-l5 w3-large w3-card w3-animate-left w3-overlay" style="width:300px; display:none; z-index:5">
             <div class="w3-bar-item w3-border-bottom">
                 <span id="titleSidebar">titleSidebar</span>
                 <a class="w3-right" href="javascript:sidebarHide()"><i class="fa fa-close"></i></a>
@@ -58,6 +58,7 @@
             <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-info-circle w3-padding"></i>About</a>
             <a href="#" class="w3-bar-item w3-button w3-hover-theme w3-ripple"><i class="fa fa-power-off w3-padding"></i>Exit</a>
         </div>
+        <div id="overlaySidebar" class="w3-overlay w3-animate-opacity" onclick="sidebarHide()"></div>
         
         <!-- Header bar -->
         <div class="w3-bar w3-theme w3-xlarge w3-card">
@@ -66,6 +67,9 @@
             <a id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
             <div id="divToolbar" class="w3-right">
                 <a id="buttonSync" class="w3-bar-item w3-button divToolbarNormal" href="javascript:DataRefresh(0)"><i class="fa fa-refresh"></i></a>
+                
+                <a id="buttonUp" class="w3-bar-item w3-button divToolbarSelection" href="#"><i class="fa fa-toggle-up"></i></a>
+                <a id="buttonDown" class="w3-bar-item w3-button divToolbarSelection" href="#"><i class="fa fa-toggle-down"></i></a>
                 <a id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="javascript:onclickEditHabitButton()"><i class="fa fa-edit"></i></a>
                 <a id="buttonDelete" class="w3-bar-item w3-button divToolbarSelection" href="javascript:removeHabit()"><i class="fa fa-trash"></i></a>
             </div>

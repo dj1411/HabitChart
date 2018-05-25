@@ -414,10 +414,12 @@ function setColorSign(r) {
 
 function sidebarShow() {
 	document.getElementById("divSidebar").style.display = "block";
+	document.getElementById("overlaySidebar").style.display = "block";
 }
 
 function sidebarHide() {
 	document.getElementById("divSidebar").style.display = "none";
+	document.getElementById("overlaySidebar").style.display = "none";
 }
 
 
