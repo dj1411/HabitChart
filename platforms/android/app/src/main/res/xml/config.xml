@@ -7,7 +7,7 @@
     <feature name="NetworkStatus">
         <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
     </feature>
-    <name>HabitJournal</name>
+    <name>Habit Journal</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
