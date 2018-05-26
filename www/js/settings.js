@@ -7,7 +7,10 @@ function main() {
 function prefillValues() {
     /* load from local storage */
     var str = localStorage.getItem("config");
-    config = JSON.parse(str);
+    if(str == null)
+        setInitValues();
+    else
+        config = JSON.parse(str);
 
     /* prefill the form */
     document.getElementById("textName").value = config.name;
@@ -28,4 +31,11 @@ function onclickSave() {
     
     /* finally go the previous page */
     window.history.back();
+}
+
+function setInitValues() {
+    config.name = "";
+    config.email = "";
+    config.syncEnable = false;
+    config.syncInterval = SYNC_INTERVAL_S;
 }
