@@ -1,11 +1,11 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "Habit Journal",
-  "short_name": "Habit Journal",
-  "version": "com.debnath.habitjournal",
-  "description": "Keep track of your habits.",
-  "author": "Jayanta Debnath",
+  "name": "HabitJournal",
+  "short_name": "HabitJournal",
+  "version": "com.atwebpages.debnath.habitjournal",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "author": "Apache Cordova Team",
   "icons": [],
   "start_url": "index.html"
 }

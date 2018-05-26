@@ -28,115 +28,14 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <!-- Cordova default code. Dont touch them -->
-<!--
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" -->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/default.css">
--->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style type="text/css">
-            @import url("https://www.w3schools.com/w3css/4/w3.css");
-            @import url("https://www.w3schools.com/lib/w3-theme-blue-grey.css");
-            @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
-            @import url("css/index.css");
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>Hello World</title>
     </head>
-    
-    <body onload="main()" onresize="refreshTable(); setStyleIndex()" class="w3-text-theme">
-        
-        <div class="w3-bar w3-theme w3-xlarge">
-            <a id="buttonSidebar" class="w3-bar-item w3-button" href="#"><i class="fa fa-bars"></i></a>
-            <span class="w3-bar-item" id="title">Title</span>
-            <a id="buttonMenu" class="w3-bar-item w3-button w3-right" href="#"><i class="fa fa-ellipsis-v"></i></a>
-            <div id="divToolbar" class="w3-right">
-                <a id="buttonSync" class="w3-bar-item w3-button divToolbarNormal" href="javascript:DataRefresh(0)"><i class="fa fa-refresh"></i></a>
-                <a id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="javascript:onclickEditHabitButton()"><i class="fa fa-edit"></i></a>
-                <a id="buttonDelete" class="w3-bar-item w3-button divToolbarSelection" href="javascript:removeHabit()"><i class="fa fa-trash"></i></a>
-            </div>
-        </div>
-        
-        <div id="tableMain" class="w3-container">
-        </div>
-        
-        <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddHabitButton()"><i class="fa fa-plus"></i></button>
-        
-        <div id="modalAddHabit" class="w3-modal">
-            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
-                <div id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Title</div>
-                <form class="w3-container" onsubmit="addupdateHabit()">
-                    <p>
-                        <label class="w3-small">Target</label>
-                        <select id="optionTarget" class="w3-select" onchange="onchangeTarget()">
-                            <option value="Improve" selected>I want to improve</option>
-                            <option value="Reduce">I want to reduce</option>
-                            <option value="Reach">I want to reach...</option>
-                        </select>
-                        <div id="divReach" class="w3-cell-row w3-small" style="display: none">
-                            <span><input id="textTimes" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
-                            <span><label class="w3-cell w3-padding">times in</label></span>
-                            <span><input id="textDays" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
-                            <span><label class="w3-cell w3-padding">days</label></span>
-                        </div>
-                    </p>
-                    <p>
-                        <label class="w3-small">Name</label>
-                        <input id="textHabit" class="w3-input" type="text" required>
-                    </p>
-                    <p>
-                        <div class="w3-bar">
-                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalAddHabit').style.display='none'">Cancel</button>
-                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
-                        </div>
-                    </p>
-                </form>
-            </div>
-        </div>
-        
-        <div id="modalEditData" class="w3-modal">
-            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
-                <div class="w3-container w3-theme w3-large w3-padding">Edit data</div>
-                <form id="formEditData" class="w3-container">
-                    <p>
-                        <label>Enter value</label>
-                        <div id="divEditDataVal"></div>
-                        <input id="textData" class="w3-input" type="number" required>
-                    </p>
-                    <p>
-                        <div class="w3-bar">
-                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalEditData').style.display='none'">Cancel</button>
-                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
-                        </div>
-                    </p>
-                    <p>
-                        <label>Date: </label>
-                        <label class="labelDate" id="labelDate"></label>
-                    </p>
-                    <p>
-                        <label>Habit: </label>
-                        <label class="labelHabit" id="labelHabit"></label>
-                    </p>
-                </form>
-            </div>
-        </div>
-
-        <div id="divDialog" class="w3-modal w3-center">
-            <span class="w3-modal-content w3-card-4 w3-theme">
-                <i class="fa fa-spinner w3-spin w3-xxxlarge"></i>
-            </span>
-        </div>
-
-        <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="js/moment/moment.min.js"></script>
-        <script type="text/javascript" src="js/config.js"></script>
-        <script type="text/javascript" src="js/style.js"></script>
-        <script type="text/javascript" src="js/libdata.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        
-        <!-- Cordova default code. Dont touch them -->
-    <!--
+    <body>
         <div class="app">
             <h1>Apache Cordova</h1>
             <div id="deviceready" class="blink">
@@ -144,8 +43,7 @@
                 <p class="event received">Device is Ready</p>
             </div>
         </div>
-    -->
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/default.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>

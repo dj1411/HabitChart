@@ -1,6 +1,6 @@
 {
-  "name": "HabitBuilder",
-  "short_name": "HabitBuilder",
+  "name": "HabitJournal",
+  "short_name": "HabitJournal",
   "description": "Description of your app from template",
   "start_url": "index.html",
   "scope": "index.html",

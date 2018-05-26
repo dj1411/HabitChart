@@ -1,6 +1,6 @@
 {
-    "name": "com.debnathapps.habitbuilder",
-    "displayName": "HabitBuilder",
+    "name": "com.atwebpages.debnath.habitjournal",
+    "displayName": "HabitJournal",
     "version": "1.0.0",
     "description": "A sample Apache Cordova application that responds to the deviceready event.",
     "main": "index.js",
@@ -21,8 +21,8 @@
             "cordova-plugin-network-information": {}
         },
         "platforms": [
-            "android",
-            "browser"
+            "browser",
+            "android"
         ]
     }
 }

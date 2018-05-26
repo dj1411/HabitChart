@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.debnath.habitjournal;
+package com.atwebpages.debnath.habitjournal;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

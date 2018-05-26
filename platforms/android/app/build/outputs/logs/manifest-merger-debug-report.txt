@@ -9,7 +9,7 @@ INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidMan
 INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
 INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
 	package
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:102-136
+		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:102-147
 		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
 		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
 	android:versionName
@@ -19,7 +19,7 @@ INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidMan
 	android:hardwareAccelerated
 		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:11-45
 	xmlns:android
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:137-195
+		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:148-206
 	android:versionCode
 		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:46-73
 		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
@@ -52,7 +52,7 @@ ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManife
 		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:5:18-52
 	android:icon
 		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:5:53-80
-activity#com.debnath.habitjournal.MainActivity
+activity#com.atwebpages.debnath.habitjournal.MainActivity
 ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:9-11:20
 	android:label
 		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:97-134

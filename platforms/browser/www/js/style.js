@@ -3,7 +3,8 @@
     /* set the app name */
     document.title = APP_NAME;
     document.getElementById("title").innerText = APP_NAME;
-
+    document.getElementById("titleSidebar").innerText = data.UserID;
+    
     /* hide the selection toolbar */
     $(".divToolbarSelection").css("display", "none");
     

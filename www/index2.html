@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style type="text/css">
+            @import url("https://www.w3schools.com/w3css/4/w3.css");
+            @import url("https://www.w3schools.com/lib/w3-theme-blue-grey.css");
+            @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+            @import url("css/index2.css");
+        </style>
+    </head>
+    
+    <body onload="main()" onresize="refreshTable(); setStyleIndex()" class="w3-text-theme">
+        
+        <!-- Header bar -->
+        <div class="w3-bar w3-theme w3-xlarge w3-card">
+            <a id="buttonSidebar" class="w3-bar-item w3-button" href="javascript:sidebarShow()"><i class="fa fa-bars"></i></a>
+            <span class="w3-bar-item" id="title">Title</span>
+            <div id="divToolbar" class="w3-right">
+                
+                <a class="fa-stack divToolbarNormal" id="buttonSync" href="javascript:DataRefresh(0)">
+                    <i class="fa fa-refresh fa-stack-1x"></i>
+                    <i id="iconSync" class="fa fa-stack-1x" style="color:red"></i>
+                </a>
+                
+                <a id="buttonUp" class="w3-bar-item w3-button divToolbarSelection" href="#"><i class="fa fa-toggle-up"></i></a>
+                <a id="buttonDown" class="w3-bar-item w3-button divToolbarSelection" href="#"><i class="fa fa-toggle-down"></i></a>
+                <a id="buttonEdit" class="w3-bar-item w3-button divToolbarSelection" href="javascript:onclickEditHabitButton()"><i class="fa fa-edit"></i></a>
+                <a id="buttonDelete" class="w3-bar-item w3-button divToolbarSelection" href="javascript:removeHabit()"><i class="fa fa-trash"></i></a>
+                <a id="buttonStat" class="w3-bar-item w3-button divToolbarSelection" href="#"><i class="fa fa-line-chart"></i></a>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="divSidebar" class="w3-sidebar w3-bar-block w3-theme-l5 w3-large w3-card w3-animate-left w3-overlay" style="width:300px; display:none; z-index:5">
+            <div class="w3-bar-item w3-border-bottom">
+                <span id="titleSidebar">titleSidebar</span>
+                <a class="w3-right" href="javascript:sidebarHide()"><i class="fa fa-close"></i></a>
+            </div>
+            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-gear w3-padding"></i>Settings</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-reply-all w3-padding"></i>Feedback</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-info-circle w3-padding"></i>About</a>
+            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-power-off w3-padding"></i>Exit</a>
+        </div>
+        <div id="overlaySidebar" class="w3-overlay w3-animate-opacity" onclick="sidebarHide()"></div>
+        
+        <div id="tableMain" class="w3-container">
+        </div>
+        
+        <!-- floating (+) button -->
+        <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddHabitButton()"><i class="fa fa-plus"></i></button>
+        
+        <!-- add habit modal -->
+        <div id="modalAddHabit" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                <div id="titleModalHabit" class="w3-container w3-theme w3-large w3-padding">Title</div>
+                <form class="w3-container" onsubmit="addupdateHabit()">
+                    <p>
+                        <label class="w3-small">Target</label>
+                        <select id="optionTarget" class="w3-select" onchange="onchangeTarget()">
+                            <option value="Improve" selected>I want to improve</option>
+                            <option value="Reduce">I want to reduce</option>
+                            <option value="Reach">I want to reach...</option>
+                        </select>
+                        <div id="divReach" class="w3-cell-row w3-small" style="display: none">
+                            <span><input id="textTimes" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
+                            <span><label class="w3-cell w3-padding">times in</label></span>
+                            <span><input id="textDays" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
+                            <span><label class="w3-cell w3-padding">days</label></span>
+                        </div>
+                    </p>
+                    <p>
+                        <label class="w3-small">Name</label>
+                        <input id="textHabit" class="w3-input" type="text" required>
+                    </p>
+                    <p>
+                        <div class="w3-bar">
+                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalAddHabit').style.display='none'">Cancel</button>
+                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
+                        </div>
+                    </p>
+                </form>
+            </div>
+        </div>
+        
+        <!-- edit data modal -->
+        <div id="modalEditData" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                <div class="w3-container w3-theme w3-large w3-padding">Edit data</div>
+                <form id="formEditData" class="w3-container">
+                    <p>
+                        <label>Enter value</label>
+                        <div id="divEditDataVal"></div>
+                        <input id="textData" class="w3-input" type="number" required>
+                    </p>
+                    <p>
+                        <div class="w3-bar">
+                            <button type="reset" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalEditData').style.display='none'">Cancel</button>
+                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
+                        </div>
+                    </p>
+                    <p>
+                        <label>Date: </label>
+                        <label class="labelDate" id="labelDate"></label>
+                    </p>
+                    <p>
+                        <label>Habit: </label>
+                        <label class="labelHabit" id="labelHabit"></label>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <!-- including all script files -->
+        <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="js/moment/moment.min.js"></script>
+        <script type="text/javascript" src="js/config.js"></script>
+        <script type="text/javascript" src="js/style.js"></script>
+        <script type="text/javascript" src="js/libdata.js"></script>
+        <script type="text/javascript" src="js/index2.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+    </body>
+</html>

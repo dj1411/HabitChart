@@ -158,7 +158,7 @@ function DataLoadCloud()
 }
 
 /*  This function will be called once at the begining of the app.
-    In other words, every time index.html is loaded.
+    In other words, every time index2.html is loaded.
     An then it is perodically called.
 
     Description:
