@@ -427,6 +427,3 @@ function sidebarHide() {
 	document.getElementById("divSidebar").style.display = "none";
 	document.getElementById("overlaySidebar").style.display = "none";
 }
-
-
-
