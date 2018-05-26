@@ -4,10 +4,15 @@ function main()
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
-    DataRefresh(0); /* see description about the function definition */
-    setStyleIndex();
 
-    setInterval(function () { DataRefresh(0); }, config.syncInterval * 1000);
+    if(SYNC_ENABLE == true) {
+        DataRefresh(0);
+        setInterval(function () { DataRefresh(0); }, config.syncInterval * 1000);
+    }
+    else
+        DataRefresh(3);
+    
+    setStyleIndex();
 }
 
 function testcode() {

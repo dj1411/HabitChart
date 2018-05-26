@@ -11,6 +11,10 @@
     /* hide the selection toolbar */
     $(".divToolbarSelection").css("display", "none");
     
+    /* hide sync button for other users */
+    if(SYNC_ENABLE == false)
+        document.getElementById("buttonSync").classList.add("w3-hide");
+    
     /* hide the modals */
     var modal1 = document.getElementById("modalAddHabit");
     var modal2 = document.getElementById("modalEditData");
