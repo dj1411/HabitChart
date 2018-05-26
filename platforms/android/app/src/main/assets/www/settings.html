@@ -11,43 +11,48 @@
     
     <body onload="main()" class="w3-text-theme">
         
-        <!-- Header bar -->
-        <div class="w3-bar w3-theme w3-xlarge w3-card">
-            <span class="w3-bar-item"><i class="fa fa-gear"></i></span>
-            <span class="w3-bar-item" id="title">Settings</span>
-        </div>
+        <form>
 
-        <form class="w3-container">
+            <!-- Header bar -->
+            <div class="w3-bar w3-theme w3-xlarge w3-card">
+                <a class="w3-bar-item w3-button w3-ripple" href="javascript:window.history.back()"><i class="fa fa-arrow-left"></i></a>
+                <span class="w3-bar-item" id="title">Settings</span>
+                <a class="w3-bar-item w3-button w3-ripple w3-right" href="javascript:onclickSave()"><i class="fa fa-save"></i></a>
+            </div>
 
             <!-- User settings -->
-            <div id="divUser" class="w3-margin-top">
+            <div id="divUser" class="w3-margin">
                 <div class="w3-container w3-theme-light" style="font-style: italic">User settings</div>
-                <label>Name</label>
-                <input id="textName" type="text" class="w3-input">
-                <label>Email</label>
-                <input id="textName" type="email" class="w3-input">
+                <div class="w3-bar w3-container">
+                    <label class="w3-bar-item" style="width: 150px">Name</label>
+                    <div class="w3-bar-item"><input id="textName" type="text"></div>
+                </div>
+                <div class="w3-bar w3-container">
+                    <label class="w3-bar-item" style="width: 150px">Email</label>
+                    <div class="w3-bar-item"><input id="textEmail" type="email"></div>
+                </div>
             </div>
         
             <!-- Sync settings -->
-            <div id="divSync" class="w3-margin-top">
+            <div id="divSync" class="w3-margin">
                 <div class="w3-container w3-theme-light" style="font-style: italic">Sync settings</div>
-                <p class="w3-container">
-                    <label>Name</label>
-                    <input id="textName" type="text" class="w3-input">
-                </p>
-                <p class="w3-container">
-                    <label>Email</label>
-                    <input id="textName" type="email" class="w3-input">
-                </p>
+                <div class="w3-bar w3-container">
+                    <label class="w3-bar-item" style="width: 150px">Enable Sync</label>
+                    <div class="w3-bar-item"><input id="checkSyncEnable" type="checkbox"></div>
+                </div>
+                <div class="w3-bar w3-container">
+                    <label class="w3-bar-item" style="width: 150px">Sync interval</label>
+                    <div class="w3-bar-item"><input id="textSyncInterval" type="number" style="width: 100px"></div>
+                    <label class="w3-bar-item">sec</label>
+                </div>
             </div>
-
+        
         </form>
 
         <!-- including all script files -->
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/moment/moment.min.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/config.js"></script>
+        <script type="text/javascript" src="js/const.js"></script>
         <script type="text/javascript" src="js/settings.js"></script>
     </body>
 </html>

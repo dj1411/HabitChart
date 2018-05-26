@@ -7,7 +7,7 @@ function main()
     DataRefresh(0); /* see description about the function definition */
     setStyleIndex();
 
-    setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
+    setInterval(function () { DataRefresh(0); }, config.syncInterval * 1000);
 }
 
 function testcode() {
