@@ -119,6 +119,24 @@
 - abrupt closing of app
 - data tampering on server 
 
+# settings
+- clicking `settings` button should open the settings page
+- clicking `cancel` on `settings` page should go back to main page
+- clicking `save` should save all config data to local storage
+    - check if all default data are present
+    - check if data from `settings` page are changed
+- uppon `save` new data should be reflected
+    - sidebar username should be changed
+    - sync settings should be enabled only for jayanta and test user
+    - in local storage sync should be turned on only for jayanta and test user
+    - if sync is disabled:
+        - in toolbar the sync button should not be visible
+        - disable sync during data refresh
+        - disable periodic sync
+    - test periodic sync interval
+
+# screen size test
+
 # Release
 - set config to point to MASTER Json id
 - disable sync
