@@ -126,6 +126,7 @@
     - check if all default data are present
     - check if data from `settings` page are changed
 - uppon `save` new data should be reflected
+    - data should be loaded for the new user
     - sidebar username should be changed
     - sync settings should be enabled only for jayanta and test user
     - in local storage sync should be turned on only for jayanta and test user
