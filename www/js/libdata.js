@@ -277,6 +277,9 @@ function DataLoad()
         selectedHabit = d;
     else
         selectedHabit = "";
+
+    /* load config data */
+    ConfigLoad();
 }
 
 /* before calling this function, make sure RAM data is valid */

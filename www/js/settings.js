@@ -1,18 +1,21 @@
 var config = new Object();
 
 function main() {
+    ConfigLoad();
     prefillValues();
 }
 
-function prefillValues() {
-    /* load from local storage */
+/* load from local storage */
+function ConfigLoad() {
     var str = localStorage.getItem("config");
     if(str == null)
         setInitValues();
     else
         config = JSON.parse(str);
+}
 
-    /* prefill the form */
+/* prefill the form */
+function prefillValues() {
     document.getElementById("textName").value = config.name;
     document.getElementById("textEmail").value = config.email;
     document.getElementById("checkSyncEnable").checked = config.syncEnable;
@@ -38,4 +41,5 @@ function setInitValues() {
     config.email = "";
     config.syncEnable = false;
     config.syncInterval = SYNC_INTERVAL_S;
+    localStorage.setItem("config", JSON.stringify(config));
 }
