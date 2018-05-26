@@ -1,9 +1,23 @@
 var config = new Object();
 
 function main() {
+    prefillValues();
+}
+
+function prefillValues() {
+    /* load from local storage */
+    var str = localStorage.getItem("config");
+    config = JSON.parse(str);
+
+    /* prefill the form */
+    document.getElementById("textName").value = config.name;
+    document.getElementById("textEmail").value = config.email;
+    document.getElementById("checkSyncEnable").checked = config.syncEnable;
+    document.getElementById("textSyncInterval").value = config.syncInterval;
 }
 
 function onclickSave() {
+    /* set the config data from form */
     config.name = document.getElementById("textName").value;
     config.email = document.getElementById("textEmail").value;
     config.syncEnable = document.getElementById("checkSyncEnable").checked;
