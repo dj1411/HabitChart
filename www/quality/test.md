@@ -147,7 +147,7 @@
     - at least 5 data columns should be visible
 - large screen
     - all modals are displayed properly
-    - settings page form is displayed properly
+    - other pages form is displayed properly
     
 # Feedback
 - the initial form should be displayed properly

@@ -137,6 +137,24 @@
     - test periodic sync interval
 
 # screen size test
+- small screens
+    - all habit names are visible properly
+    - at least one data column should be visible
+    - toolbar all icons should be visible in one line
+    - settings page is displayed properly
+    - all modals are displayed properly
+- medium screen (owned by me)
+    - at least 5 data columns should be visible
+- large screen
+    - all modals are displayed properly
+    - other pages form is displayed properly
+    
+# Feedback
+- the initial form should be displayed properly
+- upon submit, data should be available online
+- back button should go the the previous page
+- feedback success message is displayed
+- second feedback should be possible to enter
 
 # Exit App
 - clicking the exit button should exit:
@@ -144,6 +162,7 @@
     - from app
 - clicking the back button on main page also should exit the app
 - clicking back anywhere else should not exit app
+- browser to another page (e.g. settings), come back and then click `back` button
 
 # Release
 - set config to point to MASTER Json id
