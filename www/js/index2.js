@@ -228,7 +228,7 @@ function removeHabit()
     if (window.confirm( "Are you sure to delete " + DataSelectedHabitGetStr() + "?" ))
         DataHabitRemove(DataSelectedHabitGetStr());
 
-    refreshTable();
+    DataRefresh(0);
     DataSelectedHabitReset();
     toggleToolbar();
 }

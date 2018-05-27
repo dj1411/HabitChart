@@ -68,10 +68,12 @@ function DataValidate(d)
     if(d.DataFormatVer == 3) {
         for(var i=0; i<d.HabitList.length; i++) {
             /* check if habit is empty */
-            if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") return false;
+            if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") 
+                return false;
             
             /* check if target is empty */
-            if(d.HabitList[i].Target == null || d.HabitList[i].Target == undefined || d.HabitList[i].Target == "") return false;
+            if(d.HabitList[i].Target == null || d.HabitList[i].Target == undefined || d.HabitList[i].Target == "") 
+                return false;
             
             /* check if target is either Improve, Reduce or Reach */
             if(d.HabitList[i].Target != "Improve" && d.HabitList[i].Target != "Reduce"

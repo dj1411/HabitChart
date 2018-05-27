@@ -3,7 +3,7 @@
 - Check how data version change work without internet.
 
 # Data validation checks
-- local data
+- local storage data
     - Apply Break point at DataValidate()
     - do single step debugging
     - change values in debugger to check if each "return false" is executed
@@ -30,33 +30,34 @@
 - duplicate habit names should not be allowed
 - new habit should be saved on exit
 - new habit change in data should be saved to cloud
-- selecting Target should reflect in the cloud data
+- selected `Target` should reflect in the cloud data. Test for each `Target`.
 
 # update habit
 - click randomly and check if selection and de-selection of habit works. 
-- delete and update button should only be visible when a habit is selected.
-- habit name and other data should be prefilled 
-- 'Update' label on top should be visible instead of 'Add'.
+- toolbar buttons should only be visible when a habit is selected.
+- in the modal, habit name and other data should be prefilled 
+- `Update` label on top should be visible instead of 'Add'.
 - clicking cancel should go to main page
 - clicking update, habit name and other data should change
 - only changing the Target without changing Name should be allowed
 - update without changing anything should have no impact
 - all bars should have the previous values
 - restarting the app should retain the updated habit
-- select habit and wait for cloud sync. GUI state should as before.
+- select habit and wait for periodic cloud sync. GUI state should as before.
 
 # delete habit
 - confirmation dialog before delete
-    - cancel delete should work
+    - cancel should work
     - delete should actually delete the habit and update the table
-- after deleting the button should disappear and no habit should be selected
+- after deleting, the toolbar should disappear and no habit should be selected
+- deleted habit should be deleted from cloud also
 - upon closing and opening the app, the deleted habit should not re-appear
 
-# Edit Data Modal
+# Edit Data
 - Clicking in every cell should open the modal
 - clicking cancel should go to main page without doing anything
 - the modal should close upon clicking outside
-- The date and habit should correspond to the cell clicked
+- The date and habit name should correspond to the cell clicked
 - the prefilled values in the buttons should be displayed
 - in the textbox only number should be allowed to enter
 - Clicking submit/enter on invalid data should stay on the modal
