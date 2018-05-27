@@ -450,3 +450,10 @@ function onback(e) {
     e.preventDefault();
     exitApp();
 }
+
+function onclickFeedback() {
+    if(config.email == "jayanta.dn@gmail.com")
+        location.assign("feedbackreader.html");
+    else
+        location.assign("feedback.html");
+}
