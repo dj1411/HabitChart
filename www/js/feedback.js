@@ -27,27 +27,32 @@ function sendFeedback(msg) {
     if (navigator.onLine) { // check for internet connection
         $.get("https://api.myjson.com/bins/" + JSONID_FEEDBACK, function (data, status, xhr) { // receive previous data
             if(status == "success") {
-                data.list.push(msg);
-                $.ajax({
+                data.list.push(msg); // append the new message
+                
+                $.ajax({    // send data to server
                     url: "https://api.myjson.com/bins/" + JSONID_FEEDBACK,
                     type: "PUT",
                     data: JSON.stringify(data),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result, status, xhdr) {
-                        console.log("uploaded");
+                        alert("Feedback submitted successfully");
+                        window.history.back();
                     },
                     error: function (xhdr, status, msg) {
-                        console.log("upload failed");
+                        alert("ERROR: Could not upload data");
+                        window.history.back();
                     }
                 }); 
             }
             else {
+                alert("ERROR: Could not connet to server");
                 window.history.back();
             }
         });
     }
     else {
+        alert("ERROR: No internet connection");
         window.history.back();
     }
 }
