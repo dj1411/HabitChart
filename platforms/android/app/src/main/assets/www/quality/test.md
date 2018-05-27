@@ -156,6 +156,10 @@
 - feedback success message is displayed
 - second feedback should be possible to enter
 
+# Feedback Reader
+- add a new message, it should be visible in the reader
+- clicking email button should work
+
 # Exit App
 - clicking the exit button should exit:
     - from browser
