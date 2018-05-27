@@ -144,6 +144,7 @@
     - from app
 - clicking the back button on main page also should exit the app
 - clicking back anywhere else should not exit app
+- browser to another page (e.g. settings), come back and then click `back` button
 
 # Release
 - set config to point to MASTER Json id

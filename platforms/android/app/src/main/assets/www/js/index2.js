@@ -13,6 +13,9 @@ function main()
         DataRefresh(3);
     
     setStyleIndex();
+
+    /* handle the back button */
+    document.addEventListener("backbutton", onback, false);
 }
 
 function testcode() {
@@ -441,4 +444,9 @@ function exitApp() {
     else {
         window.close();
     }
+}
+
+function onback(e) {
+    e.preventDefault();
+    exitApp();
 }
