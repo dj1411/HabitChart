@@ -1,5 +1,18 @@
 function main() {
-    createMsgCard("Jayanta", "jayanta.dn@gmail.com", "Some message.");
+    if (navigator.onLine) { 
+        $.get("https://api.myjson.com/bins/" + JSONID_FEEDBACK, function (data, status, xhr) {
+            if(status == "success") {
+                /* data was read successfully from server */
+                
+            }
+            else {
+                createMsgCard("ERROR", "", "Could not connect to server");
+            }
+        });
+    }
+    else {
+        createMsgCard("ERROR", "", "No internet connection");
+    }
 }
 
 function createMsgCard(name, email, msg) {

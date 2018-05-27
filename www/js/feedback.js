@@ -46,7 +46,7 @@ function sendFeedback(msg) {
                 }); 
             }
             else {
-                alert("ERROR: Could not connet to server");
+                alert("ERROR: Could not connect to server");
                 window.history.back();
             }
         });
