@@ -3,7 +3,10 @@ function main() {
         $.get("https://api.myjson.com/bins/" + JSONID_FEEDBACK, function (data, status, xhr) {
             if(status == "success") {
                 /* data was read successfully from server */
-                
+                data.list.reverse();
+                for(var i=0; i<data.list.length; i++) {
+                    createMsgCard(data.list[i].name, data.list[i].email, data.list[i].message);
+                }
             }
             else {
                 createMsgCard("ERROR", "", "Could not connect to server");
