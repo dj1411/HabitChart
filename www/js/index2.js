@@ -73,21 +73,10 @@ function refreshTable()
         cell.classList.add("w3-center");
         cell.style.width = WIDTH_DATA_COL + "px";
         
-        var text, day;
-        var date = new Date();
-        date.setDate(date.getDate() - c);
-        switch(date.getDay()) {
-            case 0: day = "Sun"; break;
-            case 1: day = "Mon"; break;
-            case 2: day = "Tue"; break;
-            case 3: day = "Wed"; break;
-            case 4: day = "Thu"; break;
-            case 5: day = "Fri"; break;
-            case 6: day = "Sat"; break;
-        }
-        if(c==0) day = "Today";
-        text = document.createElement("span");
-        text.innerHTML = day + "<br>" + date.getDay() + "/" + (date.getMonth()+1);
+        var date = moment();
+        date = date.subtract(c, "days");
+        var text = document.createElement("span");
+        text.innerHTML = date.format("ddd<br>D/M");
         cell.appendChild(text);
     }
 
