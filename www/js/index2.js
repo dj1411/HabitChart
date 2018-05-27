@@ -5,12 +5,8 @@ function main()
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
 
-    if(SYNC_ENABLE == true) {
-        DataRefresh(0);
-        setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
-    }
-    else
-        DataRefresh(3);
+    DataRefresh(0);
+    setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
     
     setStyleIndex();
 

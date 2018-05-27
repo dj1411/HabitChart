@@ -88,7 +88,7 @@ function DataValidate(d)
 
 function DataCheckInternet()
 {
-    if (navigator.onLine) {
+    if (navigator.onLine && SYNC_ENABLE==true) {
         DataRefresh(1);     /* connection successful. continue with sync */
     }
     else {

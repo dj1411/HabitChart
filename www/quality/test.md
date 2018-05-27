@@ -99,33 +99,15 @@
 - updated settings should be reflected
     - sidebar username should be changed
     - sync settings should be enabled only for jayanta and test user
-    - if sync is disabled:
-        - in toolbar the sync button should not be visible
-        - disable sync during data refresh
-        - disable periodic sync
-    - test periodic sync interval
+    - test cloud data by disabling sync
 
-# screen size test
-- small screens
-    - all habit names are visible properly
-    - at least one data column should be visible
-    - toolbar all icons should be visible in one line
-    - settings page is displayed properly
-    - all modals are displayed properly
-- medium screen (owned by me)
-    - at least 5 data columns should be visible
-- large screen
-    - all modals are displayed properly
-    - other pages form is displayed properly
-    
 # Feedback
-- the initial form should be displayed properly
-- upon submit, data should be available online
+- the form should be displayed properly
 - back button should go the the previous page
+- upon submit, data should be available online
 - feedback success message is displayed
-- second feedback should be possible to enter
 
-# Feedback Reader
+# Feedback Reader (change email to jayanta.dn@gmail.com)
 - add a new message, it should be visible in the reader
 - clicking email button should work
 
@@ -133,13 +115,13 @@
 - clicking the exit button should exit:
     - from browser
     - from app
-- clicking the back button on main page also should exit the app
-- clicking back anywhere else should not exit app
-- browser to another page (e.g. settings), come back and then click `back` button
+- from app: clicking the back button on main page also should exit the app
+- from app: clicking back anywhere else should not exit app
 
 # My Release
-- reset sync duration to 
-- set config to point to MASTER Json id
+- enable sync
+- reset sync duration
+- set config to point to MASTER Json id. reset local data.
 - cordova run browser
 - cordova run android emulator
 - deploy to test web server
@@ -147,3 +129,15 @@
 
 # Official Release
 - disable sync
+- screen size test
+    - small screens
+        - all habit names are visible properly
+        - at least one data column should be visible
+        - toolbar all icons should be visible in one line
+        - settings page is displayed properly
+        - all modals are displayed properly
+    - medium screen (owned by me)
+        - at least 5 data columns should be visible
+    - large screen
+        - all modals are displayed properly
+        - other pages form is displayed properly
