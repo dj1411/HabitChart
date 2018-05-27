@@ -1,4 +1,8 @@
 function main() {
+    createMsgCard("Jayanta", "jayanta.dn@gmail.com", "Some message.");
+}
+
+function createMsgCard(name, email, msg) {
     var divMsgList = document.getElementById("divMsgList");
     
     var divMsg = document.createElement("div");
@@ -13,21 +17,21 @@ function main() {
     header.classList.add("w3-theme-l4");
     header.classList.add("w3-large");
     
-    var name = document.createElement("span");
-    header.appendChild(name);
-    name.classList.add("w3-bar-item");
-    name.innerText = "Jayanta";
+    var nameElem = document.createElement("span");
+    header.appendChild(nameElem);
+    nameElem.classList.add("w3-bar-item");
+    nameElem.innerText = name;
     
-    var email = document.createElement("a");
-    header.appendChild(email);
-    email.classList.add("w3-bar-item");
-    email.classList.add("w3-button");
-    email.classList.add("w3-right");
-    email.setAttribute("href", "mailto:jayanta.dn@gmail.com");
-    email.innerHTML = "<i class='fa fa-envelope'></i>";
+    var emailElem = document.createElement("a");
+    header.appendChild(emailElem);
+    emailElem.classList.add("w3-bar-item");
+    emailElem.classList.add("w3-button");
+    emailElem.classList.add("w3-right");
+    emailElem.setAttribute("href", "mailto:" + email);
+    emailElem.innerHTML = "<i class='fa fa-envelope'></i>";
 
-    var msg = document.createElement("div");
-    divMsg.appendChild(msg);
-    msg.classList.add("w3-container");
-    msg.innerText = "Message Message Message Message";
+    var msgElem = document.createElement("div");
+    divMsg.appendChild(msgElem);
+    msgElem.classList.add("w3-container");
+    msgElem.innerText = msg;
 }
