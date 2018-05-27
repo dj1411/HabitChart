@@ -36,7 +36,7 @@
         <title>Hello World</title>
     </head>
     <body>
-        <div class="app" style="display:none">
+        <div class="app">
             <h1>Apache Cordova</h1>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
@@ -45,5 +45,16 @@
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        
+        <!-- Jayanta's patch -->
+        <script type="text/javascript">
+            var elems = document.getElementsByClassName("app");
+            for(var i=0; i<elems.length; i++) elems[i].style.display = "none";
+            
+            /* Check for Android */
+            if(navigator.userAgent.indexOf("Android") == -1) {
+                location.assign("index2.html");
+            }
+        </script>
     </body>
 </html>

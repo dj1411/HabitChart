@@ -87,52 +87,27 @@
 - sync should happen every timeout.
 - server data should be identical to local data
 - any changes in the main page (as previous tests) should be reflected in another device
-- check if sync happens when the window is minimized (on device)
-- run the app without internet connection. closing and opening should retain the data.
+- check if sync works when the window is minimized (on device)
 - deactivate internet in between running app. close and reopen without internet. data should be intact
 - deactivate internet in between running app. close and reopen with internet. data should be intact.
-- abrupt closing of app
-- reset all three storages. table should become empty.
 - data tampering on server 
 
 # settings
 - clicking `settings` button should open the settings page
-- clicking `cancel` on `settings` page should go back to main page
+- clicking `back` on `settings` page should go back to main page
 - clicking `save` should save all config data to local storage
-    - check if all default data are present
-    - check if data from `settings` page are changed
-- uppon `save` new data should be reflected
-    - data should be loaded for the new user
+- updated settings should be reflected
     - sidebar username should be changed
     - sync settings should be enabled only for jayanta and test user
-    - in local storage sync should be turned on only for jayanta and test user
-    - if sync is disabled:
-        - in toolbar the sync button should not be visible
-        - disable sync during data refresh
-        - disable periodic sync
-    - test periodic sync interval
+    - test cloud data by disabling sync
 
-# screen size test
-- small screens
-    - all habit names are visible properly
-    - at least one data column should be visible
-    - toolbar all icons should be visible in one line
-    - settings page is displayed properly
-    - all modals are displayed properly
-- medium screen (owned by me)
-    - at least 5 data columns should be visible
-- large screen
-    - all modals are displayed properly
-    - other pages form is displayed properly
-    
 # Feedback
-- the initial form should be displayed properly
-- upon submit, data should be available online
+- the form should be displayed properly
 - back button should go the the previous page
+- upon submit, data should be available online
 - feedback success message is displayed
-- second feedback should be possible to enter
 
-# Feedback Reader
+# Feedback Reader (change email to jayanta.dn@gmail.com)
 - add a new message, it should be visible in the reader
 - clicking email button should work
 
@@ -140,17 +115,29 @@
 - clicking the exit button should exit:
     - from browser
     - from app
-- clicking the back button on main page also should exit the app
-- clicking back anywhere else should not exit app
-- browser to another page (e.g. settings), come back and then click `back` button
+- from app: clicking the back button on main page also should exit the app
+- from app: clicking back anywhere else should not exit app
 
 # My Release
-- reset sync duration to 
-- set config to point to MASTER Json id
+- enable sync
+- reset sync duration
+- set config to point to MASTER Json id. reset local data.
 - cordova run browser
 - cordova run android emulator
-- deploy to test web server
+- deploy to test web server. (take a screenshot of the old one)
 - set release tag in git
 
 # Official Release
 - disable sync
+- screen size test
+    - small screens
+        - all habit names are visible properly
+        - at least one data column should be visible
+        - toolbar all icons should be visible in one line
+        - settings page is displayed properly
+        - all modals are displayed properly
+    - medium screen (owned by me)
+        - at least 5 data columns should be visible
+    - large screen
+        - all modals are displayed properly
+        - other pages form is displayed properly

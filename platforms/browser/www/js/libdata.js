@@ -3,7 +3,7 @@ var data;
 var dataCloud;
 var dataInit = {
     "DataFormatVer": 3,
-    "MyJsonID": ACTIVE_JSON_ID,
+    "MyJsonID": JSONID_ACTIVE,
     "UserID": "test",
     "Timestamp": "01/01/2000",
     "CurrentID": "",
@@ -68,10 +68,12 @@ function DataValidate(d)
     if(d.DataFormatVer == 3) {
         for(var i=0; i<d.HabitList.length; i++) {
             /* check if habit is empty */
-            if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") return false;
+            if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") 
+                return false;
             
             /* check if target is empty */
-            if(d.HabitList[i].Target == null || d.HabitList[i].Target == undefined || d.HabitList[i].Target == "") return false;
+            if(d.HabitList[i].Target == null || d.HabitList[i].Target == undefined || d.HabitList[i].Target == "") 
+                return false;
             
             /* check if target is either Improve, Reduce or Reach */
             if(d.HabitList[i].Target != "Improve" && d.HabitList[i].Target != "Reduce"
@@ -86,36 +88,11 @@ function DataValidate(d)
 
 function DataCheckInternet()
 {
-    if (navigator.onLine) {
+    if (navigator.onLine && SYNC_ENABLE==true) {
         DataRefresh(1);     /* connection successful. continue with sync */
     }
     else {
         DataRefresh(3);    /* No internet connection. just update the table */
-    }
-}
-
-function DataSaveCloud() {
-    if (data.MyJsonID == "")    /* First time storing data to cloud */
-    {
-        $.get("https://api.myjson.com/bins/" + ACTIVE_JSON_ID, function (result, textStatus, xhdr) {
-            DataSetMyJsonID(result[data.UserID]);
-        });
-    }
-    else
-    {
-        $.ajax({
-            url: "https://api.myjson.com/bins/" + data.MyJsonID,
-            type: "PUT",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result, status, xhdr) {
-                DataRefresh(3);
-            },
-            error: function (xhdr, status, msg) {
-            	document.getElementById("iconSync").classList.add("fa-exclamation");
-            }
-        }); 
     }
 }
 
@@ -127,7 +104,7 @@ function DataLoadCloud()
     /*  First time accessing cloud data, get the id and then retrieve the data. */
     if (data.MyJsonID == "")
     {
-        $.get("https://api.myjson.com/bins/" + ACTIVE_JSON_ID, function (result, textStatus, xhdr)
+        $.get("https://api.myjson.com/bins/" + JSONID_ACTIVE, function (result, textStatus, xhdr)
         {
             DataSetMyJsonID(result[data.UserID]);
             $.get("https://api.myjson.com/bins/" + data.MyJsonID, ReadCloudData);
@@ -156,6 +133,31 @@ function DataLoadCloud()
         }
         
         DataRefresh(2);
+    }
+}
+
+function DataSaveCloud() {
+    if (data.MyJsonID == "")    /* First time storing data to cloud */
+    {
+        $.get("https://api.myjson.com/bins/" + JSONID_ACTIVE, function (result, textStatus, xhdr) {
+            DataSetMyJsonID(result[data.UserID]);
+        });
+    }
+    else
+    {
+        $.ajax({
+            url: "https://api.myjson.com/bins/" + data.MyJsonID,
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result, status, xhdr) {
+                DataRefresh(3);
+            },
+            error: function (xhdr, status, msg) {
+            	document.getElementById("iconSync").classList.add("fa-exclamation");
+            }
+        }); 
     }
 }
 

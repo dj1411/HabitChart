@@ -18,16 +18,12 @@ function ConfigLoad() {
 function prefillValues() {
     document.getElementById("textName").value = config.name;
     document.getElementById("textEmail").value = config.email;
-    document.getElementById("checkSyncEnable").checked = config.syncEnable;
-    document.getElementById("textSyncInterval").value = config.syncInterval;
 }
 
 function onclickSave() {
     /* set the config data from form */
     config.name = document.getElementById("textName").value;
     config.email = document.getElementById("textEmail").value;
-    config.syncEnable = document.getElementById("checkSyncEnable").checked;
-    config.syncInterval = document.getElementById("textSyncInterval").value;
     
     /* save to local storage */
     localStorage.setItem("config", JSON.stringify(config));
@@ -39,7 +35,5 @@ function onclickSave() {
 function setInitValues() {
     config.name = "";
     config.email = "";
-    config.syncEnable = false;
-    config.syncInterval = SYNC_INTERVAL_S;
     localStorage.setItem("config", JSON.stringify(config));
 }

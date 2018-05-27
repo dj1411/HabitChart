@@ -422,8 +422,8 @@ function sidebarHide() {
 }
 
 function exitApp() {
-    if(navigator.userAgent.indexOf("Android") >= 0) {
-        /* Android detected */
+    /* Check for Android */
+    if(navigator.userAgent.indexOf("Android") >= 0) {         
         navigator.app.exitApp()
     }
     else {

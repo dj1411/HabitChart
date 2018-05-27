@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style type="text/css">
+            @import url("https://www.w3schools.com/w3css/4/w3.css");
+            @import url("https://www.w3schools.com/lib/w3-theme-blue-grey.css");
+            @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+        </style>
+    </head>
+    
+    <body onload="main()" class="w3-text-theme">
+        
+        <!-- Header bar -->
+        <div class="w3-bar w3-theme w3-xlarge w3-card">
+            <a class="w3-bar-item w3-button w3-ripple" href="javascript:window.history.back()"><i class="fa fa-arrow-left"></i></a>
+            <span class="w3-bar-item" id="title">Feedback</span>
+        </div>
+        
+        <!-- Message Cards -->
+        <div id="divMsgList" class="w3-padding"></div>
+
+        <!-- including all script files -->
+        <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="js/moment/moment.min.js"></script>
+        <script type="text/javascript" src="js/const.js"></script>
+        <script type="text/javascript" src="js/feedbackreader.js"></script>
+    </body>
+</html>

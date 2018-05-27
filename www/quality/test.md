@@ -124,8 +124,8 @@
 - set config to point to MASTER Json id. reset local data.
 - cordova run browser
 - cordova run android emulator
-- deploy to test web server
-- set release tag in git
+- deploy to test web server. (take a screenshot of the old one)
+- push and set release tag in git
 
 # Official Release
 - disable sync
