@@ -1,28 +1,28 @@
+var msg = new Object();
+
 function main() {
     ConfigLoad();
 }
 
 function onsubmitFeedback() {
-    var mes = new Object();
-    
     /* set the user name */
     if(config.name == "") 
-        mes.name = "Anonymous";
+        msg.name = "Anonymous";
     else
-        mes.name = config.name;
+        msg.name = config.name;
     
     /* set email */
     if(config.email == "") 
-        mes.email = "Anonym@ous.com";
+        msg.email = "Anonym@ous.com";
     else
-        mes.email = config.email;
+        msg.email = config.email;
     
     /* set the message */
-    mes.message = document.getElementById("textMessage").value;
+    msg.message = document.getElementById("textMessage").value;
     
-    sendFeedback(mes);
+    sendFeedback();
     window.history.back();
 }
 
-function sendFeedback(mes) {
+function sendFeedback() {
 }
