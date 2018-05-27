@@ -13,7 +13,7 @@ function onsubmitFeedback() {
     
     /* set email */
     if(config.email == "") 
-        msg.email = "Anonym@ous.com";
+        msg.email = "";
     else
         msg.email = config.email;
     
