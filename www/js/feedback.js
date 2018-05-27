@@ -21,7 +21,7 @@ function onsubmitFeedback() {
     msg.message = document.getElementById("textMessage").value;
     
     sendFeedback_step1();
-    window.history.back();
+//    window.history.back();
 }
 
 /* step1: check internet */
@@ -31,5 +31,10 @@ function sendFeedback_step1() {
 
 /* step2: get previous data */
 function sendFeedback_step2() {
-    $.get("https://api.myjson.com/bins/" + JSONID_FEEDBACK);
+    $.get("https://api.myjson.com/bins/" + JSONID_FEEDBACK, sendFeedback_step3);
+}
+
+/* step3: data received from server */
+function sendFeedback_step3(data, status, xhr) {
+    alert(data);
 }
