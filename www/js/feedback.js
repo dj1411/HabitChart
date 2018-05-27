@@ -29,6 +29,7 @@ function sendFeedback_step1() {
     if (navigator.onLine) sendFeedback_step2();
 }
 
+/* step2: get previous data */
 function sendFeedback_step2() {
-    
+    $.get("https://api.myjson.com/bins/" + JSONID_FEEDBACK);
 }
