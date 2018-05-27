@@ -1,13 +1,13 @@
 function main()
 {
-//    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//    DataReset(0, 0, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
 
     if(SYNC_ENABLE == true) {
         DataRefresh(0);
-        setInterval(function () { DataRefresh(0); }, config.syncInterval * 1000);
+        setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
     }
     else
         DataRefresh(3);
@@ -73,21 +73,10 @@ function refreshTable()
         cell.classList.add("w3-center");
         cell.style.width = WIDTH_DATA_COL + "px";
         
-        var text, day;
-        var date = new Date();
-        date.setDate(date.getDate() - c);
-        switch(date.getDay()) {
-            case 0: day = "Sun"; break;
-            case 1: day = "Mon"; break;
-            case 2: day = "Tue"; break;
-            case 3: day = "Wed"; break;
-            case 4: day = "Thu"; break;
-            case 5: day = "Fri"; break;
-            case 6: day = "Sat"; break;
-        }
-        if(c==0) day = "Today";
-        text = document.createElement("span");
-        text.innerHTML = day + "<br>" + date.getDay() + "/" + (date.getMonth()+1);
+        var date = moment();
+        date = date.subtract(c, "days");
+        var text = document.createElement("span");
+        text.innerHTML = date.format("ddd<br>D/M");
         cell.appendChild(text);
     }
 
@@ -228,7 +217,7 @@ function removeHabit()
     if (window.confirm( "Are you sure to delete " + DataSelectedHabitGetStr() + "?" ))
         DataHabitRemove(DataSelectedHabitGetStr());
 
-    refreshTable();
+    DataRefresh(0);
     DataSelectedHabitReset();
     toggleToolbar();
 }

@@ -1,7 +1,7 @@
 const APP_NAME = "Habit Journal"
 
-const SYNC_ENABLE = true;
-const SYNC_INTERVAL_S = 300;
+const SYNC_ENABLE = false;
+const SYNC_INTERVAL_S = 20;
 const MAX_HISTORY_DATA = 21;
 
 const JSONID_MASTER = "mlerr";

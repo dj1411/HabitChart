@@ -3,7 +3,7 @@
 - Check how data version change work without internet.
 
 # Data validation checks
-- local data
+- local storage data
     - Apply Break point at DataValidate()
     - do single step debugging
     - change values in debugger to check if each "return false" is executed
@@ -30,86 +30,61 @@
 - duplicate habit names should not be allowed
 - new habit should be saved on exit
 - new habit change in data should be saved to cloud
-- selecting Target should reflect in the cloud data
+- selected `Target` should reflect in the cloud data. Test for each `Target`.
 
 # update habit
 - click randomly and check if selection and de-selection of habit works. 
-- delete and update button should only be visible when a habit is selected.
-- habit name and other data should be prefilled 
-- 'Update' label on top should be visible instead of 'Add'.
+- toolbar buttons should only be visible when a habit is selected.
+- in the modal, habit name and other data should be prefilled 
+- `Update` label on top should be visible instead of 'Add'.
 - clicking cancel should go to main page
 - clicking update, habit name and other data should change
 - only changing the Target without changing Name should be allowed
 - update without changing anything should have no impact
 - all bars should have the previous values
 - restarting the app should retain the updated habit
-- select habit and wait for cloud sync. GUI state should as before.
+- select habit and wait for periodic cloud sync. GUI state should as before.
 
 # delete habit
 - confirmation dialog before delete
-    - cancel delete should work
+    - cancel should work
     - delete should actually delete the habit and update the table
-- after deleting the button should disappear and no habit should be selected
+- after deleting, the toolbar should disappear and no habit should be selected
+- deleted habit should be deleted from cloud also
 - upon closing and opening the app, the deleted habit should not re-appear
 
-# Edit Data Modal
+# Edit Data values
 - Clicking in every cell should open the modal
 - clicking cancel should go to main page without doing anything
 - the modal should close upon clicking outside
-- The date and habit should correspond to the cell clicked
-- the prefilled values in the buttons should be displayed
+- The date and habit name should correspond to the cell clicked
+- the prefilled values in the `value buttons` should be displayed
 - in the textbox only number should be allowed to enter
 - Clicking submit/enter on invalid data should stay on the modal
 - Clicking submit/enter should submit the number entered in textbox
-- After submit the following should be reflected in data:
-    - Improve/Reduce
-    - Reach_times_days
 - clicking pre-filled data buttons:
     - fill the textbox with the data
     - submit
-- test with different data sets
-    - no data
-    - 1 day data
-    - 1 week data
-    - 21 days data
-    - 3 months data
-    - 1 year data
+- randonly enter previous data. check how the `value buttons` change.
     
-# Data bar
+# Data bar chart
 - upon changing the value in modal, the bar should display according height
     - test by chosing lower value
     - test by chosing higher value
-- test with different data sets
-    - no data
-    - 1 day data
-    - 1 week data
-    - 21 days data
-    - 3 months data
-    - 1 year data
+- randonly enter previous data. check how the bar chart changes.
     
 # Target sign colors
-- progress should be based on :
-    - last 7 days average compared to last 21 days average
-    - for less than 7 days: today's value compared to average of all days
-    - for "Reach" check average of 21 days
-- For good progress green light should be shown
-- For slow progress yellow light should be shown
-- for negative progress red light should be shown
-- test with different data sets
-    - no data
-    - 1 day data
-    - 1 week data
-    - 21 days data
-    - 3 months data
-    - 1 year data
+- randonly enter previous data. check how the target sign color change.
+    - For good progress green light should be shown
+    - For slow progress yellow light should be shown
+    - for negative progress red light should be shown
 
 # sync data to server
-- The app should work perfectly without any internet connection. Check directly in target.
+- The app should work perfectly without any internet connection.
+- upon resuming internet, updated local data should be uploaded to cloud.
 - reset RAM data, local storage and cloud storage individually. check if the table is re-constructible.
-- reset all three storages. table should become empty.
 - sync should happen at app start
 - sync should happen every timeout.
-- sync should refresh the table
 - server data should be identical to local data
 - any changes in the main page (as previous tests) should be reflected in another device
 - check if sync happens when the window is minimized (on device)
@@ -117,6 +92,7 @@
 - deactivate internet in between running app. close and reopen without internet. data should be intact
 - deactivate internet in between running app. close and reopen with internet. data should be intact.
 - abrupt closing of app
+- reset all three storages. table should become empty.
 - data tampering on server 
 
 # settings
@@ -168,11 +144,13 @@
 - clicking back anywhere else should not exit app
 - browser to another page (e.g. settings), come back and then click `back` button
 
-# Release
+# My Release
+- reset sync duration to 
 - set config to point to MASTER Json id
-- disable sync
 - cordova run browser
-- cordova build android
+- cordova run android emulator
 - deploy to test web server
-- deploy to emulator device
 - set release tag in git
+
+# Official Release
+- disable sync

@@ -53,84 +53,52 @@
 - deleted habit should be deleted from cloud also
 - upon closing and opening the app, the deleted habit should not re-appear
 
-# Edit Data
+# Edit Data values
 - Clicking in every cell should open the modal
 - clicking cancel should go to main page without doing anything
 - the modal should close upon clicking outside
 - The date and habit name should correspond to the cell clicked
-- the prefilled values in the buttons should be displayed
+- the prefilled values in the `value buttons` should be displayed
 - in the textbox only number should be allowed to enter
 - Clicking submit/enter on invalid data should stay on the modal
 - Clicking submit/enter should submit the number entered in textbox
-- After submit the following should be reflected in data:
-    - Improve/Reduce
-    - Reach_times_days
 - clicking pre-filled data buttons:
     - fill the textbox with the data
     - submit
-- test with different data sets
-    - no data
-    - 1 day data
-    - 1 week data
-    - 21 days data
-    - 3 months data
-    - 1 year data
+- randonly enter previous data. check how the `value buttons` change.
     
-# Data bar
+# Data bar chart
 - upon changing the value in modal, the bar should display according height
     - test by chosing lower value
     - test by chosing higher value
-- test with different data sets
-    - no data
-    - 1 day data
-    - 1 week data
-    - 21 days data
-    - 3 months data
-    - 1 year data
+- randonly enter previous data. check how the bar chart changes.
     
 # Target sign colors
-- progress should be based on :
-    - last 7 days average compared to last 21 days average
-    - for less than 7 days: today's value compared to average of all days
-    - for "Reach" check average of 21 days
-- For good progress green light should be shown
-- For slow progress yellow light should be shown
-- for negative progress red light should be shown
-- test with different data sets
-    - no data
-    - 1 day data
-    - 1 week data
-    - 21 days data
-    - 3 months data
-    - 1 year data
+- randonly enter previous data. check how the target sign color change.
+    - For good progress green light should be shown
+    - For slow progress yellow light should be shown
+    - for negative progress red light should be shown
 
 # sync data to server
-- The app should work perfectly without any internet connection. Check directly in target.
+- The app should work perfectly without any internet connection.
+- upon resuming internet, updated local data should be uploaded to cloud.
 - reset RAM data, local storage and cloud storage individually. check if the table is re-constructible.
-- reset all three storages. table should become empty.
 - sync should happen at app start
 - sync should happen every timeout.
-- sync should refresh the table
 - server data should be identical to local data
 - any changes in the main page (as previous tests) should be reflected in another device
-- check if sync happens when the window is minimized (on device)
-- run the app without internet connection. closing and opening should retain the data.
+- check if sync works when the window is minimized (on device)
 - deactivate internet in between running app. close and reopen without internet. data should be intact
 - deactivate internet in between running app. close and reopen with internet. data should be intact.
-- abrupt closing of app
 - data tampering on server 
 
 # settings
 - clicking `settings` button should open the settings page
-- clicking `cancel` on `settings` page should go back to main page
+- clicking `back` on `settings` page should go back to main page
 - clicking `save` should save all config data to local storage
-    - check if all default data are present
-    - check if data from `settings` page are changed
-- uppon `save` new data should be reflected
-    - data should be loaded for the new user
+- updated settings should be reflected
     - sidebar username should be changed
     - sync settings should be enabled only for jayanta and test user
-    - in local storage sync should be turned on only for jayanta and test user
     - if sync is disabled:
         - in toolbar the sync button should not be visible
         - disable sync during data refresh
@@ -169,11 +137,13 @@
 - clicking back anywhere else should not exit app
 - browser to another page (e.g. settings), come back and then click `back` button
 
-# Release
+# My Release
+- reset sync duration to 
 - set config to point to MASTER Json id
-- disable sync
 - cordova run browser
-- cordova build android
+- cordova run android emulator
 - deploy to test web server
-- deploy to emulator device
 - set release tag in git
+
+# Official Release
+- disable sync

@@ -1,13 +1,13 @@
 function main()
 {
-//    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//    DataReset(0, 0, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
 
     if(SYNC_ENABLE == true) {
         DataRefresh(0);
-        setInterval(function () { DataRefresh(0); }, config.syncInterval * 1000);
+        setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
     }
     else
         DataRefresh(3);
