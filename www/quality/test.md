@@ -138,6 +138,13 @@
 
 # screen size test
 
+# Exit App
+- clicking the exit button should exit:
+    - from browser
+    - from app
+- clicking the back button on main page also should exit the app
+- clicking back anywhere else should not exit app
+
 # Release
 - set config to point to MASTER Json id
 - disable sync

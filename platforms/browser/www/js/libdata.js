@@ -86,10 +86,12 @@ function DataValidate(d)
 
 function DataCheckInternet()
 {
-    if (navigator.onLine)
+    if (navigator.onLine) {
         DataRefresh(1);     /* connection successful. continue with sync */
-    else
+    }
+    else {
         DataRefresh(3);    /* No internet connection. just update the table */
+    }
 }
 
 function DataSaveCloud() {
@@ -277,6 +279,9 @@ function DataLoad()
         selectedHabit = d;
     else
         selectedHabit = "";
+
+    /* load config data */
+    ConfigLoad();
 }
 
 /* before calling this function, make sure RAM data is valid */

@@ -86,10 +86,12 @@ function DataValidate(d)
 
 function DataCheckInternet()
 {
-    if (navigator.onLine)
+    if (navigator.onLine) {
         DataRefresh(1);     /* connection successful. continue with sync */
-    else
+    }
+    else {
         DataRefresh(3);    /* No internet connection. just update the table */
+    }
 }
 
 function DataSaveCloud() {

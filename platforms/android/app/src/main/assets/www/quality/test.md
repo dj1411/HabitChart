@@ -138,6 +138,8 @@
 
 # screen size test
 
+# Exit button
+
 # Release
 - set config to point to MASTER Json id
 - disable sync

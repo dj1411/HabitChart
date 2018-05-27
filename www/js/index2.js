@@ -432,3 +432,13 @@ function sidebarHide() {
 	document.getElementById("divSidebar").style.display = "none";
 	document.getElementById("overlaySidebar").style.display = "none";
 }
+
+function exitApp() {
+    if(navigator.userAgent.indexOf("Android") >= 0) {
+        /* Android detected */
+        navigator.app.exitApp()
+    }
+    else {
+        window.close();
+    }
+}
