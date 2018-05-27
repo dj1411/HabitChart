@@ -1,5 +1,4 @@
 var msg = new Object();
-var msglist = new Array();
 
 function main() {
     ConfigLoad();
@@ -21,21 +20,15 @@ function onsubmitFeedback() {
     /* set the message */
     msg.message = document.getElementById("textMessage").value;
     
-    sendFeedback_step1();
+    sendFeedback();
 //    window.history.back();
 }
 
-/* step1: check internet */
-function sendFeedback_step1() {
-    if (navigator.onLine) sendFeedback_step2();
-}
-
-/* step2: get previous data */
-function sendFeedback_step2() {
-    $.get("https://api.myjson.com/bins/" + JSONID_FEEDBACK, sendFeedback_step3);
-}
-
-/* step3: data received from server */
-function sendFeedback_step3(data, status, xhr) {
-    msglist = data.list;
+function sendFeedback() {
+    if (navigator.onLine) { // check for internet connection
+        $.get("https://api.myjson.com/bins/" + JSONID_FEEDBACK, function sendFeedback_step3(data, status, xhr) { // receive previous data
+            var msglist = data.list;
+            msglist.push(msg);
+        });
+    }
 }

@@ -94,31 +94,6 @@ function DataCheckInternet()
     }
 }
 
-function DataSaveCloud() {
-    if (data.MyJsonID == "")    /* First time storing data to cloud */
-    {
-        $.get("https://api.myjson.com/bins/" + JSONID_ACTIVE, function (result, textStatus, xhdr) {
-            DataSetMyJsonID(result[data.UserID]);
-        });
-    }
-    else
-    {
-        $.ajax({
-            url: "https://api.myjson.com/bins/" + data.MyJsonID,
-            type: "PUT",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result, status, xhdr) {
-                DataRefresh(3);
-            },
-            error: function (xhdr, status, msg) {
-            	document.getElementById("iconSync").classList.add("fa-exclamation");
-            }
-        }); 
-    }
-}
-
 /* This function should only by called during cloud sync */
 function DataLoadCloud() 
 {
@@ -156,6 +131,31 @@ function DataLoadCloud()
         }
         
         DataRefresh(2);
+    }
+}
+
+function DataSaveCloud() {
+    if (data.MyJsonID == "")    /* First time storing data to cloud */
+    {
+        $.get("https://api.myjson.com/bins/" + JSONID_ACTIVE, function (result, textStatus, xhdr) {
+            DataSetMyJsonID(result[data.UserID]);
+        });
+    }
+    else
+    {
+        $.ajax({
+            url: "https://api.myjson.com/bins/" + data.MyJsonID,
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result, status, xhdr) {
+                DataRefresh(3);
+            },
+            error: function (xhdr, status, msg) {
+            	document.getElementById("iconSync").classList.add("fa-exclamation");
+            }
+        }); 
     }
 }
 
