@@ -1,4 +1,5 @@
 var msg = new Object();
+var msglist = new Array();
 
 function main() {
     ConfigLoad();
@@ -36,5 +37,5 @@ function sendFeedback_step2() {
 
 /* step3: data received from server */
 function sendFeedback_step3(data, status, xhr) {
-    alert(data);
+    msglist = data.list;
 }
