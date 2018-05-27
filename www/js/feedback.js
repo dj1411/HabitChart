@@ -20,9 +20,15 @@ function onsubmitFeedback() {
     /* set the message */
     msg.message = document.getElementById("textMessage").value;
     
-    sendFeedback();
+    sendFeedback_step1();
     window.history.back();
 }
 
-function sendFeedback() {
+/* step1: check internet */
+function sendFeedback_step1() {
+    if (navigator.onLine) sendFeedback_step2();
+}
+
+function sendFeedback_step2() {
+    
 }
