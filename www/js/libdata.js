@@ -397,18 +397,20 @@ function DataHabitRemove(habit)
 }
 
 function DataHabitMove(habitName, dir) {
-    var index = data.HabitList.findIndex( function(obj) {
+    var indexOld = data.HabitList.findIndex( function(obj) {
         return (obj.Name == habitName);
     });
     
-    var habit = data.HabitList[index];
+    var habit = data.HabitList[indexOld];
     
+    var indexNew;
     if(dir == "up")
-        index--;
+        indexNew = indexOld - 1;
     else if(dir == "down")
-        index++;
+        indexNew = indexOld + 1;
     
-    data.HabitList.splice(index, 0, habit);
+    data.HabitList.splice(indexOld, 1);
+    data.HabitList.splice(indexNew, 0, habit);
     console.log(data.HabitList);
 }
 

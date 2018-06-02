@@ -83,6 +83,7 @@
 - All previous data should be intact
 - the row should still be selected after movement, and further movement should be possible
 - selection and de-selection should work after moving
+- check if habit target is still intact after movement
 
 # sync data to server
 - The app should work perfectly without any internet connection.
