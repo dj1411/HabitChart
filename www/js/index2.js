@@ -170,6 +170,7 @@ function populateDataVal(r, c)
     return arrButton;
 }
 
+/* e.g. HabitId = HabitList_<row> */
 function selectHabit(habitId)
 {
     var selectedHabitId = DataSelectedHabitGetId();  
@@ -286,7 +287,13 @@ function onclickMoveHabitButton(dir) {
         newindex = oldindex + 1;
     
     DataHabitMove(oldindex, newindex);
-//    DataMove(selectedHabit, dir);    
+    DataMove(oldindex, newindex);
+    
+    refreshTable();
+    
+    /* todo patches to avoid selection restore */
+    DataSelectedHabitReset();
+    toggleToolbar();
 }
 
 function onclickDataCell(r, c)

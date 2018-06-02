@@ -400,6 +400,8 @@ function DataHabitMove(oldindex, newindex) {
     var habit = data.HabitList[oldindex];
     data.HabitList.splice(oldindex, 1);
     data.HabitList.splice(newindex, 0, habit);
+    
+    DataSave(true);
 }
 
 function DataAdd(date,arr)
@@ -418,8 +420,15 @@ function DataAdd(date,arr)
         DataSave(true);
 }
 
-function DataMove(habitName, dir) {
-
+function DataMove(oldindex, newindex) {
+    for(var key in data.DataList) {
+        var list = data.DataList[key];
+        var d = list[oldindex];
+        list.splice(oldindex, 1);
+        list.splice(newindex, 0, d);
+    }
+    
+    DataSave(true);
 }
 
 function DataSetCurrentID(date)
