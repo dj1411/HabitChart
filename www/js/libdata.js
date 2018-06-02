@@ -397,6 +397,7 @@ function DataHabitRemove(habit)
 }
 
 function DataHabitMove(habit, dir) {
+    console.log(habit);
 }
 
 function DataAdd(date,arr)
