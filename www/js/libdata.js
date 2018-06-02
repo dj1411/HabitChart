@@ -397,7 +397,11 @@ function DataHabitRemove(habit)
 }
 
 function DataHabitMove(habit, dir) {
-    console.log(habit);
+    var index = data.HabitList.findIndex( function(obj) {
+        return (obj.Name == habit);
+    });
+    
+    console.log(index);
 }
 
 function DataAdd(date,arr)
