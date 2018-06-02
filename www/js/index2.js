@@ -232,6 +232,18 @@ function toggleToolbar()
         $(".divToolbarSelection").css("display", "block");
         $(".divToolbarNormal").css("display", "none");
         document.getElementById("title").classList.add("w3-hide-small");
+        
+        /* disable move up/down on first/last habit */
+        var rowCur = DataSelectedHabitGetId().split("_")[1];
+        var rowLast = data.HabitList.length - 1;
+        if(document.getElementById("buttonUp").classList.contains("w3-hide"))
+            document.getElementById("buttonUp").classList.remove("w3-hide");
+        if(document.getElementById("buttonDown").classList.contains("w3-hide"))
+            document.getElementById("buttonDown").classList.remove("w3-hide");
+        if(rowCur == 0) 
+            document.getElementById("buttonUp").classList.add("w3-hide");
+        if(rowCur == rowLast)
+            document.getElementById("buttonDown").classList.add("w3-hide");
     }
 }
 
