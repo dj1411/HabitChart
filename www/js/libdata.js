@@ -396,12 +396,20 @@ function DataHabitRemove(habit)
     DataSave(true);
 }
 
-function DataHabitMove(habit, dir) {
+function DataHabitMove(habitName, dir) {
     var index = data.HabitList.findIndex( function(obj) {
-        return (obj.Name == habit);
+        return (obj.Name == habitName);
     });
     
-    console.log(index);
+    var habit = data.HabitList[index];
+    
+    if(dir == "up")
+        index--;
+    else if(dir == "down")
+        index++;
+    
+    data.HabitList.splice(index, 0, habit);
+    console.log(data.HabitList);
 }
 
 function DataAdd(date,arr)
