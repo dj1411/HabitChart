@@ -411,7 +411,6 @@ function DataHabitMove(habitName, dir) {
     
     data.HabitList.splice(indexOld, 1);
     data.HabitList.splice(indexNew, 0, habit);
-    console.log(data.HabitList);
 }
 
 function DataAdd(date,arr)
@@ -428,6 +427,21 @@ function DataAdd(date,arr)
         alert("Error Adding data");
     else
         DataSave(true);
+}
+
+function DataMove(habitName, dir) {
+    var indexOld = data.HabitList.findIndex( function(obj) {
+        return (obj.Name == habitName);
+    });    
+    
+    var indexNew;
+    if(dir == "up")
+        indexNew = indexOld - 1;
+    else if(dir == "down")
+        indexNew = indexOld + 1;
+    
+    console.log("old index: " + indexOld);
+    console.log("new index: " + indexNew);
 }
 
 function DataSetCurrentID(date)
