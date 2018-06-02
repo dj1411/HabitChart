@@ -276,6 +276,7 @@ function onclickEditHabitButton()
 
 function onclickMoveHabitButton(dir) {
     console.log("Move button pressed: " + dir);
+    console.log("Selected habit: " + selectedHabit);
 }
 
 function onclickDataCell(r, c)
