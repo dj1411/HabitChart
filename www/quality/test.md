@@ -66,7 +66,7 @@
     - fill the textbox with the data
     - submit
 - randonly enter previous data. check how the `value buttons` change.
-    
+
 # Data bar chart
 - upon changing the value in modal, the bar should display according height
     - test by chosing lower value
@@ -78,6 +78,11 @@
     - For good progress green light should be shown
     - For slow progress yellow light should be shown
     - for negative progress red light should be shown
+
+# Habit move up/down
+- All previous data should be intact
+- the row should still be selected after movement, and further movement should be possible
+- selection and de-selection should work after moving
 
 # sync data to server
 - The app should work perfectly without any internet connection.

@@ -396,6 +396,9 @@ function DataHabitRemove(habit)
     DataSave(true);
 }
 
+function DataHabitMove(habit, dir) {
+}
+
 function DataAdd(date,arr)
 {
     flgError = false;

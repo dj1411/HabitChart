@@ -274,6 +274,10 @@ function onclickEditHabitButton()
     }
 }
 
+function onclickMoveHabitButton(dir) {
+    console.log("Move button pressed: " + dir);
+}
+
 function onclickDataCell(r, c)
 {
     /* display the modal */
