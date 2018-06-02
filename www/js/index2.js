@@ -275,8 +275,18 @@ function onclickEditHabitButton()
 }
 
 function onclickMoveHabitButton(dir) {
-//    DataHabitMove(selectedHabit, dir);
-    DataMove(selectedHabit, dir);    
+    var oldindex = data.HabitList.findIndex( function(obj) {
+        return (obj.Name == selectedHabit);
+    });    
+    
+    var newindex;
+    if(dir == "up")
+        newindex = oldindex - 1;
+    else if(dir == "down")
+        newindex = oldindex + 1;
+    
+    DataHabitMove(oldindex, newindex);
+//    DataMove(selectedHabit, dir);    
 }
 
 function onclickDataCell(r, c)

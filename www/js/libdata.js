@@ -396,21 +396,10 @@ function DataHabitRemove(habit)
     DataSave(true);
 }
 
-function DataHabitMove(habitName, dir) {
-    var indexOld = data.HabitList.findIndex( function(obj) {
-        return (obj.Name == habitName);
-    });
-    
-    var habit = data.HabitList[indexOld];
-    
-    var indexNew;
-    if(dir == "up")
-        indexNew = indexOld - 1;
-    else if(dir == "down")
-        indexNew = indexOld + 1;
-    
-    data.HabitList.splice(indexOld, 1);
-    data.HabitList.splice(indexNew, 0, habit);
+function DataHabitMove(oldindex, newindex) {
+    var habit = data.HabitList[oldindex];
+    data.HabitList.splice(oldindex, 1);
+    data.HabitList.splice(newindex, 0, habit);
 }
 
 function DataAdd(date,arr)
@@ -430,18 +419,7 @@ function DataAdd(date,arr)
 }
 
 function DataMove(habitName, dir) {
-    var indexOld = data.HabitList.findIndex( function(obj) {
-        return (obj.Name == habitName);
-    });    
-    
-    var indexNew;
-    if(dir == "up")
-        indexNew = indexOld - 1;
-    else if(dir == "down")
-        indexNew = indexOld + 1;
-    
-    console.log("old index: " + indexOld);
-    console.log("new index: " + indexNew);
+
 }
 
 function DataSetCurrentID(date)
