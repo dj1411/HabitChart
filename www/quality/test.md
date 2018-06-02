@@ -118,6 +118,15 @@
 - from app: clicking the back button on main page also should exit the app
 - from app: clicking back anywhere else should not exit app
 
+# About page
+- version number is proper
+- email developer working
+- github link working
+- license accordion
+- Thanks link:
+    - are all links included. check css and js links.
+    - are links working upon click
+
 # My Release
 - enable sync
 - reset sync duration

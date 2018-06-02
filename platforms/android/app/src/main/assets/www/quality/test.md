@@ -122,10 +122,11 @@
 - enable sync
 - reset sync duration
 - set config to point to MASTER Json id. reset local data.
+- set version in const.js
 - cordova run browser
 - cordova run android emulator
 - deploy to test web server. (take a screenshot of the old one)
-- set release tag in git
+- push and set release tag in git
 
 # Official Release
 - disable sync

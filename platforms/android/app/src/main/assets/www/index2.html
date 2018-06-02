@@ -40,7 +40,7 @@
             </div>
             <a href="settings.html" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-gear w3-padding"></i>Settings</a>
             <a href="javascript:onclickFeedback()" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-envelope-o w3-padding"></i>Feedback</a>
-            <a href="#" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-info-circle w3-padding"></i>About</a>
+            <a href="javascript: onclickAbout()" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-info-circle w3-padding"></i>About</a>
             <a href="javascript:exitApp()" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-power-off w3-padding"></i>Exit</a>
         </div>
         <div id="overlaySidebar" class="w3-overlay w3-animate-opacity" onclick="sidebarHide()"></div>
@@ -110,6 +110,26 @@
                         <label class="labelHabit" id="labelHabit"></label>
                     </p>
                 </form>
+            </div>
+        </div>
+
+        <!-- About modal -->
+        <div id="modalAbout" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                <section class="w3-container w3-theme w3-large w3-padding">
+                    About
+                    <a class="w3-right" href="#"><i class="fa fa-close"></i></a>
+                </section>
+                
+                <section class="w3-container">
+                    <label id="labelTitleAbout" class="w3-large"></label><br>
+                    <label id="labelVersionAbout"></label><br>
+                    <label>Copyright (c) 2018 - Jayanta Debnath. All rights reserved.</label><br>
+                    <a href="mailto:jayanta.dn@gmail.com"><i class="fa fa-envelope"></i></a>
+                    <a href="https://github.com/jayantadn/HabitJournal"><i class="fa fa-github"></i></a>
+                    <hr>
+                </section>
+
             </div>
         </div>
 
