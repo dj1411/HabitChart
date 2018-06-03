@@ -84,6 +84,15 @@
 - the row should still be selected after movement, and further movement should be possible
 - selection and de-selection should work after moving
 - check if habit target is still intact after movement
+- disable move up/down button on first/last habit
+
+# Statistics
+- clicking outside or close button should close the modal
+- check the chart for
+    - last 7 days
+    - last 21 days
+    - overall
+- check the min, max and avg for the above
 
 # sync data to server
 - The app should work perfectly without any internet connection.

@@ -287,6 +287,10 @@ function onclickEditHabitButton()
     }
 }
 
+function onclickStatButton() {
+    document.getElementById("modalStat").style.display = "block";
+}
+
 function onclickMoveHabitButton(dir) {
     var oldindex = data.HabitList.findIndex( function(obj) {
         return (obj.Name == selectedHabit);
@@ -385,6 +389,9 @@ function onchangeTarget() {
         document.getElementById("textTimes").required = false;
         document.getElementById("textDays").required = false;
     }
+}
+
+function onchangeStat() {
 }
 
 function addupdateHabit()

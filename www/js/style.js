@@ -21,14 +21,17 @@
     var modal1 = document.getElementById("modalAddHabit");
     var modal2 = document.getElementById("modalEditData");
     var modal3 = document.getElementById("modalAbout");
+    var modal4 = document.getElementById("modalStat");
     window.onclick = function(event) {
         if (event.target == modal1 
             || event.target == modal2
             || event.target == modal3
+            || event.target == modal4
            ) {
             modal1.style.display = "none";
             modal2.style.display = "none";
             modal3.style.display = "none";
+            modal4.style.display = "none";
         }
     }
 }
