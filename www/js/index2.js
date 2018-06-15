@@ -293,6 +293,8 @@ function onclickStatButton() {
     // patch: fix border going out of modal for secStatChart 
     divwidth = document.getElementById("modalcontentStat").clientWidth;
     document.getElementById("secStatChart").style.width = (divwidth - 32) + "px"; // 32 = margin width left and right added
+    
+    createStatChart(document.getElementById("optionStat").value);
 }
 
 function onclickMoveHabitButton(dir) {
@@ -499,4 +501,17 @@ function exitApp() {
 function onback(e) {
     e.preventDefault();
     exitApp();
+}
+
+function createStatChart(numDays) {
+    // clear existing chart
+    document.getElementById("secStatChart").innerHTML = ""; 
+    
+    var row=0
+    for(; row < data.HabitList.length; row++) {
+        if(data.HabitList[row].Name == selectedHabit)
+            break;
+    }
+    
+    var arr = DataGetByRow(row).slice(0,numDays);
 }
