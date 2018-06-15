@@ -289,6 +289,10 @@ function onclickEditHabitButton()
 
 function onclickStatButton() {
     document.getElementById("modalStat").style.display = "block";
+
+    // patch: fix border going out of modal for secStatChart 
+    divwidth = document.getElementById("modalcontentStat").clientWidth;
+    document.getElementById("secStatChart").style.width = (divwidth - 32) + "px"; // 32 = margin width left and right added
 }
 
 function onclickMoveHabitButton(dir) {

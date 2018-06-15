@@ -115,7 +115,7 @@
 
         <!-- Statistics modal -->
         <div id="modalStat" class="w3-modal">
-            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+            <div id="modalcontentStat" class="w3-modal-content w3-text-theme" style="max-width:600px">
                 
                 <!-- header -->
                 <section class="w3-container w3-theme w3-large w3-padding">
@@ -124,11 +124,24 @@
                 </section>
                 
                 <!-- dropdown -->
-                <select id="optionStat" class="w3-select" onchange="onchangeStat()">
-                    <option value="7">Last 7 days</option>
-                    <option value="21" selected>Last 21 days</option>
-                    <option value="0">Overall</option>
-                </select>
+                <section>
+                    <select id="optionStat" class="w3-select" onchange="onchangeStat()">
+                        <option value="7">Last 7 days</option>
+                        <option value="21" selected>Last 21 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="0">Overall</option>
+                    </select>
+                </section>
+                
+                <!-- chart -->
+                <section id="secStatChart" class="w3-cell-row w3-border-left w3-border-bottom w3-margin" style="height: 100px">
+                    <div class="w3-cell" style="border-bottom: 20px solid"></div>
+                    <div class="w3-cell" style="border-bottom: 30px solid"></div>
+                    <div class="w3-cell" style="border-bottom: 20px solid"></div>
+                    <div class="w3-cell" style="border-bottom: 50px solid"></div>
+                </section>
+                
+                <!-- figures -->
                 
             </div>
         </div>
