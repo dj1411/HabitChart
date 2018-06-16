@@ -14,6 +14,7 @@ const WIDTH_HABIT_COL = 200;
 const WIDTH_DATA_COL = 40;
 const WIDTH_SIGN = 20;
 const HEIGHT_ROW = 50;
+const HEIGHT_STAT_CHART = 100;
 
 const COLOR_TARGET_GREEN = "lightgreen";
 const COLOR_TARGET_YELLOW = "#ffe900";

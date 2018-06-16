@@ -505,7 +505,11 @@ function onback(e) {
 
 function createStatChart(numDays) {
     // clear existing chart
-    document.getElementById("secStatChart").innerHTML = ""; 
+    var secStatChart = document.getElementById("secStatChart"); 
+    secStatChart.innerHTML = "";
+    
+    // set height of chart
+    document.getElementById("secStatChart").style.height = HEIGHT_STAT_CHART;
     
     var row=0
     for(; row < data.HabitList.length; row++) {
@@ -513,5 +517,16 @@ function createStatChart(numDays) {
             break;
     }
     
-    var arr = DataGetByRow(row).slice(0,numDays);
+    var arrData = DataGetByRow(row).slice(0,numDays);
+    
+    for (var i = 0; i < arrData.length; i++) {
+        var cell = document.createElement("div");
+        secStatChart.appendChild(cell);
+        cell.classList.add("w3-cell");
+
+        /* creating the bar chart */
+        var max = Math.max(...arrData);
+        var step = HEIGHT_STAT_CHART / max;
+        cell.style.borderBottom = (arrData[i] * step) + "px solid";
+    }    
 }
