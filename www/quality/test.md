@@ -88,10 +88,10 @@
 
 # Statistics
 - clicking outside or close button should close the modal
-- check the chart for
-    - last 7 days
-    - last 21 days
-    - overall
+- check the chart for a habit
+- select different habits and check if reflected
+- change data for a habit
+- select different range
 - check the min, max and avg for the above
 
 # sync data to server

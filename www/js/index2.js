@@ -398,6 +398,7 @@ function onchangeTarget() {
 }
 
 function onchangeStat() {
+    createStatChart(document.getElementById("optionStat").value);
 }
 
 function addupdateHabit()
@@ -517,8 +518,8 @@ function createStatChart(numDays) {
             break;
     }
     
-    var arrData = DataGetByRow(row).slice(0,numDays);
-    
+    var arrData = DataGetByRow(row);
+    if(numDays > 0) arrData = arrData.slice(0,numDays);
     for (var i = 0; i < arrData.length; i++) {
         var cell = document.createElement("div");
         secStatChart.appendChild(cell);
