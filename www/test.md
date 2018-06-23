@@ -69,12 +69,15 @@
     - fill the textbox with the data
     - submit
 - randonly enter previous data. check how the `value buttons` change.
+    - there should be values between min and max
+    - there should be one value greater than max
+    - there should be one value smaller than min
 
 # Data bar chart
 - upon changing the value in modal, the bar should display according height
     - test by chosing lower value
     - test by chosing higher value
-- randonly enter previous data. check how the bar chart changes.
+- randonly enter previous data. check how the `bar chart` changes.
     
 # Target sign colors
 - randonly enter previous data. check how the target sign color change.
@@ -83,16 +86,19 @@
     - for negative progress red light should be shown
 
 # Habit move up/down
+- arrow visibility
+    - only down arrow should be visible for the first habit
+    - only up arrow should be visible for the last habit
+    - for all other habits, both arrows should be visible
 - All previous data should be intact
 - the row should still be selected after movement, and further movement should be possible
 - selection and de-selection should work after moving
-- check if habit target is still intact after movement
-- disable move up/down button on first/last habit
+- check if habit `target` is still intact after movement
 
 # Statistics
 - clicking outside or close button should close the modal
-- check the chart for a habit
-- select different habits and check if reflected
+- verify the chart for a habit
+- select different habits and check if chart is shown for the selected one
 - change data for a habit
 - select different range
 - height of same data may vary due to range selected. e.g. max data before 7 days.
