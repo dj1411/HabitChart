@@ -17,7 +17,11 @@
             <span class="w3-bar-item" id="title">Feedback</span>
         </div>
 
-        <form class="w3-container w3-text-theme" onsubmit="onsubmitFeedback(); return false;">    
+        <form class="w3-container w3-text-theme" onsubmit="onsubmitFeedback(); return false;">
+            <p><label>Name</label></p>
+            <p><input id="name" type="text" class="w3-input"></p>
+            <p><label>Email</label></p>
+            <p><input id="email" type="text" class="w3-input"></p>
             <p><textarea id="textMessage" class="w3-border" rows="5" cols="40" placeholder="Enter your message" required></textarea></p>
             <p><input type="submit" class="w3-button w3-theme"></p>
         </form>

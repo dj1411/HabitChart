@@ -67,7 +67,7 @@ function DataValidate(d)
     /* checks for data format version 3 */
     if(d.DataFormatVer == 3) {
         for(var i=0; i<d.HabitList.length; i++) {
-            /* check if habit is empty */
+            /* check if habit name is empty */
             if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") 
                 return false;
             
@@ -396,6 +396,14 @@ function DataHabitRemove(habit)
     DataSave(true);
 }
 
+function DataHabitMove(oldindex, newindex) {
+    var habit = data.HabitList[oldindex];
+    data.HabitList.splice(oldindex, 1);
+    data.HabitList.splice(newindex, 0, habit);
+    
+    DataSave(true);
+}
+
 function DataAdd(date,arr)
 {
     flgError = false;
@@ -410,6 +418,17 @@ function DataAdd(date,arr)
         alert("Error Adding data");
     else
         DataSave(true);
+}
+
+function DataMove(oldindex, newindex) {
+    for(var key in data.DataList) {
+        var list = data.DataList[key];
+        var d = list[oldindex];
+        list.splice(oldindex, 1);
+        list.splice(newindex, 0, d);
+    }
+    
+    DataSave(true);
 }
 
 function DataSetCurrentID(date)

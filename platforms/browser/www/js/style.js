@@ -1,8 +1,10 @@
 ﻿function setStyleIndex()
 {
-    /* set the app name */
+    /* set the app name and version */
     document.title = APP_NAME;
     document.getElementById("title").innerText = APP_NAME;
+    document.getElementById("labelTitleAbout").innerText = APP_NAME;
+    document.getElementById("labelVersionAbout").innerText = "v" + APP_VER;
     
     /* sidebar header */
     if(config.name != "") document.getElementById("labelName").innerText = config.name;
@@ -18,10 +20,18 @@
     /* hide the modals */
     var modal1 = document.getElementById("modalAddHabit");
     var modal2 = document.getElementById("modalEditData");
+    var modal3 = document.getElementById("modalAbout");
+    var modal4 = document.getElementById("modalStat");
     window.onclick = function(event) {
-        if (event.target == modal1 || event.target == modal2) {
+        if (event.target == modal1 
+            || event.target == modal2
+            || event.target == modal3
+            || event.target == modal4
+           ) {
             modal1.style.display = "none";
             modal2.style.display = "none";
+            modal3.style.display = "none";
+            modal4.style.display = "none";
         }
     }
 }

@@ -1,6 +1,6 @@
 function main()
 {
-//    DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//    DataReset(0, 0, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
@@ -564,6 +564,6 @@ function createStatChart(numDays) {
     /* Filling the figures */
     document.getElementById("figMin").innerText = "Min: " + Math.min(...arrData);
     document.getElementById("figMax").innerText = "Max: " + max;
-    document.getElementById("figAct").innerText = "Avg(act): " + avgact;
-    document.getElementById("figExp").innerText = "Avg(exp): " + avgexp;
+    document.getElementById("figAct").innerText = "Avg: " + avgact;
+    document.getElementById("figExp").innerText = "Exp: " + avgexp;
 }

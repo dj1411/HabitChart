@@ -99,23 +99,18 @@
 - clicking outside or close button should close the modal
 - verify the chart for a habit
 - select different habits and check if chart is shown for the selected one
-- change data for a habit
-- select different range
+- change any data for a habit and see if reflected in chart
+- change `number of days` and see if the chart changes
 - height of same data may vary due to range selected. e.g. max data before 7 days.
 - check the min, max and avg for the above
 
 # sync data to server
-- The app should work perfectly without any internet connection.
+- Disable internet and check all the above functionality still works.
 - upon resuming internet, updated local data should be uploaded to cloud.
 - reset RAM data, local storage and cloud storage individually. check if the table is re-constructible.
 - sync should happen at app start
-- sync should happen every timeout.
 - server data should be identical to local data
 - any changes in the main page (as previous tests) should be reflected in another device
-- check if sync works when the window is minimized (on device)
-- deactivate internet in between running app. close and reopen without internet. data should be intact
-- deactivate internet in between running app. close and reopen with internet. data should be intact.
-- data tampering on server 
 
 # settings
 - clicking `settings` button should open the settings page

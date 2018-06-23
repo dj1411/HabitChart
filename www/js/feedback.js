@@ -6,13 +6,17 @@ function onsubmitFeedback() {
     var msg = new Object();
     
     /* set the user name */
-    if(config.name == "") 
+    if(document.getElementById("name").value != "") // todo this will be removed after `settings` is enabled
+        msg.name = document.getElementById("name").value;
+    else if(config.name == "") 
         msg.name = "Anonymous";
     else
         msg.name = config.name;
     
     /* set email */
-    if(config.email == "") 
+    if(document.getElementById("email").value != "") // todo this will be removed after `settings` is enabled
+        msg.email = document.getElementById("email").value;
+    else if(config.email == "") 
         msg.email = "";
     else
         msg.email = config.email;

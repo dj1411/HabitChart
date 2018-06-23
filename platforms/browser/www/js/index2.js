@@ -25,7 +25,7 @@ function testcode() {
 
 function refreshTable()
 {
-	/* check if mobile screen is too small */
+	/* check if screen is too small */
 	if( window.innerWidth < (WIDTH_HABIT_COL + WIDTH_DATA_COL) )
 	{
 		alert( "Your screen is too small for the app to run properly" );
@@ -170,6 +170,7 @@ function populateDataVal(r, c)
     return arrButton;
 }
 
+/* e.g. HabitId = HabitList_<row> */
 function selectHabit(habitId)
 {
     var selectedHabitId = DataSelectedHabitGetId();  
@@ -231,6 +232,18 @@ function toggleToolbar()
         $(".divToolbarSelection").css("display", "block");
         $(".divToolbarNormal").css("display", "none");
         document.getElementById("title").classList.add("w3-hide-small");
+        
+        /* disable move up/down on first/last habit */
+        var rowCur = DataSelectedHabitGetId().split("_")[1];
+        var rowLast = data.HabitList.length - 1;
+        if(document.getElementById("buttonUp").classList.contains("w3-hide"))
+            document.getElementById("buttonUp").classList.remove("w3-hide");
+        if(document.getElementById("buttonDown").classList.contains("w3-hide"))
+            document.getElementById("buttonDown").classList.remove("w3-hide");
+        if(rowCur == 0) 
+            document.getElementById("buttonUp").classList.add("w3-hide");
+        if(rowCur == rowLast)
+            document.getElementById("buttonDown").classList.add("w3-hide");
     }
 }
 
@@ -274,6 +287,37 @@ function onclickEditHabitButton()
     }
 }
 
+function onclickStatButton() {
+    document.getElementById("modalStat").style.display = "block";
+
+    /* patch: fix border going out of modal for secStatChart */
+    divwidth = document.getElementById("modalcontentStat").clientWidth;
+    document.getElementById("secStatChart").style.width = (divwidth - 32) + "px"; /* 32 = margin width left and right added */
+
+    createStatChart(document.getElementById("optionStat").value);
+}
+
+function onclickMoveHabitButton(dir) {
+    var oldindex = data.HabitList.findIndex( function(obj) {
+        return (obj.Name == selectedHabit);
+    });    
+    
+    var newindex;
+    if(dir == "up")
+        newindex = oldindex - 1;
+    else if(dir == "down")
+        newindex = oldindex + 1;
+    
+    DataHabitMove(oldindex, newindex);
+    DataMove(oldindex, newindex);
+    
+    refreshTable();
+    
+    /* todo patches to avoid selection restore */
+    DataSelectedHabitReset();
+    toggleToolbar();
+}
+
 function onclickDataCell(r, c)
 {
     /* display the modal */
@@ -311,6 +355,26 @@ function onclickEditDataVal(r, c, val) {
     $("#formEditData").submit(); // for strange reasons, without jquery onsubmitEditData() is not getting called!
 }
 
+function onclickFeedback() {
+    if(config.email == "jayanta.dn@gmail.com")
+        location.assign("feedbackreader.html");
+    else
+        location.assign("feedback.html");
+}
+
+function onclickAbout() {
+    sidebarHide();
+    document.getElementById("modalAbout").style.display = "block";
+}
+
+function onclickLicense() {
+    var secLicense = document.getElementById("secLicense");
+    if(secLicense.classList.contains("w3-show"))
+        secLicense.classList.remove("w3-show");
+    else
+        secLicense.classList.add("w3-show");
+}
+
 function onsubmitEditData(r, c) {
     var mom = moment();
     var date = mom.subtract(c, "day").toDate();
@@ -331,6 +395,10 @@ function onchangeTarget() {
         document.getElementById("textTimes").required = false;
         document.getElementById("textDays").required = false;
     }
+}
+
+function onchangeStat() {
+    createStatChart(document.getElementById("optionStat").value);
 }
 
 function addupdateHabit()
@@ -354,14 +422,23 @@ function addupdateHabit()
     }
 }
 
+/* compute the color of traffic light.
+ * return expected and actual average.
+ */
 function setColorSign(r) {
+    /* prepare the return value */
+    var ret = new Object();
+    
+    /* crop the data array */
     var arr = DataGetByRow(r).slice(0,MAX_HISTORY_DATA);
     
+    /* average of the complete array */
     var sum = 0;
     var i=0;
     for(; i<arr.length; i++) sum += arr[i];
     var oldavg = sum / i;
     
+    /* average of the last few days */
     var curavg = 0;
     if(arr.length <= 7) {
         curavg = arr[0];
@@ -371,18 +448,21 @@ function setColorSign(r) {
         for(var i=0; i<7; i++) sum += arr[i];
         curavg = sum / 7;
     }
+    ret.avgact = curavg;
     
     var color = "transparent";
     var hi = oldavg + 0.1*oldavg;
     var lo = oldavg - 0.1*oldavg;
     switch(data.HabitList[r].Target) {
         case "Improve":
+            ret.avgexp = hi;
             if(curavg > hi) color = COLOR_TARGET_GREEN;
             else if(curavg < lo) color = COLOR_TARGET_RED;
             else color = COLOR_TARGET_YELLOW;
             break;
             
         case "Reduce":
+            ret.avgexp = lo;
             if(curavg > hi) color = COLOR_TARGET_RED;
             else if(curavg < lo) color = COLOR_TARGET_GREEN;
             else color = COLOR_TARGET_YELLOW;
@@ -397,7 +477,9 @@ function setColorSign(r) {
                 var hiyellow = target + 0.25*target;
                 var loyellow = target - 0.25*target;
                 
-                if(oldavg > logreen && oldavg <higreen) color = COLOR_TARGET_GREEN;
+                ret.avgexp = ((higreen - logreen) / 2) + logreen;
+                if(oldavg > logreen && oldavg <higreen)
+                    color = COLOR_TARGET_GREEN;
                 else if(oldavg > loyellow && oldavg <hiyellow) color = COLOR_TARGET_YELLOW
                 else color = COLOR_TARGET_RED;
                 
@@ -409,6 +491,7 @@ function setColorSign(r) {
     }
     
     document.getElementById("sign_" + r).style.color = color;
+    return ret;
 }
 
 function sidebarShow() {
@@ -436,9 +519,51 @@ function onback(e) {
     exitApp();
 }
 
-function onclickFeedback() {
-    if(config.email == "jayanta.dn@gmail.com")
-        location.assign("feedbackreader.html");
+function createStatChart(numDays) {
+    /* clear existing chart */
+    var secStatChart = document.getElementById("secStatChart"); 
+    secStatChart.innerHTML = "";
+    
+    /* set height of chart */
+    document.getElementById("secStatChart").style.height = HEIGHT_STAT_CHART;
+    
+    /* get the row of selected habit */
+    var row=0
+    for(; row < data.HabitList.length; row++) {
+        if(data.HabitList[row].Name == selectedHabit)
+            break;
+    }
+    
+    /* create the chart */
+    var arrData = DataGetByRow(row);
+    var max = Math.max(...arrData);
+    if(numDays > 0) arrData = arrData.slice(0,numDays);
+    for (var i = 0; i < arrData.length; i++) {
+        var cell = document.createElement("div");
+        secStatChart.appendChild(cell);
+        cell.classList.add("w3-cell");
+
+        /* creating the bar chart */
+        /* Here the height calculation is done considering min as 0 */
+        var step = HEIGHT_STAT_CHART / max;
+        cell.style.borderBottom = (arrData[i] * step) + "px solid";
+    }    
+    
+    /* retrieve the actual and expected average */
+    var avg = setColorSign(row);
+    var avgexp, avgact;
+    if(avg.avgexp.toString().indexOf(".") == -1)
+        avgexp = avg.avgexp;
     else
-        location.assign("feedback.html");
+        avgexp = avg.avgexp.toString().split(".")[0] + "." + (avg.avgexp.toString().split(".")[1]).charAt(0) + (avg.avgexp.toString().split(".")[1]).charAt(1);
+    if(avg.avgact.toString().indexOf(".") == -1)
+        avgact = avg.avgact;
+    else
+        avgact = avg.avgact.toString().split(".")[0] + "." + (avg.avgact.toString().split(".")[1]).charAt(0) + (avg.avgact.toString().split(".")[1]).charAt(1);
+    
+    /* Filling the figures */
+    document.getElementById("figMin").innerText = "Min: " + Math.min(...arrData);
+    document.getElementById("figMax").innerText = "Max: " + max;
+    document.getElementById("figAct").innerText = "Avg: " + avgact;
+    document.getElementById("figExp").innerText = "Exp: " + avgexp;
 }
