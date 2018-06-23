@@ -124,7 +124,7 @@
                 </section>
                 
                 <!-- dropdown -->
-                <section class="w3-margin">
+                <section class="w3-container">
                     <select id="optionStat" class="w3-select" onchange="onchangeStat()">
                         <option value="7">Last 7 days</option>
                         <option value="21" selected>Last 21 days</option>
@@ -135,13 +135,23 @@
                 
                 <!-- chart -->
                 <section id="secStatChart" class="w3-cell-row w3-border-left w3-border-bottom w3-margin">
-                    <div class="w3-cell" style="border-bottom: 20px solid"></div>
-                    <div class="w3-cell" style="border-bottom: 30px solid"></div>
-                    <div class="w3-cell" style="border-bottom: 20px solid"></div>
-                    <div class="w3-cell" style="border-bottom: 50px solid"></div>
+                    <div class="w3-cell" style="border-bottom: 20px solid"></div> <!-- dummy -->
+                    <div class="w3-cell" style="border-bottom: 30px solid"></div> <!-- dummy -->
+                    <div class="w3-cell" style="border-bottom: 20px solid"></div> <!-- dummy -->
+                    <div class="w3-cell" style="border-bottom: 50px solid"></div> <!-- dummy -->
                 </section>
                 
                 <!-- figures -->
+                <table class="w3-container w3-table">
+                    <tr>
+                        <td>Min: </td>
+                        <td>Max: </td>
+                    </tr>
+                    <tr>
+                        <td>Expected: </td>
+                        <td>Actual: </td>
+                    </tr>
+                </table>
             </div>
         </div>
 
