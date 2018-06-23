@@ -23,11 +23,11 @@
                     <i id="iconSync" class="fa fa-stack-1x" style="color:red"></i>
                 </a>
                 
-                <a id="buttonUp" class="w3-bar-item w3-button w3-ripple divToolbarSelection" href="#"><i class="fa fa-arrow-up"></i></a>
-                <a id="buttonDown" class="w3-bar-item w3-button w3-ripple divToolbarSelection" href="#"><i class="fa fa-arrow-down"></i></a>
+                <a id="buttonUp" class="w3-bar-item w3-button w3-ripple divToolbarSelection" href="javascript: onclickMoveHabitButton('up')"><i class="fa fa-arrow-up"></i></a>
+                <a id="buttonDown" class="w3-bar-item w3-button w3-ripple divToolbarSelection" href="javascript: onclickMoveHabitButton('down')"><i class="fa fa-arrow-down"></i></a>
                 <a id="buttonEdit" class="w3-bar-item w3-button w3-ripple divToolbarSelection" href="javascript:onclickEditHabitButton()"><i class="fa fa-edit"></i></a>
                 <a id="buttonDelete" class="w3-bar-item w3-button w3-ripple divToolbarSelection" href="javascript:removeHabit()"><i class="fa fa-trash"></i></a>
-                <a id="buttonStat" class="w3-bar-item w3-button w3-ripple divToolbarSelection" href="#"><i class="fa fa-line-chart"></i></a>
+                <a id="buttonStat" class="w3-bar-item w3-button w3-ripple divToolbarSelection" href="javascript: onclickStatButton()"><i class="fa fa-line-chart"></i></a>
             </div>
         </div>
 
@@ -38,7 +38,7 @@
                 <a class="w3-right" href="javascript:sidebarHide()"><i class="fa fa-close"></i></a>
                 <br><span id="labelEmail" class="w3-small"></span>
             </div>
-            <a href="settings.html" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-gear w3-padding"></i>Settings</a>
+            <a href="settings.html" class="w3-disabled w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-gear w3-padding"></i>Settings</a>
             <a href="javascript:onclickFeedback()" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-envelope-o w3-padding"></i>Feedback</a>
             <a href="javascript: onclickAbout()" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-info-circle w3-padding"></i>About</a>
             <a href="javascript:exitApp()" class="w3-bar-item w3-button w3-hover-border-theme w3-ripple"><i class="fa fa-power-off w3-padding"></i>Exit</a>
@@ -77,7 +77,7 @@
                     </p>
                     <p>
                         <div class="w3-bar">
-                            <button class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalAddHabit').style.display='none'">Cancel</button>
+                            <input type="button" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalAddHabit').style.display='none'" value="Cancel"></button>
                             <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
                         </div>
                     </p>
@@ -96,12 +96,6 @@
                         <input id="textData" class="w3-input" type="number" required>
                     </p>
                     <p>
-                        <div class="w3-bar">
-                            <button class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalEditData').style.display='none'">Cancel</button>
-                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
-                        </div>
-                    </p>
-                    <p>
                         <label>Date: </label>
                         <label class="labelDate" id="labelDate"></label>
                     </p>
@@ -109,34 +103,126 @@
                         <label>Habit: </label>
                         <label class="labelHabit" id="labelHabit"></label>
                     </p>
+                    <p>
+                        <div class="w3-bar">
+                            <input type="button" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalEditData').style.display='none'" value="Cancel"></button>
+                            <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
+                        </div>
+                    </p>
                 </form>
+            </div>
+        </div>
+
+        <!-- Statistics modal -->
+        <div id="modalStat" class="w3-modal">
+            <div id="modalcontentStat" class="w3-modal-content w3-text-theme" style="max-width:600px">
+                
+                <!-- header -->
+                <section class="w3-container w3-theme w3-large w3-padding">
+                    Statistics
+                    <a class="w3-right" onclick="javascript: document.getElementById('modalStat').style.display = 'none'"><i class="fa fa-close"></i></a>
+                </section>
+                
+                <!-- dropdown -->
+                <section class="w3-container">
+                    <select id="optionStat" class="w3-select" onchange="onchangeStat()">
+                        <option value="7">Last 7 days</option>
+                        <option value="21" selected>Last 21 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="0">Overall</option>
+                    </select>
+                </section>
+                
+                <!-- chart -->
+                <section id="secStatChart" class="w3-cell-row w3-border-left w3-border-bottom w3-margin">
+                    <div class="w3-cell" style="border-bottom: 20px solid"></div> <!-- dummy -->
+                    <div class="w3-cell" style="border-bottom: 30px solid"></div> <!-- dummy -->
+                    <div class="w3-cell" style="border-bottom: 20px solid"></div> <!-- dummy -->
+                    <div class="w3-cell" style="border-bottom: 50px solid"></div> <!-- dummy -->
+                </section>
+                
+                <!-- figures -->
+                <table class="w3-container w3-table">
+                    <tr>
+                        <td id="figMin">Min: </td>
+                        <td id="figMax">Max: </td>
+                    </tr>
+                    <tr>
+                        <td id="figAct">Current Avg: </td>
+                        <td id="figExp">Expected Avg: </td>
+                    </tr>
+                </table>
             </div>
         </div>
 
         <!-- About modal -->
         <div id="modalAbout" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                
+                <!-- header -->
                 <section class="w3-container w3-theme w3-large w3-padding">
                     About
-                    <a class="w3-right" href="#"><i class="fa fa-close"></i></a>
+                    <a class="w3-right" onclick="javascript: document.getElementById('modalAbout').style.display = 'none'"><i class="fa fa-close"></i></a>
                 </section>
                 
+                <!-- app info -->
                 <section class="w3-container">
-                    <label id="labelTitleAbout" class="w3-large"></label><br>
+                    <label id="labelTitleAbout" class="w3-xlarge"></label><br>
                     <label id="labelVersionAbout"></label><br>
                     <label>Copyright (c) 2018 - Jayanta Debnath. All rights reserved.</label><br>
                     <a href="mailto:jayanta.dn@gmail.com"><i class="fa fa-envelope"></i></a>
                     <a href="https://github.com/jayantadn/HabitJournal"><i class="fa fa-github"></i></a>
-                    <hr>
                 </section>
 
+                <!-- license -->
+                <section class="w3-margin">
+                    <button onclick="onclickLicense()" class="w3-button w3-theme-light w3-border w3-left-align" style="width: 100%">
+                        License <i class="fa fa-caret-down w3-right"></i>
+                    </button>
+                    <section id="secLicense" class="w3-border w3-hide">
+<p>MIT License</p>
+
+<p>Copyright (c) 2018 Jayanta Debnath</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+                    </section>
+                </section>
+                
+                <!-- thanks section -->
+                <section class="w3-container">
+                    <label class="w3-large">Special thanks to:</label><br>
+                    <div class="w3-center">
+                        <a href="https://cordova.apache.org/">https://cordova.apache.org/</a><br>
+                        <a href="https://jquery.com/">https://jquery.com/</a><br>
+                        <a href="https://momentjs.com/">https://momentjs.com/</a><br>
+                        <a href="https://www.w3schools.com/w3css/">https://www.w3schools.com/w3css/</a><br>
+                        <a href="https://fontawesome.com/">https://fontawesome.com/</a><br>
+                    </div>
+                </section>                
+                
             </div>
         </div>
 
         <!-- including all script files -->
+        <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/moment/moment.min.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/const.js"></script>
         <script type="text/javascript" src="js/style.js"></script>
         <script type="text/javascript" src="js/settings.js"></script>

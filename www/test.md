@@ -124,21 +124,21 @@
 # Feedback
 - the form should be displayed properly
 - back button should go the the previous page
-- upon submit, data should be available online
-- feedback success message is displayed
+- upon submit feedback success message is displayed
+- data should be available online (https://api.myjson.com/bins/15kbim)
 
-# Feedback Reader (change email to jayanta.dn@gmail.com)
+# Feedback Reader
 - add a new message, it should be visible in the reader
 - clicking email button should work
 
-# Exit App
-- clicking the exit button should exit:
-    - from browser
-    - from app
-- from app: clicking the back button on main page also should exit the app
-- from app: clicking back anywhere else should not exit app
+# Exit App (test in emulator)
+- clicking the exit button should exit
+- clicking the back button on main page also should exit the app
+- clicking back in other pages should not exit app
 
-# About page
+# About page (test in emulator)
+- close button should close modal
+- clicking outside should close modal
 - version number is proper
 - email developer working
 - github link working
@@ -147,26 +147,4 @@
     - are all links included. check css and js links.
     - are links working upon click
 
-# My Release
-- enable sync
-- reset sync duration
-- set config to point to MASTER Json id. reset local data.
-- cordova run browser
-- cordova run android emulator
-- deploy to test web server. (take a screenshot of the old one)
-- push and set release tag in git
 
-# Official Release
-- disable sync
-- screen size test
-    - small screens
-        - all habit names are visible properly
-        - at least one data column should be visible
-        - toolbar all icons should be visible in one line
-        - settings page is displayed properly
-        - all modals are displayed properly
-    - medium screen (owned by me)
-        - at least 5 data columns should be visible
-    - large screen
-        - all modals are displayed properly
-        - other pages form is displayed properly

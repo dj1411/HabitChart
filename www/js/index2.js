@@ -1,6 +1,6 @@
 function main()
 {
-//    DataReset(0, 0, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
