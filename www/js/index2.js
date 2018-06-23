@@ -25,7 +25,7 @@ function testcode() {
 
 function refreshTable()
 {
-	/* check if mobile screen is too small */
+	/* check if screen is too small */
 	if( window.innerWidth < (WIDTH_HABIT_COL + WIDTH_DATA_COL) )
 	{
 		alert( "Your screen is too small for the app to run properly" );
@@ -290,10 +290,10 @@ function onclickEditHabitButton()
 function onclickStatButton() {
     document.getElementById("modalStat").style.display = "block";
 
-    // patch: fix border going out of modal for secStatChart 
+    /* patch: fix border going out of modal for secStatChart */
     divwidth = document.getElementById("modalcontentStat").clientWidth;
-    document.getElementById("secStatChart").style.width = (divwidth - 32) + "px"; // 32 = margin width left and right added
-    
+    document.getElementById("secStatChart").style.width = (divwidth - 32) + "px"; /* 32 = margin width left and right added */
+
     createStatChart(document.getElementById("optionStat").value);
 }
 
@@ -422,14 +422,23 @@ function addupdateHabit()
     }
 }
 
+/* compute the color of traffic light.
+ * return expected and actual average.
+ */
 function setColorSign(r) {
+    /* prepare the return value */
+    var ret = new Object();
+    
+    /* crop the data array */
     var arr = DataGetByRow(r).slice(0,MAX_HISTORY_DATA);
     
+    /* average of the complete array */
     var sum = 0;
     var i=0;
     for(; i<arr.length; i++) sum += arr[i];
     var oldavg = sum / i;
     
+    /* average of the last few days */
     var curavg = 0;
     if(arr.length <= 7) {
         curavg = arr[0];
@@ -439,18 +448,21 @@ function setColorSign(r) {
         for(var i=0; i<7; i++) sum += arr[i];
         curavg = sum / 7;
     }
+    ret.avgact = curavg;
     
     var color = "transparent";
     var hi = oldavg + 0.1*oldavg;
     var lo = oldavg - 0.1*oldavg;
     switch(data.HabitList[r].Target) {
         case "Improve":
+            ret.avgexp = hi;
             if(curavg > hi) color = COLOR_TARGET_GREEN;
             else if(curavg < lo) color = COLOR_TARGET_RED;
             else color = COLOR_TARGET_YELLOW;
             break;
             
         case "Reduce":
+            ret.avgexp = lo;
             if(curavg > hi) color = COLOR_TARGET_RED;
             else if(curavg < lo) color = COLOR_TARGET_GREEN;
             else color = COLOR_TARGET_YELLOW;
@@ -465,7 +477,9 @@ function setColorSign(r) {
                 var hiyellow = target + 0.25*target;
                 var loyellow = target - 0.25*target;
                 
-                if(oldavg > logreen && oldavg <higreen) color = COLOR_TARGET_GREEN;
+                ret.avgexp = ((higreen - logreen) / 2) + logreen;
+                if(oldavg > logreen && oldavg <higreen)
+                    color = COLOR_TARGET_GREEN;
                 else if(oldavg > loyellow && oldavg <hiyellow) color = COLOR_TARGET_YELLOW
                 else color = COLOR_TARGET_RED;
                 
@@ -477,6 +491,7 @@ function setColorSign(r) {
     }
     
     document.getElementById("sign_" + r).style.color = color;
+    return ret;
 }
 
 function sidebarShow() {
@@ -505,20 +520,23 @@ function onback(e) {
 }
 
 function createStatChart(numDays) {
-    // clear existing chart
+    /* clear existing chart */
     var secStatChart = document.getElementById("secStatChart"); 
     secStatChart.innerHTML = "";
     
-    // set height of chart
+    /* set height of chart */
     document.getElementById("secStatChart").style.height = HEIGHT_STAT_CHART;
     
+    /* get the row of selected habit */
     var row=0
     for(; row < data.HabitList.length; row++) {
         if(data.HabitList[row].Name == selectedHabit)
             break;
     }
     
+    /* create the chart */
     var arrData = DataGetByRow(row);
+    var max = Math.max(...arrData);
     if(numDays > 0) arrData = arrData.slice(0,numDays);
     for (var i = 0; i < arrData.length; i++) {
         var cell = document.createElement("div");
@@ -526,8 +544,26 @@ function createStatChart(numDays) {
         cell.classList.add("w3-cell");
 
         /* creating the bar chart */
-        var max = Math.max(...arrData);
+        /* Here the height calculation is done considering min as 0 */
         var step = HEIGHT_STAT_CHART / max;
         cell.style.borderBottom = (arrData[i] * step) + "px solid";
     }    
+    
+    /* retrieve the actual and expected average */
+    var avg = setColorSign(row);
+    var avgexp, avgact;
+    if(avg.avgexp.toString().indexOf(".") == -1)
+        avgexp = avg.avgexp;
+    else
+        avgexp = avg.avgexp.toString().split(".")[0] + "." + (avg.avgexp.toString().split(".")[1]).charAt(0) + (avg.avgexp.toString().split(".")[1]).charAt(1);
+    if(avg.avgact.toString().indexOf(".") == -1)
+        avgact = avg.avgact;
+    else
+        avgact = avg.avgact.toString().split(".")[0] + "." + (avg.avgact.toString().split(".")[1]).charAt(0) + (avg.avgact.toString().split(".")[1]).charAt(1);
+    
+    /* Filling the figures */
+    document.getElementById("figMin").innerText = "Min: " + Math.min(...arrData);
+    document.getElementById("figMax").innerText = "Max: " + max;
+    document.getElementById("figAct").innerText = "Avg(act): " + avgact;
+    document.getElementById("figExp").innerText = "Avg(exp): " + avgexp;
 }
