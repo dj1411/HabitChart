@@ -11,6 +11,7 @@
     - Apply Break point at DataValidate()
     - do single step debugging
     - change values in cloud to check if each "return false" is executed
+- move some habit up/down and check the data validation
 
 # Save changes in bar
 - Set value of an empty cell. Reopen the application. See if the value is still there.
@@ -19,31 +20,33 @@
 # Add Habit
 - new modal should open with the following:
 	- `Target` dropdown
-	- if `Target` is `Reach` then additional input fields should be shown
 	- text entry field
     - submit and cancel button
+	- if `Target` is `Reach` then additional input fields should be shown
 - the modal should close upon clicking outside
-- clicking cancel should go to main page
+- clicking cancel should close the modal
 - Clicking submit on empty data should stay on the modal
 - clicking submit should add a new row with all data cleared
 - pressing enter should also add the habit
-- duplicate habit names should not be allowed
 - new habit should be saved on exit
+- duplicate habit names should not be allowed
 - new habit change in data should be saved to cloud
 - selected `Target` should reflect in the cloud data. Test for each `Target`.
 
 # update habit
 - click randomly and check if selection and de-selection of habit works. 
 - toolbar buttons should only be visible when a habit is selected.
-- in the modal, habit name and other data should be prefilled 
+- in the modal, all values should be prefilled 
+    - Habit name
+    - habit frequency if applicable
 - `Update` label on top should be visible instead of 'Add'.
-- clicking cancel should go to main page
+- update value and click cancel. should go to main page without any changes.
 - clicking update, habit name and other data should change
 - only changing the Target without changing Name should be allowed
 - update without changing anything should have no impact
 - all bars should have the previous values
 - restarting the app should retain the updated habit
-- select habit and wait for periodic cloud sync. GUI state should as before.
+- select habit and wait for periodic cloud sync. GUI state should be as before.
 
 # delete habit
 - confirmation dialog before delete

@@ -67,7 +67,7 @@ function DataValidate(d)
     /* checks for data format version 3 */
     if(d.DataFormatVer == 3) {
         for(var i=0; i<d.HabitList.length; i++) {
-            /* check if habit is empty */
+            /* check if habit name is empty */
             if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") 
                 return false;
             
