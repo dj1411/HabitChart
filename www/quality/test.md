@@ -92,6 +92,7 @@
 - select different habits and check if reflected
 - change data for a habit
 - select different range
+- height of same data may vary due to range selected. e.g. max data before 7 days.
 - check the min, max and avg for the above
 
 # sync data to server
