@@ -1,4 +1,5 @@
 # My Release
+- update version number in const.js
 - enable sync
 - reset sync duration
 - set const.js to point to MASTER Json id. reset local data.

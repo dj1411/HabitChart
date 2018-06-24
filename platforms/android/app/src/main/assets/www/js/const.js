@@ -23,7 +23,7 @@
  *******************************************************************************/
 
 const APP_NAME = "Habit Journal"
-const APP_VER = "0.6.0"
+const APP_VER = "0.6.1"
 
 const SYNC_ENABLE = true;
 const SYNC_INTERVAL_S = 300;
