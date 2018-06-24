@@ -41,6 +41,9 @@ function setStyleIndex()
     if(SYNC_ENABLE == false)
         document.getElementById("buttonSync").classList.add("w3-hide");
     
+    /* set size of input text fields */
+    document.getElementById("textHabit").maxLength = WIDTH_HABIT_COL / (15/2); // 15 = w3.css default font size in px
+    
     /* hide the modals */
     var modal1 = document.getElementById("modalAddHabit");
     var modal2 = document.getElementById("modalEditData");

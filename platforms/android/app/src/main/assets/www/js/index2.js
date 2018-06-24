@@ -24,7 +24,7 @@
 
 function main()
 {
-//    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//    DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
@@ -422,7 +422,7 @@ function onchangeStat() {
 function addupdateHabit()
 {
     var habit = new Object();
-    habit.Name = document.getElementById("textHabit").value;
+    habit.Name = document.getElementById("textHabit").value.trim();
     habit.Target = document.getElementById("optionTarget").value;
     
     if(habit.Target.slice(0,5) == "Reach") {
