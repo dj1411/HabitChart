@@ -154,15 +154,9 @@ function refreshTable()
             else if(arrData.length == 1) {
                 height = HEIGHT_ROW;
             }
-            else if(curData <= min) {
-                height = 1;
-            }
-            else if(curData >= max) {
-                height = HEIGHT_ROW;
-            }
             else {
-                var step = HEIGHT_ROW / (max - min);
-                height = min + curData*step;
+                var step = HEIGHT_ROW / max;
+                height = curData*step;
             }
             cell.style.borderBottom = height + "px solid";
         }
