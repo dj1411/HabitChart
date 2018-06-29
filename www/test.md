@@ -92,6 +92,7 @@
     - only down arrow should be visible for the first habit
     - only up arrow should be visible for the last habit
     - for all other habits, both arrows should be visible
+    - for a single habit, no arrow should be visible
 - All previous data should be intact
 - the row should still be selected after movement, and further movement should be possible
 - selection and de-selection should work after moving
