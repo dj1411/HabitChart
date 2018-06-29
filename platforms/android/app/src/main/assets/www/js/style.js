@@ -44,6 +44,12 @@ function setStyleIndex()
     /* set size of input text fields */
     document.getElementById("textHabit").maxLength = WIDTH_HABIT_COL / (15/2); // 15 = w3.css default font size in px
     
+    /* disable exit button for browser */
+    if(navigator.userAgent.indexOf("Android") == -1) {         
+        document.getElementById("buttonExit").classList.add("w3-disabled");
+    }
+
+    
     /* hide the modals */
     var modal1 = document.getElementById("modalAddHabit");
     var modal2 = document.getElementById("modalEditData");

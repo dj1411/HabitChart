@@ -1,6 +1,30 @@
+/*******************************************************************************
+ * MIT License
+ * 
+ * Copyright (c) 2018 Jayanta Debnath
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *******************************************************************************/
+
 function main()
 {
-//    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+//    DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
@@ -122,7 +146,6 @@ function refreshTable()
             var curData = DataGetByRC(r, c);
             var arrData = DataGetByRow(r).slice(0,MAX_HISTORY_DATA);
             var max = Math.max(...arrData);
-            var min = Math.min(...arrData);
             var height = 0;
             if(curData == 0) {
                 height = 0;
@@ -130,15 +153,9 @@ function refreshTable()
             else if(arrData.length == 1) {
                 height = HEIGHT_ROW;
             }
-            else if(curData <= min) {
-                height = 1;
-            }
-            else if(curData >= max) {
-                height = HEIGHT_ROW;
-            }
             else {
-                var step = HEIGHT_ROW / (max - min);
-                height = min + curData*step;
+                var step = HEIGHT_ROW / max;
+                height = curData*step;
             }
             cell.style.borderBottom = height + "px solid";
         }
@@ -404,7 +421,7 @@ function onchangeStat() {
 function addupdateHabit()
 {
     var habit = new Object();
-    habit.Name = document.getElementById("textHabit").value;
+    habit.Name = document.getElementById("textHabit").value.trim();
     habit.Target = document.getElementById("optionTarget").value;
     
     if(habit.Target.slice(0,5) == "Reach") {

@@ -32,8 +32,9 @@
 - duplicate habit names should not be allowed
 - new habit change in data should be saved to cloud
 - selected `Target` should reflect in the cloud data. Test for each `Target`.
+- try to add a very long habit name
 
-# update habit
+# Edit habit
 - click randomly and check if selection and de-selection of habit works. 
 - toolbar buttons should only be visible when a habit is selected.
 - in the modal, all values should be prefilled 
@@ -47,6 +48,7 @@
 - all bars should have the previous values
 - restarting the app should retain the updated habit
 - select habit and wait for periodic cloud sync. GUI state should be as before.
+- try to edit a habit name to very long name
 
 # delete habit
 - confirmation dialog before delete

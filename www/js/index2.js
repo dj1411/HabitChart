@@ -146,7 +146,6 @@ function refreshTable()
             var curData = DataGetByRC(r, c);
             var arrData = DataGetByRow(r).slice(0,MAX_HISTORY_DATA);
             var max = Math.max(...arrData);
-            var min = Math.min(...arrData);
             var height = 0;
             if(curData == 0) {
                 height = 0;

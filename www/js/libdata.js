@@ -54,9 +54,9 @@ function DataValidate(d)
     d = JSON.parse(d);
 
     /* CurrentID should not be greater than current date */
-    var dd = new Date();
-    if (d.CurrentID.split("_")[0] > dd.getDate())
-        return false;
+//    var dd = new Date();
+//    if (d.CurrentID.split("_")[0] > dd.getDate())
+//        return false;
 
     /* mandatory fields should not be blank */
     if (d.DataFormatVer == "" || d.DataFormatVer == null || d.DataFormatVer == undefined)

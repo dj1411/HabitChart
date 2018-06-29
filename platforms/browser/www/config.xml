@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atwebpages.debnath.habitjournal" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Habit Journal</name>
+<widget id="com.atwebpages.debnath.habitjournal" version="0.6.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name short="HabitJournal">Habit Journal</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Habit tracking app.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="jayanta.dn@gmail.com" href="http://debnath.atwebpages.com/">
+        Jayanta Debnath
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -15,4 +15,5 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <icon src="www/img/logo.png" />
 </widget>
