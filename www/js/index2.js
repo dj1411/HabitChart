@@ -158,7 +158,7 @@ function refreshTable()
                 height = curData*step;
             }
             cell.style.borderBottom = height + "px solid";
-//            cell.style.borderBottomColor = "#74d14c";
+            cell.style.borderBottomColor = "#74d14c";
         }
     }
 }
