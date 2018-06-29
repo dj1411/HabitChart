@@ -158,6 +158,7 @@ function refreshTable()
                 height = curData*step;
             }
             cell.style.borderBottom = height + "px solid";
+            cell.style.borderBottomColor = "#74d14c";
         }
     }
 }
@@ -384,6 +385,12 @@ function onclickAbout() {
     document.getElementById("modalAbout").style.display = "block";
 }
 
+function onclickHelp() {
+    sidebarHide();
+    document.getElementById("modalHelp").style.display = "block";
+    slideshowHelp(0);
+}
+
 function onclickLicense() {
     var secLicense = document.getElementById("secLicense");
     if(secLicense.classList.contains("w3-show"))
@@ -553,8 +560,8 @@ function createStatChart(numDays) {
     
     /* create the chart */
     var arrData = DataGetByRow(row);
-    var max = Math.max(...arrData);
     if(numDays > 0) arrData = arrData.slice(0,numDays);
+    var max = Math.max(...arrData);
     for (var i = 0; i < arrData.length; i++) {
         var cell = document.createElement("div");
         secStatChart.appendChild(cell);
@@ -583,4 +590,32 @@ function createStatChart(numDays) {
     document.getElementById("figMax").innerText = "Max: " + max;
     document.getElementById("figAct").innerText = "Avg: " + avgact;
     document.getElementById("figExp").innerText = "Exp: " + avgexp;
+}
+
+function slideshowHelp(dir) {
+    var x = document.getElementsByClassName("slideHelp");
+    var curIdx = 0;
+    
+    for (i = 0; i < x.length; i++) {
+        if(x[i].style.display == "block")
+            curIdx = i;
+        x[i].style.display = "none";
+    }
+
+    console.log(curIdx);
+    switch(dir) {
+        case 0:     /* show the first image */
+            x[0].style.display = "block";
+            break;
+            
+        case 1:     /* show the next image */
+            if(curIdx == (x.length-1)) curIdx--;
+            x[curIdx+1].style.display = "block";
+            break;
+
+        case -1:     /* show the prev image */
+            if(curIdx == 0) curIdx++;
+            x[curIdx-1].style.display = "block";
+            break;
+    }
 }

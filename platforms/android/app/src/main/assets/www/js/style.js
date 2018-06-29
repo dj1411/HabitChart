@@ -55,16 +55,19 @@ function setStyleIndex()
     var modal2 = document.getElementById("modalEditData");
     var modal3 = document.getElementById("modalAbout");
     var modal4 = document.getElementById("modalStat");
+    var modal5 = document.getElementById("modalHelp");
     window.onclick = function(event) {
         if (event.target == modal1 
             || event.target == modal2
             || event.target == modal3
             || event.target == modal4
+            || event.target == modal5
            ) {
             modal1.style.display = "none";
             modal2.style.display = "none";
             modal3.style.display = "none";
             modal4.style.display = "none";
+            modal5.style.display = "none";
         }
     }
 }

@@ -158,6 +158,7 @@ function refreshTable()
                 height = curData*step;
             }
             cell.style.borderBottom = height + "px solid";
+//            cell.style.borderBottomColor = "#74d14c";
         }
     }
 }
@@ -559,8 +560,8 @@ function createStatChart(numDays) {
     
     /* create the chart */
     var arrData = DataGetByRow(row);
-    var max = Math.max(...arrData);
     if(numDays > 0) arrData = arrData.slice(0,numDays);
+    var max = Math.max(...arrData);
     for (var i = 0; i < arrData.length; i++) {
         var cell = document.createElement("div");
         secStatChart.appendChild(cell);
