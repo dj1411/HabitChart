@@ -480,7 +480,7 @@ function setColorSign(r) {
     switch(data.HabitList[r].Target) {
         case "Improve":
             ret.avgexp = hi;
-            if(curavg > hi) color = COLOR_TARGET_GREEN;
+            if(curavg >= hi) color = COLOR_TARGET_GREEN;
             else if(curavg < lo) color = COLOR_TARGET_RED;
             else color = COLOR_TARGET_YELLOW;
             break;
@@ -488,7 +488,7 @@ function setColorSign(r) {
         case "Reduce":
             ret.avgexp = lo;
             if(curavg > hi) color = COLOR_TARGET_RED;
-            else if(curavg < lo) color = COLOR_TARGET_GREEN;
+            else if(curavg <= lo) color = COLOR_TARGET_GREEN;
             else color = COLOR_TARGET_YELLOW;
             break;
             
@@ -502,9 +502,9 @@ function setColorSign(r) {
                 var loyellow = target - 0.25*target;
                 
                 ret.avgexp = ((higreen - logreen) / 2) + logreen;
-                if(oldavg > logreen && oldavg <higreen)
+                if(oldavg >= logreen && oldavg <= higreen)
                     color = COLOR_TARGET_GREEN;
-                else if(oldavg > loyellow && oldavg <hiyellow) color = COLOR_TARGET_YELLOW
+                else if(oldavg > loyellow && oldavg < hiyellow) color = COLOR_TARGET_YELLOW
                 else color = COLOR_TARGET_RED;
                 
                 break;
