@@ -462,7 +462,7 @@ function setColorSign(r) {
     for(; i<arr.length; i++) sum += arr[i];
     var oldavg = sum / i;
     
-    /* average of the last few days */
+    /* average of the last 7 days */
     var curavg = 0;
     if(arr.length <= 7) {
         curavg = arr[0];
@@ -472,7 +472,7 @@ function setColorSign(r) {
         for(var i=0; i<7; i++) sum += arr[i];
         curavg = sum / 7;
     }
-    ret.avgact = curavg;
+    ret.avgact = curavg;    /* for improve and reduce */
     
     var color = "transparent";
     var hi = oldavg + 0.1*oldavg;
@@ -501,7 +501,8 @@ function setColorSign(r) {
                 var hiyellow = target + 0.25*target;
                 var loyellow = target - 0.25*target;
                 
-                ret.avgexp = ((higreen - logreen) / 2) + logreen;
+                ret.avgexp = target;
+                ret.avgact = oldavg;    /* for reach */
                 if(oldavg >= logreen && oldavg <= higreen)
                     color = COLOR_TARGET_GREEN;
                 else if(oldavg > loyellow && oldavg < hiyellow) color = COLOR_TARGET_YELLOW
