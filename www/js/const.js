@@ -40,6 +40,6 @@ const WIDTH_SIGN = 20;
 const HEIGHT_ROW = 50;
 const HEIGHT_STAT_CHART = 100;
 
-const COLOR_TARGET_GREEN = "lightgreen";
+const COLOR_TARGET_GREEN = "#74d14c";
 const COLOR_TARGET_YELLOW = "#ffe900";
 const COLOR_TARGET_RED = "red";
