@@ -80,10 +80,10 @@ function DataValidate(d)
             return false;
 
         /* DataList entries should be contiguous */
-        if ((prevEntry != 0) && parseInt(key.split("_")[1]) != (prevEntry + 1))
-            return false;
-        else
-            prevEntry = parseInt(key.split("_")[1]);
+//        if ((prevEntry != 0) && parseInt(key.split("_")[1]) != (prevEntry + 1))
+//            return false;
+//        else
+//            prevEntry = parseInt(key.split("_")[1]);
     }
     if (keyCurrentID == false)
         return false;

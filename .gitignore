@@ -1,4 +1,3 @@
-
 /platforms/android/app/build/generated
 /platforms/android/app/build/intermediates
 /platforms/android/CordovaLib/build
@@ -11,3 +10,5 @@
 /platforms/android/app/src/main/assets/www/index.html
 /platforms/android/app/src/main/assets/www/js/config.js
 /platforms/android/app/src/main/assets/www/js/libdata.js
+
+/platforms/android/app/build/outputs

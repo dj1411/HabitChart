@@ -23,9 +23,9 @@
  *******************************************************************************/
 
 const APP_NAME = "Habit Journal"
-const APP_VER = "0.7.0"
+const APP_VER = "1.0.0"
 
-const SYNC_ENABLE = true;
+const SYNC_ENABLE = false;
 const SYNC_INTERVAL_S = 300;
 const MAX_HISTORY_DATA = 21;
 
