@@ -22,8 +22,10 @@
  * SOFTWARE.
  *******************************************************************************/
 
-const APP_NAME = "Habit Journal"
-const APP_VER = "1.0.0"
+const APP_NAME = "Habit Journal";
+const APP_VER = "1.0.0";
+
+const DATA_FORMAT_VER = 4;
 
 const SYNC_ENABLE = false;
 const SYNC_INTERVAL_S = 300;

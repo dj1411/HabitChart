@@ -512,9 +512,10 @@ function DataFormatConversion()
         Assuming no other operation on the data is started yet.
     */
     
-    /* converting from ver 2 to 3 */
-    if (data.DataFormatVer == 2 && dataInit.DataFormatVer == 3)
-    {
+    var formatchange = false;
+    
+    /* converting from ver 2 to 3. Habit `target` added. */
+    if (data.DataFormatVer == 2 && dataInit.DataFormatVer == 3) {
         var oldHabitList = data.HabitList;
         var newHabitList = new Array();
         for(var i=0; i<oldHabitList.length; i++) {
@@ -525,8 +526,41 @@ function DataFormatConversion()
         }
         data.HabitList = newHabitList;
         data.DataFormatVer = 3;
+        formatchange = true;
+    }
+
+    /* converting from ver 3 to 4. Habit `entry` date is added. */
+    if (data.DataFormatVer == 3 && DATA_FORMAT_VER == 4) {
+        /* find the oldest date */
+        var entrymon = 12;
+        for( var key in data.DataList ) {
+            if( key.split("_")[2] < entrymon )
+                entrymon = key.split("_")[2];
+        }
+        var entrydate = 31;
+        for( var key in data.DataList ) {
+            if( (key.split("_")[2] == entrymon) && (key.split("_")[1] < entrydate) )
+                entrydate = key.split("_")[1];
+        }
+        
+        /* update the data */
+        var oldHabitList = data.HabitList;
+        var newHabitList = new Array();
+        for(var i=0; i<oldHabitList.length; i++) {
+            var obj = new Object();
+            obj.Name = oldHabitList[i].Name;
+            obj.Target = oldHabitList[i].Target;
+            obj.Entry = "Date_" + entrydate + "_" + entrymon;
+            newHabitList.push(obj);
+        }
+        data.HabitList = newHabitList;
+        data.DataFormatVer = 4; // dont put the const here
+        formatchange = true;
+    }
+    
+    if(formatchange) {
         DataSave(true);
-        location.reload();
+        location.reload();        
     }
 }
 

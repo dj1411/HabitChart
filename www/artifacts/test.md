@@ -11,11 +11,6 @@
     - Apply Break point at DataValidate()
     - do single step debugging
     - change values in cloud to check if each "return false" is executed
-- move some habit up/down and check the data validation
-
-# Save changes in bar
-- Set value of an empty cell. Reopen the application. See if the value is still there.
-- Change value of an existing cell with value. Reopen the application. See if the value is still there.
 
 # Add Habit
 - new modal should open with the following:
@@ -33,6 +28,7 @@
 - new habit change in data should be saved to cloud
 - selected `Target` should reflect in the cloud data. Test for each `Target`.
 - try to add a very long habit name
+- All data before today should be disabled
 
 # Edit habit
 - click randomly and check if selection and de-selection of habit works. 
@@ -49,6 +45,7 @@
 - restarting the app should retain the updated habit
 - select habit and wait for periodic cloud sync. GUI state should be as before.
 - try to edit a habit name to very long name
+- Habit `entry` date should not be affected
 
 # delete habit
 - confirmation dialog before delete
@@ -74,6 +71,7 @@
     - there should be values between min and max
     - there should be one value greater than max
     - there should be one value smaller than min
+- disable edit data for older dates than Habit was created
 
 # Data bar chart
 - upon changing the value in modal, the bar should display according height
@@ -86,6 +84,7 @@
     - For good progress green light should be shown
     - For slow progress yellow light should be shown
     - for negative progress red light should be shown
+- target sign colors should be computed starting from data `entry` date only
 
 # Habit move up/down
 - arrow visibility
@@ -97,6 +96,7 @@
 - the row should still be selected after movement, and further movement should be possible
 - selection and de-selection should work after moving
 - check if habit `target` is still intact after movement
+- data `entry` date should be unaffected
 
 # Statistics
 - clicking outside or close button should close the modal
@@ -106,6 +106,7 @@
 - change `number of days` and see if the chart changes
 - height of same data may vary due to range selected. e.g. max data before 7 days.
 - check the min, max and avg for the above
+- statistics should be computed starting from the data `entry` date
 
 # sync data to server
 - Disable internet and check all the above functionality still works.
