@@ -376,10 +376,10 @@ function DataHabitAdd(habit)
     DataSave(true);
 }
 
-function DataHabitUpdate(oldHabit, newHabit)
+function DataHabitUpdate(oldHabitName, newHabit)
 {
     /* check if habit already exists */
-    if(oldHabit != newHabit.Name) {
+    if(oldHabitName != newHabit.Name) {
         for(var i=0; i<data.HabitList.length; i++) {
             if(newHabit.Name == data.HabitList[i].Name) {
                 alert("Habit already exists");
@@ -388,8 +388,9 @@ function DataHabitUpdate(oldHabit, newHabit)
         }    
     }
 
+    /* look for the habit by oldHabitName and replace by newHabit */
     for(var i=0; i<data.HabitList.length; i++) {
-        if(data.HabitList[i].Name == oldHabit) data.HabitList[i] = newHabit;
+        if(data.HabitList[i].Name == oldHabitName) data.HabitList[i] = newHabit;
     }
 
     DataSave(true);

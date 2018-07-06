@@ -400,12 +400,20 @@ function onclickLicense() {
 }
 
 function onsubmitEditData(r, c) {
+    /* update the data */
     var mom = moment();
-    var date = mom.subtract(c, "day").toDate();
-    
-    var arr = DataGetByDate(date);
+    var d = mom.subtract(c, "day");
+    var arr = DataGetByDate(d.toDate());
     arr[r] = parseInt(document.getElementById("textData").value);
-    DataSetByDate(date, arr);
+    DataSetByDate(d.toDate(), arr);
+    
+    /* update the `entry` field of habit if necessary */
+    var habit = data.HabitList[r];
+    var curentry = moment( habit.Entry.split("_")[1] + "-" + habit.Entry.split("_")[2] + "-2018", "DD-MM-YYYY" );
+    if(curentry.isAfter(d)) { /* editing data before the `entry` date of habit */
+        habit.Entry = "Date_" + d.format("D_M");
+        DataHabitUpdate(habit.Name, habit);
+    }
 }
 
 function onchangeTarget() {

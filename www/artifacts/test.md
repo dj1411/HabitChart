@@ -71,7 +71,7 @@
     - there should be values between min and max
     - there should be one value greater than max
     - there should be one value smaller than min
-- disable edit data for older dates than Habit was created
+- if data is edited for date older than `entry` date of habit, the `entry` field should be updated
 
 # Data bar chart
 - upon changing the value in modal, the bar should display according height
