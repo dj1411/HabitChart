@@ -116,6 +116,10 @@
 - server data should be identical to local data
 - any changes in the main page (as previous tests) should be reflected in another device
 
+# reset condition
+- reset all data and check if all the above features work correctly
+- data `Entry` field should be present for new habit
+
 # settings
 - clicking `settings` button should open the settings page
 - clicking `back` on `settings` page should go back to main page

@@ -68,11 +68,11 @@ function DataValidate(d)
 
     /* validation of the DataList */
     var prevEntry = 0;
-    var keyCurrentID = false;
+    var keyCurrentID = false; // this will be set if the key for CurrentID is found
     for (var key in d.DataList)
     {
         /* There should be a key corresponding the current id in DataList */
-        if (key == ("Date_" + d.CurrentID))
+        if ( key == ("Date_" + d.CurrentID) ) 
             keyCurrentID = true;
 
         /* Each item in DataList should have the same length as HabitList */
@@ -85,11 +85,11 @@ function DataValidate(d)
 //        else
 //            prevEntry = parseInt(key.split("_")[1]);
     }
-    if (keyCurrentID == false)
+    if ( (d.CurrentID != "") && (keyCurrentID == false) )
         return false;
     
     /* checks for data format version 3 */
-    if(d.DataFormatVer == 3) {
+    if(d.DataFormatVer >= 3) {
         for(var i=0; i<d.HabitList.length; i++) {
             /* check if habit name is empty */
             if(d.HabitList[i].Name == null || d.HabitList[i].Name == undefined || d.HabitList[i].Name == "") 
@@ -104,6 +104,14 @@ function DataValidate(d)
                 && d.HabitList[i].Target.slice(0,5) != "Reach") {
                 return false;
             }
+        }
+    }
+
+    /* Check if data `entry` field is present for all habits */
+    if(d.DataFormatVer >= 4) {
+        for(var i=0; i<d.HabitList.length; i++) {
+            if(d.HabitList[i].Entry == null || d.HabitList[i].Entry == undefined || d.HabitList[i].Entry == "") 
+                return false;
         }
     }
     
