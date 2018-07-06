@@ -430,6 +430,7 @@ function addupdateHabit()
     var habit = new Object();
     habit.Name = document.getElementById("textHabit").value.trim();
     habit.Target = document.getElementById("optionTarget").value;
+    habit.Entry = "Date_" + moment().format("D_M");
     
     if(habit.Target.slice(0,5) == "Reach") {
         habit.Target = habit.Target + "_" + document.getElementById("textTimes").value + "_" + document.getElementById("textDays").value;
