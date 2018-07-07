@@ -409,7 +409,7 @@ function onsubmitEditData(r, c) {
     
     /* update the `entry` field of habit if necessary */
     var habit = data.HabitList[r];
-    var curentry = moment( habit.Entry.split("_")[1] + "-" + habit.Entry.split("_")[2] + "-2018", "DD-MM-YYYY" );
+    var curentry = moment( habit.Entry.split("_")[1] + "-" + habit.Entry.split("_")[2] + "-2018", "D-M-YYYY" );
     if(curentry.isAfter(d)) { /* editing data before the `entry` date of habit */
         habit.Entry = "Date_" + d.format("D_M");
         DataHabitUpdate(habit.Name, habit);

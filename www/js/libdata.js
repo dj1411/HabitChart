@@ -249,7 +249,7 @@ function DataRefresh(step)
 
             /* bring data up to date */
             var dateCur = moment();
-            var datePrev = moment( data.CurrentID.split("_")[0] + "/" + data.CurrentID.split("_")[1] + "/2018" , "DD/MM/YYYY" ); // todo fix year
+            var datePrev = moment( data.CurrentID.split("_")[0] + "/" + data.CurrentID.split("_")[1] + "/2018" , "D/M/YYYY" ); // todo fix year
             for( var date = datePrev.add(1, "day"); date.isBefore(dateCur); date = date.add(1, "day") )
             {
                 var d = new Date(date.format());
@@ -508,9 +508,13 @@ function DataSetByDate(date, arr) {
 
 function DataGetByRow(row)
 {
+    var entry = moment(data.HabitList[row].Entry.split("_")[1] + "-" + data.HabitList[row].Entry.split("_")[2] + "-2018", "D-M-YYYY");
+    
     var arr = new Array();
     for (var key in data.DataList) {
-        arr.push(data.DataList[key][row]);
+        var curmoment = moment(key.split("_")[1] + "-" + key.split("_")[2] + "-2018", "D-M-YYYY");
+        if(!curmoment.isBefore(entry))
+            arr.push(data.DataList[key][row]);
     }
     return arr.reverse();
 }
