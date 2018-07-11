@@ -11,7 +11,7 @@ It displays a chart of all the recent data on the front page. You can edit a dat
 The following types of habits are supported:
 1.	Improve something e.g. study time
 2.	Reduce something e.g. cigarette
-3.	Or, achieve a specific goal e.g. run 3 times in 7 days
+3.	Or, achieve a specific goal e.g. run 3 times in a week
 
 ### Statistics  
 See all history data in a statistical chart format. Observe how much you have improved over time.
