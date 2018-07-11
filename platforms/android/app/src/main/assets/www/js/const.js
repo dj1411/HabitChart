@@ -22,7 +22,7 @@
  * SOFTWARE.
  *******************************************************************************/
 
-const APP_NAME = "Habit Journal";
+const APP_NAME = "Habit Chart";
 const APP_VER = "1.0.0";
 
 const DATA_FORMAT_VER = 4;

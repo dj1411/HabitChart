@@ -1,92 +1,92 @@
 -- Merging decision tree log ---
 manifest
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
-MERGED from [:CordovaLib] T:\GitRepos\HabitJournal\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:20:1-27:12
-INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
+MERGED from [:CordovaLib] T:\GitRepos\HabitChart\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:20:1-27:12
+INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
 	package
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:100-145
-		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
-		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:100-143
+		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:72-99
-		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
-		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:72-99
+		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 	android:hardwareAccelerated
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:11-45
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:11-45
 	xmlns:android
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:146-204
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:144-202
 	android:versionCode
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:2:46-71
-		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
-		INJECTED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:46-71
+		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 supports-screens
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:3:5-191
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:3:5-191
 	android:largeScreens
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:3:49-76
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:3:49-76
 	android:smallScreens
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:3:132-159
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:3:132-159
 	android:normalScreens
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:3:77-105
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:3:77-105
 	android:xlargeScreens
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:3:160-188
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:3:160-188
 	android:resizeable
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:3:106-131
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:3:106-131
 	android:anyDensity
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:3:23-48
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:3:23-48
 uses-permission#android.permission.INTERNET
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:4:5-67
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:4:5-67
 	android:name
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:4:22-64
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:4:22-64
 application
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:5:5-12:19
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:5:5-12:19
 	android:supportsRtl
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:5:114-140
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:5:114-140
 	android:label
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:5:81-113
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:5:81-113
 	android:hardwareAccelerated
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:5:18-52
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:5:18-52
 	android:icon
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:5:53-80
-activity#com.atwebpages.debnath.habitjournal.MainActivity
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:9-11:20
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:5:53-80
+activity#com.atwebpages.debnath.habitchart.MainActivity
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:6:9-11:20
 	android:label
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:97-134
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:6:97-134
 	android:launchMode
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:135-165
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:6:135-165
 	android:windowSoftInputMode
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:257-299
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:6:257-299
 	android:configChanges
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:19-96
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:6:19-96
 	android:theme
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:194-256
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:6:194-256
 	android:name
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:6:166-193
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:6:166-193
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:7:13-10:29
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:7:13-10:29
 	android:label
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:7:28-65
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:7:28-65
 action#android.intent.action.MAIN
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:8:17-69
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:8:17-69
 	android:name
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:8:25-66
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:8:25-66
 category#android.intent.category.LAUNCHER
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:9:17-77
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:9:17-77
 	android:name
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:9:27-74
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:9:27-74
 uses-sdk
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:13:5-74
-MERGED from [:CordovaLib] T:\GitRepos\HabitJournal\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
-MERGED from [:CordovaLib] T:\GitRepos\HabitJournal\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:13:5-74
+MERGED from [:CordovaLib] T:\GitRepos\HabitChart\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
+MERGED from [:CordovaLib] T:\GitRepos\HabitChart\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
 	android:targetSdkVersion
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:13:42-71
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:13:42-71
 	android:minSdkVersion
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:13:15-41
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:13:15-41
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:14:5-79
+ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:14:5-79
 	android:name
-		ADDED from T:\GitRepos\HabitJournal\platforms\android\app\src\main\AndroidManifest.xml:14:22-76
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:14:22-76
