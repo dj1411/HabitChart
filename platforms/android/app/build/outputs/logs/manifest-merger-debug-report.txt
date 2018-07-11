@@ -9,19 +9,19 @@ INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManif
 INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
 INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:1-15:12
 	package
-		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:100-143
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:102-145
 		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:72-99
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:74-101
 		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 	android:hardwareAccelerated
 		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:11-45
 	xmlns:android
-		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:144-202
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:146-204
 	android:versionCode
-		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:46-71
+		ADDED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml:2:46-73
 		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 		INJECTED from T:\GitRepos\HabitChart\platforms\android\app\src\main\AndroidManifest.xml
 supports-screens
