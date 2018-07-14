@@ -33,11 +33,24 @@ function main()
     setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
     
     setStyleIndex();
+    
+    /* show tutorial if using for the first time */
+    if( isFirstUsage() )
+        alert("first time");
 
     /* handle the back button */
     document.addEventListener("backbutton", onback, false);
+}
+
+function isFirstUsage() {
+    if(data.HabitList.length == 0) return true;
     
-    onclickHelp();
+    for(var key in data.DataList) {
+        if( !data.DataList[key].every( function(e) { return (e==0); } ) )
+            return false;
+    }
+    
+    return true;
 }
 
 function testcode() {
