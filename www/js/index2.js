@@ -395,12 +395,18 @@ function onclickHelp() {
     /* display the overlay */
     document.getElementById("overlayTutorial").style.display = "block";
 
-    /* add habit arrow */
-    document.getElementById("lineAddHabit").setAttribute( "x1", document.getElementById("buttonAdd").offsetLeft - 100 );
-    document.getElementById("lineAddHabit").setAttribute( "y1", document.getElementById("buttonAdd").offsetTop - 100 );
-    document.getElementById("lineAddHabit").setAttribute( "x2", document.getElementById("buttonAdd").offsetLeft );
-    document.getElementById("lineAddHabit").setAttribute( "y2", document.getElementById("buttonAdd").offsetTop );
+    /* add habit line */
+    var xAddHabitButton = document.getElementById("buttonAdd").offsetLeft;
+    var yAddHabitButton = document.getElementById("buttonAdd").offsetTop;
+    document.getElementById("lineAddHabit").setAttribute( "x1", xAddHabitButton - 100 );
+    document.getElementById("lineAddHabit").setAttribute( "y1", yAddHabitButton - 100 );
+    document.getElementById("lineAddHabit").setAttribute( "x2", xAddHabitButton );
+    document.getElementById("lineAddHabit").setAttribute( "y2", yAddHabitButton );
 
+    /* add habit text */
+    var widthLabel = document.getElementById("labelAddHabit").getBBox().width;
+    document.getElementById("labelAddHabit").setAttribute( "x", xAddHabitButton - 100 - (widthLabel/2) );
+    document.getElementById("labelAddHabit").setAttribute( "y", yAddHabitButton - 100 - 1);    
 }
 
 function onclickLicense() {
