@@ -36,6 +36,8 @@ function main()
 
     /* handle the back button */
     document.addEventListener("backbutton", onback, false);
+    
+    document.getElementById("overlayTutorial").style.display = "block";
 }
 
 function testcode() {
