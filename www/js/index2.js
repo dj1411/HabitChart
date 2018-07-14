@@ -438,7 +438,6 @@ function addupdateHabit()
     var habit = new Object();
     habit.Name = document.getElementById("textHabit").value.trim();
     habit.Target = document.getElementById("optionTarget").value;
-    habit.Entry = "Date_" + moment().format("D_M");
     
     if(habit.Target.slice(0,5) == "Reach") {
         habit.Target = habit.Target + "_" + document.getElementById("textTimes").value + "_" + document.getElementById("textDays").value;
@@ -446,10 +445,14 @@ function addupdateHabit()
     
     if( DataSelectedHabitGetStr() == "" )
     {
+        /* add */
+        habit.Entry = "Date_" + moment().format("D_M");
         DataHabitAdd(habit);
     }
     else
     {
+        /* update */
+        habit.Entry = data.HabitList[DataSelectedHabitGetId().split("_")[1]].Entry; /* retain the old habit entry */
         DataHabitUpdate(DataSelectedHabitGetStr(), habit);
         DataSelectedHabitReset();
     }

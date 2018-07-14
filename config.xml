@@ -2,7 +2,7 @@
 <widget id="com.atwebpages.debnath.habitchart" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name short="HabitChart">Habit Chart</name>
     <description>
-        Habit tracking app.
+        keep track of your habits
     </description>
     <author email="jayanta.dn@gmail.com" href="https://github.com/jayantadn/HabitChart">
         Jayanta Debnath
