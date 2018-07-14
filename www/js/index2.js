@@ -35,22 +35,24 @@ function main()
     setStyleIndex();
     
     /* show tutorial if using for the first time */
-    if( isFirstUsage() )
+    if( checkFirstUsage() == "habit" )
         showTutorial(0);
+    else if( checkFirstUsage() == "data" )
+        showTutorial(1);
 
     /* handle the back button */
     document.addEventListener("backbutton", onback, false);
 }
 
-function isFirstUsage() {
-    if(data.HabitList.length == 0) return true;
+function checkFirstUsage() {
+    if(data.HabitList.length == 0) return "habit";
     
     for(var key in data.DataList) {
         if( !data.DataList[key].every( function(e) { return (e==0); } ) )
-            return false;
+            return;
     }
     
-    return true;
+    return "data";
 }
 
 function testcode() {
@@ -404,8 +406,7 @@ function onclickAbout() {
 
 function onclickHelp() {
     sidebarHide();
-//    document.getElementById("modalHelp").style.display = "block";
-//    slideshowHelp(0);
+    showTutorial(100); /* show all */
 }
 
 function onclickLicense() {
@@ -612,19 +613,39 @@ function showTutorial(step) {
     
     switch(step) {
         case 0:
+            document.getElementById("lineAddHabit").style.display = "block";
+            document.getElementById("labelAddHabit").style.display = "block";
+            document.getElementById("rectEditData").style.display = "none";
+            document.getElementById("labelEditData").style.display = "none";
+            document.getElementById("lineSign").style.display = "none";
+            document.getElementById("labelSign").style.display = "none";
             break;
             
         case 1:
+            document.getElementById("lineAddHabit").style.display = "none";
+            document.getElementById("labelAddHabit").style.display = "none";
+            document.getElementById("rectEditData").style.display = "block";
+            document.getElementById("labelEditData").style.display = "block";
+            document.getElementById("lineSign").style.display = "none";
+            document.getElementById("labelSign").style.display = "none";
             break;
             
         case 2:
-            break;
-            
-        case 3:
+            document.getElementById("lineAddHabit").style.display = "none";
+            document.getElementById("labelAddHabit").style.display = "none";
+            document.getElementById("rectEditData").style.display = "none";
+            document.getElementById("labelEditData").style.display = "none";
+            document.getElementById("lineSign").style.display = "block";
+            document.getElementById("labelSign").style.display = "block";
             break;
             
         default: /* show all */
-            break;
+            document.getElementById("lineAddHabit").style.display = "block";
+            document.getElementById("labelAddHabit").style.display = "block";
+            document.getElementById("rectEditData").style.display = "block";
+            document.getElementById("labelEditData").style.display = "block";
+            document.getElementById("lineSign").style.display = "block";
+            document.getElementById("labelSign").style.display = "block";
     }
 }
 
