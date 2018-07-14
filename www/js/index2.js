@@ -35,9 +35,10 @@ function main()
     setStyleIndex();
     
     /* show tutorial if using for the first time */
-    if( checkFirstUsage() == "habit" )
+    var ret = checkFirstUsage();
+    if( ret == "habit" )
         showTutorial(0);
-    else if( checkFirstUsage() == "data" )
+    else if( ret == "data" )
         showTutorial(1);
 
     /* handle the back button */
@@ -47,12 +48,20 @@ function main()
 function checkFirstUsage() {
     if(data.HabitList.length == 0) return "habit";
     
+    var cnt = 0;
     for(var key in data.DataList) {
         if( !data.DataList[key].every( function(e) { return (e==0); } ) )
-            return;
+            cnt++;
     }
-    
-    return "data";
+
+    switch(cnt) {
+        case 0:
+            return "data";
+//        case 2:
+//            return "sign";
+//        case 5:
+//            return "chart";
+    }
 }
 
 function testcode() {
