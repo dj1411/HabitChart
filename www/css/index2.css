@@ -26,13 +26,14 @@
     cursor: pointer; /* Add a pointer on hover */    
 }
 
-.lineOverlay {
-    stroke: yellow;
+.vectorOverlay {
+    stroke: white;
+    fill: transparent;
     stroke-width: 2;
 }
 
 .labelOverlay {
-    fill: yellow;
+    fill: white;
     font-size: large;
     font-family: "Comic Sans MS", cursive, sans-serif;
 }

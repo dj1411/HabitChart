@@ -120,6 +120,10 @@
 - reset all data and check if all the above features work correctly
 - data `Entry` field should be present for new habit
 
+# Tutorial
+- First time usage tutorial should be shown interleaved
+- on clicking help tutorial should be shown as slideshow
+
 # settings
 - clicking `settings` button should open the settings page
 - clicking `back` on `settings` page should go back to main page

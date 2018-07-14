@@ -36,7 +36,7 @@ function main()
     
     /* show tutorial if using for the first time */
     if( isFirstUsage() )
-        alert("first time");
+        showTutorial(0);
 
     /* handle the back button */
     document.addEventListener("backbutton", onback, false);
@@ -154,6 +154,8 @@ function refreshTable()
             var cell = document.createElement("div");
             row.appendChild(cell);
             cell.classList.add("w3-cell");
+            cell.setAttribute("id", "DataCell_" + r + "_" + c);
+//            console.log("setting id for: " + "DataCell_" + r + "_" + c);
             cell.setAttribute("onclick", "onclickDataCell(" + r + "," + c + ")");
             cell.style.width = WIDTH_DATA_COL + "px";
 
@@ -404,22 +406,6 @@ function onclickHelp() {
     sidebarHide();
 //    document.getElementById("modalHelp").style.display = "block";
 //    slideshowHelp(0);
-    
-    /* display the overlay */
-    document.getElementById("overlayTutorial").style.display = "block";
-
-    /* add habit line */
-    var xAddHabitButton = document.getElementById("buttonAdd").offsetLeft;
-    var yAddHabitButton = document.getElementById("buttonAdd").offsetTop;
-    document.getElementById("lineAddHabit").setAttribute( "x1", xAddHabitButton - 100 );
-    document.getElementById("lineAddHabit").setAttribute( "y1", yAddHabitButton - 100 );
-    document.getElementById("lineAddHabit").setAttribute( "x2", xAddHabitButton );
-    document.getElementById("lineAddHabit").setAttribute( "y2", yAddHabitButton );
-
-    /* add habit text */
-    var widthLabel = document.getElementById("labelAddHabit").getBBox().width;
-    document.getElementById("labelAddHabit").setAttribute( "x", xAddHabitButton - 100 - (widthLabel/2) );
-    document.getElementById("labelAddHabit").setAttribute( "y", yAddHabitButton - 100 - 1);    
 }
 
 function onclickLicense() {
@@ -565,6 +551,81 @@ function setColorSign(r) {
 function sidebarShow() {
 	document.getElementById("divSidebar").style.display = "block";
 	document.getElementById("overlaySidebar").style.display = "block";
+}
+
+function showTutorial(step) {
+    /* display the overlay */
+    document.getElementById("overlayTutorial").style.display = "block";
+
+    /* add habit line */
+    var xAddHabitButton = document.getElementById("buttonAdd").offsetLeft;
+    var yAddHabitButton = document.getElementById("buttonAdd").offsetTop;
+    document.getElementById("lineAddHabit").setAttribute( "x1", xAddHabitButton - 50 );
+    document.getElementById("lineAddHabit").setAttribute( "y1", yAddHabitButton - 50 );
+    document.getElementById("lineAddHabit").setAttribute( "x2", xAddHabitButton );
+    document.getElementById("lineAddHabit").setAttribute( "y2", yAddHabitButton );
+
+    /* add habit text */
+    var widthLabel = document.getElementById("labelAddHabit").getBBox().width;
+    var heightLabel = document.getElementById("labelAddHabit").getBBox().height;
+    document.getElementById("labelAddHabit").setAttribute( "x", xAddHabitButton - 100 - (widthLabel/2) );
+    document.getElementById("labelAddHabit").setAttribute( "y", yAddHabitButton - 50 - 2);        
+
+    /* edit data */
+    if( document.getElementById("DataCell_0_0") != null ) {
+        var xFirstDataCell = document.getElementById("DataCell_0_0").offsetLeft;
+        var yFirstDataCell = document.getElementById("DataCell_0_0").offsetTop;
+        var widthFirstDataCell = document.getElementById("DataCell_0_0").offsetWidth;
+        var heightFirstDataCell = document.getElementById("DataCell_0_0").offsetHeight;
+        
+        /* rect */
+        document.getElementById("rectEditData").setAttribute( "x", xFirstDataCell);
+        document.getElementById("rectEditData").setAttribute( "y", yFirstDataCell);
+        document.getElementById("rectEditData").setAttribute( "width", widthFirstDataCell);
+        document.getElementById("rectEditData").setAttribute( "height", heightFirstDataCell);
+    
+        /* label */
+        widthLabel = document.getElementById("labelEditData").getBBox().width;
+        heightLabel = document.getElementById("labelEditData").getBBox().height;
+        document.getElementById("labelEditData").setAttribute( "x", xFirstDataCell - (widthLabel/2) + (widthFirstDataCell/2) );
+        document.getElementById("labelEditData").setAttribute( "y", yFirstDataCell + heightFirstDataCell + heightLabel );        
+    }
+
+    /* target achievement sign */
+    if(data.HabitList.length != 0) {
+        var xSign = document.getElementById("sign_0").offsetLeft;
+        var ySign = document.getElementById("sign_0").offsetTop;
+        var widthSign = document.getElementById("sign_0").offsetWidth;
+        var heightSign = document.getElementById("sign_0").offsetHeight;
+        
+        /* line */
+        document.getElementById("lineSign").setAttribute( "x1", xSign + widthSign );
+        document.getElementById("lineSign").setAttribute( "y1", ySign + heightSign );
+        document.getElementById("lineSign").setAttribute( "x2", xSign + 100 );
+        document.getElementById("lineSign").setAttribute( "y2", ySign + 100 );
+        
+        /* label */
+        heightLabel = document.getElementById("labelSign").getBBox().height;
+        document.getElementById("labelSign").setAttribute( "x", xSign + 50 );
+        document.getElementById("labelSign").setAttribute( "y", ySign + heightLabel + 100);        
+    }
+    
+    switch(step) {
+        case 0:
+            break;
+            
+        case 1:
+            break;
+            
+        case 2:
+            break;
+            
+        case 3:
+            break;
+            
+        default: /* show all */
+            break;
+    }
 }
 
 function sidebarHide() {

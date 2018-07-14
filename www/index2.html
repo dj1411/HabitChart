@@ -77,10 +77,17 @@
         <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddHabitButton()"><i class="fa fa-plus"></i></button>
         
         <!-- tutorial overlay -->
-        <div id="overlayTutorial">
+        <div id="overlayTutorial" onclick="document.getElementById('overlayTutorial').style.display = 'none'">
             <svg height="100%" width="100%">
-                <line id="lineAddHabit" class="lineOverlay" x1="0" y1="0" x2="200" y2="200" />
+                
+                <line id="lineAddHabit" class="vectorOverlay" />
                 <text id="labelAddHabit" class="labelOverlay">click this button to add a habit</text>
+                
+                <rect id="rectEditData" class="vectorOverlay" />
+                <text id="labelEditData" class="labelOverlay">click on a cell to enter data</text>
+
+                <line id="lineSign" class="vectorOverlay" />
+                <text id="labelSign" class="labelOverlay">this sign will indicate your progress</text>
             </svg>
         </div>
         
