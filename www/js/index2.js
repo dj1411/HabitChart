@@ -37,7 +37,7 @@ function main()
     /* handle the back button */
     document.addEventListener("backbutton", onback, false);
     
-    document.getElementById("overlayTutorial").style.display = "block";
+    onclickHelp();
 }
 
 function testcode() {
@@ -389,8 +389,18 @@ function onclickAbout() {
 
 function onclickHelp() {
     sidebarHide();
-    document.getElementById("modalHelp").style.display = "block";
-    slideshowHelp(0);
+//    document.getElementById("modalHelp").style.display = "block";
+//    slideshowHelp(0);
+    
+    /* display the overlay */
+    document.getElementById("overlayTutorial").style.display = "block";
+
+    /* add habit arrow */
+    document.getElementById("lineAddHabit").setAttribute( "x1", document.getElementById("buttonAdd").offsetLeft - 100 );
+    document.getElementById("lineAddHabit").setAttribute( "y1", document.getElementById("buttonAdd").offsetTop - 100 );
+    document.getElementById("lineAddHabit").setAttribute( "x2", document.getElementById("buttonAdd").offsetLeft );
+    document.getElementById("lineAddHabit").setAttribute( "y2", document.getElementById("buttonAdd").offsetTop );
+
 }
 
 function onclickLicense() {
