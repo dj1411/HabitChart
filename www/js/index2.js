@@ -34,13 +34,6 @@ function main()
     
     setStyleIndex();
     
-    /* show tutorial if using for the first time */
-    var ret = checkFirstUsage();
-    if( ret == "habit" )
-        showTutorial(0);
-    else if( ret == "data" )
-        showTutorial(1);
-
     /* handle the back button */
     document.addEventListener("backbutton", onback, false);
 }

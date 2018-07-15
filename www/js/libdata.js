@@ -264,6 +264,14 @@ function DataRefresh(step)
             /* finish up */
             refreshTable();
             document.getElementById("buttonSync").classList.remove("w3-spin");
+            
+            /* show tutorial if using for the first time */
+            var ret = checkFirstUsage();
+            if( ret == "habit" )
+                showTutorial(0);
+            else if( ret == "data" )
+                showTutorial(1);
+
             break;
 
         default:
