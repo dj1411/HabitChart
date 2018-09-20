@@ -108,6 +108,19 @@
 - check the min, max and avg for the above
 - statistics should be computed starting from the data `entry` date
 
+# Screen size test
+    - small screens
+        - all habit names are visible properly
+        - at least one data column should be visible
+        - toolbar all icons should be visible in one line
+        - settings page is displayed properly
+        - all modals are displayed properly
+    - medium screen (owned by me)
+        - at least 5 data columns should be visible
+    - large screen
+        - all modals are displayed properly
+        - other pages form is displayed properly
+
 # sync data to server
 - Disable internet and check all the above functionality still works.
 - upon resuming internet, updated local data should be uploaded to cloud.
@@ -119,6 +132,10 @@
 # reset condition
 - reset all data and check if all the above features work correctly
 - data `Entry` field should be present for new habit
+
+# Tutorial
+- First time usage tutorial should be shown interleaved
+- on clicking help tutorial should be shown as slideshow
 
 # settings
 - clicking `settings` button should open the settings page

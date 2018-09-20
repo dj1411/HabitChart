@@ -24,7 +24,7 @@
 
 function main()
 {
-//    DataReset(1, 1, 1); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
+    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
     DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
@@ -33,9 +33,28 @@ function main()
     setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
     
     setStyleIndex();
-
+    
     /* handle the back button */
     document.addEventListener("backbutton", onback, false);
+}
+
+function checkFirstUsage() {
+    if(data.HabitList.length == 0) return "habit";
+    
+    var cnt = 0;
+    for(var key in data.DataList) {
+        if( !data.DataList[key].every( function(e) { return (e==0); } ) )
+            cnt++;
+    }
+
+    switch(cnt) {
+        case 0:
+            return "data";
+//        case 2:
+//            return "sign";
+//        case 5:
+//            return "chart";
+    }
 }
 
 function testcode() {
@@ -139,6 +158,8 @@ function refreshTable()
             var cell = document.createElement("div");
             row.appendChild(cell);
             cell.classList.add("w3-cell");
+            cell.setAttribute("id", "DataCell_" + r + "_" + c);
+//            console.log("setting id for: " + "DataCell_" + r + "_" + c);
             cell.setAttribute("onclick", "onclickDataCell(" + r + "," + c + ")");
             cell.style.width = WIDTH_DATA_COL + "px";
 
@@ -387,8 +408,7 @@ function onclickAbout() {
 
 function onclickHelp() {
     sidebarHide();
-    document.getElementById("modalHelp").style.display = "block";
-    slideshowHelp(0);
+    showTutorial(100); /* show all */
 }
 
 function onclickLicense() {
@@ -438,7 +458,6 @@ function addupdateHabit()
     var habit = new Object();
     habit.Name = document.getElementById("textHabit").value.trim();
     habit.Target = document.getElementById("optionTarget").value;
-    habit.Entry = "Date_" + moment().format("D_M");
     
     if(habit.Target.slice(0,5) == "Reach") {
         habit.Target = habit.Target + "_" + document.getElementById("textTimes").value + "_" + document.getElementById("textDays").value;
@@ -446,10 +465,14 @@ function addupdateHabit()
     
     if( DataSelectedHabitGetStr() == "" )
     {
+        /* add */
+        habit.Entry = "Date_" + moment().format("D_M");
         DataHabitAdd(habit);
     }
     else
     {
+        /* update */
+        habit.Entry = data.HabitList[DataSelectedHabitGetId().split("_")[1]].Entry; /* retain the old habit entry */
         DataHabitUpdate(DataSelectedHabitGetStr(), habit);
         DataSelectedHabitReset();
     }
@@ -531,6 +554,101 @@ function setColorSign(r) {
 function sidebarShow() {
 	document.getElementById("divSidebar").style.display = "block";
 	document.getElementById("overlaySidebar").style.display = "block";
+}
+
+function showTutorial(step) {
+    /* display the overlay */
+    document.getElementById("overlayTutorial").style.display = "block";
+
+    /* add habit line */
+    var xAddHabitButton = document.getElementById("buttonAdd").offsetLeft;
+    var yAddHabitButton = document.getElementById("buttonAdd").offsetTop;
+    document.getElementById("lineAddHabit").setAttribute( "x1", xAddHabitButton - 50 );
+    document.getElementById("lineAddHabit").setAttribute( "y1", yAddHabitButton - 50 );
+    document.getElementById("lineAddHabit").setAttribute( "x2", xAddHabitButton );
+    document.getElementById("lineAddHabit").setAttribute( "y2", yAddHabitButton );
+
+    /* add habit text */
+    var widthLabel = document.getElementById("labelAddHabit").getBBox().width;
+    var heightLabel = document.getElementById("labelAddHabit").getBBox().height;
+    document.getElementById("labelAddHabit").setAttribute( "x", xAddHabitButton - 100 - (widthLabel/2) );
+    document.getElementById("labelAddHabit").setAttribute( "y", yAddHabitButton - 50 - 2);        
+
+    /* edit data */
+    if( document.getElementById("DataCell_0_0") != null ) {
+        var xFirstDataCell = document.getElementById("DataCell_0_0").offsetLeft;
+        var yFirstDataCell = document.getElementById("DataCell_0_0").offsetTop;
+        var widthFirstDataCell = document.getElementById("DataCell_0_0").offsetWidth;
+        var heightFirstDataCell = document.getElementById("DataCell_0_0").offsetHeight;
+        
+        /* rect */
+        document.getElementById("rectEditData").setAttribute( "x", xFirstDataCell);
+        document.getElementById("rectEditData").setAttribute( "y", yFirstDataCell);
+        document.getElementById("rectEditData").setAttribute( "width", widthFirstDataCell);
+        document.getElementById("rectEditData").setAttribute( "height", heightFirstDataCell);
+    
+        /* label */
+        widthLabel = document.getElementById("labelEditData").getBBox().width;
+        heightLabel = document.getElementById("labelEditData").getBBox().height;
+        document.getElementById("labelEditData").setAttribute( "x", xFirstDataCell - (widthLabel/2) + (widthFirstDataCell/2) );
+        document.getElementById("labelEditData").setAttribute( "y", yFirstDataCell + heightFirstDataCell + heightLabel );        
+    }
+
+    /* target achievement sign */
+    if(data.HabitList.length != 0) {
+        var xSign = document.getElementById("sign_0").offsetLeft;
+        var ySign = document.getElementById("sign_0").offsetTop;
+        var widthSign = document.getElementById("sign_0").offsetWidth;
+        var heightSign = document.getElementById("sign_0").offsetHeight;
+        
+        /* line */
+        document.getElementById("lineSign").setAttribute( "x1", xSign + widthSign );
+        document.getElementById("lineSign").setAttribute( "y1", ySign + heightSign );
+        document.getElementById("lineSign").setAttribute( "x2", xSign + 100 );
+        document.getElementById("lineSign").setAttribute( "y2", ySign + 100 );
+        
+        /* label */
+        heightLabel = document.getElementById("labelSign").getBBox().height;
+        document.getElementById("labelSign").setAttribute( "x", xSign + 50 );
+        document.getElementById("labelSign").setAttribute( "y", ySign + heightLabel + 100);        
+    }
+    
+    switch(step) {
+        case 0:
+            document.getElementById("lineAddHabit").style.display = "block";
+            document.getElementById("labelAddHabit").style.display = "block";
+            document.getElementById("rectEditData").style.display = "none";
+            document.getElementById("labelEditData").style.display = "none";
+            document.getElementById("lineSign").style.display = "none";
+            document.getElementById("labelSign").style.display = "none";
+            break;
+            
+        case 1:
+            document.getElementById("lineAddHabit").style.display = "none";
+            document.getElementById("labelAddHabit").style.display = "none";
+            document.getElementById("rectEditData").style.display = "block";
+            document.getElementById("labelEditData").style.display = "block";
+            document.getElementById("lineSign").style.display = "none";
+            document.getElementById("labelSign").style.display = "none";
+            break;
+            
+        case 2:
+            document.getElementById("lineAddHabit").style.display = "none";
+            document.getElementById("labelAddHabit").style.display = "none";
+            document.getElementById("rectEditData").style.display = "none";
+            document.getElementById("labelEditData").style.display = "none";
+            document.getElementById("lineSign").style.display = "block";
+            document.getElementById("labelSign").style.display = "block";
+            break;
+            
+        default: /* show all */
+            document.getElementById("lineAddHabit").style.display = "block";
+            document.getElementById("labelAddHabit").style.display = "block";
+            document.getElementById("rectEditData").style.display = "block";
+            document.getElementById("labelEditData").style.display = "block";
+            document.getElementById("lineSign").style.display = "block";
+            document.getElementById("labelSign").style.display = "block";
+    }
 }
 
 function sidebarHide() {

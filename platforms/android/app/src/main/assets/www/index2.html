@@ -76,6 +76,21 @@
         <!-- floating (+) button -->
         <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddHabitButton()"><i class="fa fa-plus"></i></button>
         
+        <!-- tutorial overlay -->
+        <div id="overlayTutorial" onclick="document.getElementById('overlayTutorial').style.display = 'none'">
+            <svg height="100%" width="100%">
+                
+                <line id="lineAddHabit" class="vectorOverlay" />
+                <text id="labelAddHabit" class="labelOverlay">click this button to add a habit</text>
+                
+                <rect id="rectEditData" class="vectorOverlay" />
+                <text id="labelEditData" class="labelOverlay">click on a cell to enter data</text>
+
+                <line id="lineSign" class="vectorOverlay" />
+                <text id="labelSign" class="labelOverlay">this sign will indicate your progress</text>
+            </svg>
+        </div>
+        
         <!-- add habit modal -->
         <div id="modalAddHabit" class="w3-modal">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
@@ -101,7 +116,7 @@
                     </p>
                     <p>
                         <div class="w3-bar">
-                            <input type="button" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalAddHabit').style.display='none'" value="Cancel"></button>
+                            <input type="button" class="w3-button w3-theme w3-left" style="width:45%" onclick="document.getElementById('modalAddHabit').style.display='none'" value="Cancel"></input>
                             <button type="submit" class="w3-button w3-theme w3-right" style="width:45%">Submit</button>
                         </div>
                     </p>
@@ -177,23 +192,6 @@
                     </tr>
                 </table>
             </div>
-        </div>
-
-        <!-- Help modal -->
-        <div id="modalHelp" class="w3-modal">
-            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
-                <!-- Images -->
-                <div class="w3-content w3-display-container">
-                  <img class="slideHelp" src="img/help/01.png" style="height:100%; width: 100%" onclick="document.getElementById('modalHelp').style.display='none'">
-                  <img class="slideHelp" src="img/help/02.png" style="height:100%; width: 100%" onclick="document.getElementById('modalHelp').style.display='none'">
-                  <img class="slideHelp" src="img/help/03.png" style="height:100%; width: 100%" onclick="document.getElementById('modalHelp').style.display='none'">
-                  <img class="slideHelp" src="img/help/04.png" style="height:100%; width: 100%" onclick="document.getElementById('modalHelp').style.display='none'">
-                  <img class="slideHelp" src="img/help/05.png" style="height:100%; width: 100%" onclick="document.getElementById('modalHelp').style.display='none'">
-                  <img class="slideHelp" src="img/help/06.png" style="height:100%; width: 100%" onclick="document.getElementById('modalHelp').style.display='none'">
-                  <button class="w3-button w3-hover-theme w3-display-left" onclick="slideshowHelp(-1)">&#10094;</button>
-                  <button class="w3-button w3-hover-theme w3-display-right" onclick="slideshowHelp(1)">&#10095;</button>
-                </div>            
-            </div>        
         </div>
 
         <!-- About modal -->
