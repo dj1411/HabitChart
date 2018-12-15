@@ -22,6 +22,9 @@
  * SOFTWARE.
  *******************************************************************************/
 
+/* global variables */
+var db = new DB();
+
 function main()
 {
 //    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
