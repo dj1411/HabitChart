@@ -28,8 +28,11 @@ var db = new DB();
 function main()
 {
 //    db.addHabit("Habit 3", "chart", "improve");
-    db.editHabit(0, "Habit 2", "chart", "improve");
+//    db.editHabit(0, "Habit 2", "chart", "improve");
 //    db.removeHabit(0);
+//    db.addEntry(0, moment(), 5);
+//    db.updateEntry(0, 0, moment(), 4);
+//    db.removeEntry(0, 1);
     
 //    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();

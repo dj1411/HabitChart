@@ -22,26 +22,26 @@
  * SOFTWARE.
  *******************************************************************************/
 
-function Entry() {
-    this.date = moment();
-    this.value = 0;
-    this.isValid = false;
+function Entry(idEntry, date, value) {
+    this.date = date;
+    this.value = value;
+    this.isValid = true;
 
     /* inheriting the signature elements */
-    this.id = id;
+    this.id = idEntry;
     this.timestamp = moment();
     this.isDeleted = false;
 }
 
-function Habit(id, name, type, target) {
+function Habit(idHabit, name, type, target) {
     this.name = name;
     this.type = type; //  options are chart, checkbox and count
     this.target = target; // options are improve, reduce and maintain
     
-    this.entry = new Array();
+    this.arrEntry = new Array();
     
     /* inheriting the signature elements */
-    this.id = id;
+    this.id = idHabit;
     this.timestamp = moment();
     this.isDeleted = false;
 }
@@ -85,39 +85,95 @@ DB.prototype.save = function () {
 }
 
 DB.prototype.addHabit = function (name, type, target) {
-    /* find an unique id */
-    var id = 0;
+    /* find an unique habit id */
+    var idHabit = 0;
     while( ! this.root.data.arrHabit.every( function(habit) {
-        return (habit.id != id);
+        return (habit.id != idHabit);
     } ) ) {
-        id++;
+        idHabit++;
     }
     
     /* create a habit object and append to the habit array */
-    var habit = new Habit(id, name, type, target);
+    var habit = new Habit(idHabit, name, type, target);
     this.root.data.arrHabit.push(habit);
     
     this.save();
 }
 
-DB.prototype.removeHabit = function(id) {
-    var idx = this.root.data.arrHabit.findIndex( function(habit)  {
-        return (habit.id == id);
+DB.prototype.removeHabit = function(idHabit) {
+    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
+        return (habit.id == idHabit);
     } );
 
-    this.root.data.arrHabit.splice(idx, 1);
+    this.root.data.arrHabit.splice(idxHabit, 1);
     
     this.save();
 }
 
 DB.prototype.editHabit = function (idHabit, name, type, target) {
+    /* find habit idx */
     var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
         return (habit.id == idHabit);
     } );
     
+    /* update */
     this.root.data.arrHabit[idxHabit].name = name;
     this.root.data.arrHabit[idxHabit].type = type;
     this.root.data.arrHabit[idxHabit].target = target;
+    
+    this.save();
+}
+
+DB.prototype.addEntry = function (idHabit, date, value) {
+    /* find habit idx */
+    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
+        return (habit.id == idHabit);
+    } );
+    
+    /* find an unique entry id */
+    var idEntry = 0;
+    while( ! this.root.data.arrHabit[idxHabit].arrEntry.every( function(entry) {
+        return (entry.id != idEntry);
+    } ) ) {
+        idEntry++;
+    }
+    
+    /* create an entry and add to the habit */
+    var entry = new Entry(idEntry, date, value);
+    this.root.data.arrHabit[idxHabit].arrEntry.push(entry);
+    
+    this.save();
+}
+
+DB.prototype.removeEntry = function (idHabit, idEntry) {
+    /* find habit idx */
+    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
+        return (habit.id == idHabit);
+    } );
+    
+    /* find entry idx */
+    var idxEntry = this.root.data.arrHabit[idxHabit].arrEntry.findIndex( function(entry)  {
+        return (entry.id == idEntry);
+    } );    
+    
+    this.root.data.arrHabit[idxHabit].arrEntry.splice( idxEntry, 1 );
+    
+    this.save();
+}
+
+DB.prototype.updateEntry = function (idHabit, idEntry, date, value) {
+    /* find habit idx */
+    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
+        return (habit.id == idHabit);
+    } );
+    
+    /* find entry idx */
+    var idxEntry = this.root.data.arrHabit[idxHabit].arrEntry.findIndex( function(entry)  {
+        return (entry.id == idEntry);
+    } );   
+    
+    this.root.data.arrHabit[idxHabit].arrEntry[idxEntry].date = date;
+    this.root.data.arrHabit[idxHabit].arrEntry[idxEntry].value = value;
     
     this.save();
 }
