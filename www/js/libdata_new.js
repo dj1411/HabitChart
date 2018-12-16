@@ -33,10 +33,10 @@ function Entry() {
     this.isDeleted = false;
 }
 
-function Habit(id) {
-    this.name = "";
-    this.type = "chart"; // other options are checkbox and count
-    this.target = "improve"; // other options are reduce and maintain
+function Habit(id, name, type, target) {
+    this.name = name;
+    this.type = type; //  options are chart, checkbox and count
+    this.target = target; // options are improve, reduce and maintain
     
     this.entry = new Array();
     
@@ -82,4 +82,42 @@ DB.prototype.load = function () {
 /* do not reorder this function */
 DB.prototype.save = function () {
     localStorage.setItem("dbHabitChart", JSON.stringify(this.root));
+}
+
+DB.prototype.addHabit = function (name, type, target) {
+    /* find an unique id */
+    var id = 0;
+    while( ! this.root.data.arrHabit.every( function(habit) {
+        return (habit.id != id);
+    } ) ) {
+        id++;
+    }
+    
+    /* create a habit object and append to the habit array */
+    var habit = new Habit(id, name, type, target);
+    this.root.data.arrHabit.push(habit);
+    
+    this.save();
+}
+
+DB.prototype.removeHabit = function(id) {
+    var idx = this.root.data.arrHabit.findIndex( function(habit)  {
+        return (habit.id == id);
+    } );
+
+    this.root.data.arrHabit.splice(idx, 1);
+    
+    this.save();
+}
+
+DB.prototype.editHabit = function (idHabit, name, type, target) {
+    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
+        return (habit.id == idHabit);
+    } );
+    
+    this.root.data.arrHabit[idxHabit].name = name;
+    this.root.data.arrHabit[idxHabit].type = type;
+    this.root.data.arrHabit[idxHabit].target = target;
+    
+    this.save();
 }

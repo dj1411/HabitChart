@@ -177,7 +177,7 @@
 											"top": 108,
 											"width": 67.5517578125,
 											"height": 13,
-											"text": "+deleted",
+											"text": "+isDeleted",
 											"horizontalAlignment": 0
 										}
 									],
@@ -2296,6 +2296,24 @@
 											"height": 13,
 											"text": "+value",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAFns6Ef0HxGus0=",
+											"_parent": {
+												"$ref": "AAAAAAFnsxf3bqe7nPw="
+											},
+											"model": {
+												"$ref": "AAAAAAFns6EfkHw6ykA="
+											},
+											"fillColor": "#ffffd8",
+											"font": "Arial;13;0",
+											"left": 645,
+											"top": 292,
+											"width": 63.2353515625,
+											"height": 13,
+											"text": "+isValid",
+											"horizontalAlignment": 0
 										}
 									],
 									"fillColor": "#ffffd8",
@@ -2303,7 +2321,7 @@
 									"left": 640,
 									"top": 257,
 									"width": 73.2353515625,
-									"height": 38
+									"height": 53
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -2317,7 +2335,7 @@
 									"fillColor": "#ffffd8",
 									"font": "Arial;13;0",
 									"left": 640,
-									"top": 295,
+									"top": 310,
 									"width": 73.2353515625,
 									"height": 10
 								},
@@ -2360,7 +2378,7 @@
 							"left": 640,
 							"top": 232,
 							"width": 73.2353515625,
-							"height": 73,
+							"height": 88,
 							"nameCompartment": {
 								"$ref": "AAAAAAFnsxf3bqe2KBU="
 							},
@@ -3175,8 +3193,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFnrAxDdFAj/1Y="
 							},
-							"name": "deleted",
-							"type": ""
+							"name": "isDeleted"
 						}
 					]
 				},
@@ -3617,6 +3634,14 @@
 							},
 							"name": "value",
 							"type": ""
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAFns6EfkHw6ykA=",
+							"_parent": {
+								"$ref": "AAAAAAFnsxf3bqezxMg="
+							},
+							"name": "isValid"
 						}
 					]
 				}
