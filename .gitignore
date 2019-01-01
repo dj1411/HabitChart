@@ -12,3 +12,5 @@
 /platforms/android/app/src/main/assets/www/js/libdata.js
 
 /platforms/android/app/build/outputs
+
+/platforms/android/.gradle
