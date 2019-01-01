@@ -161,7 +161,7 @@ DB.prototype.removeEntry = function (idHabit, idEntry) {
     this.save();
 }
 
-DB.prototype.updateEntry = function (idHabit, idEntry, date, value) {
+DB.prototype.editEntry = function (idHabit, idEntry, date, value) {
     /* find habit idx */
     var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
         return (habit.id == idHabit);

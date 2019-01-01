@@ -37,7 +37,8 @@ function main()
 //    DataReset(1, 1, 0); return; /* 0=NA, 1=reset; ramData, localData, cloudData */
 //    testcode();
 
-    DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
+    /* with new DB dataload is no longer necessary. creation of object will load the data. */
+//    DataLoad();     /* data should be loaded from localstorage everytime a page is loaded. this ensures to refresh data if updated from another page */
 
     DataRefresh(0);
     setInterval(function () { DataRefresh(0); }, SYNC_INTERVAL_S * 1000);
