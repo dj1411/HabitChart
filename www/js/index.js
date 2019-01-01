@@ -78,4 +78,28 @@ function showData() {
         cell.classList.add("w3-border-bottom");
         cell.innerHTML = moment().subtract(numCol - (i+1), "days").format("ddd<br>DD/MM");
     }
+    
+    /* create data rows */
+    for(var i=0; i<db.root.data.arrHabit.length; i++) {
+        /* habit name */
+        row = table.insertRow(3*i+1);
+        var cell = row.insertCell(0);
+        cell.classList.add("w3-text-black");
+        cell.style.maxWidth = 0;
+        cell.style.whiteSpace = "nowrap";
+        cell.innerHTML = "<i class='fas fa-circle'></i>";
+        cell.innerHTML += db.root.data.arrHabit[i].name;
+        
+        /* the chart */
+        row = table.insertRow(3*i+2);
+        for(var j=0; j<numCol; j++) {
+            cell = row.insertCell(j);
+            cell.style.borderBottom = 5 + i*j + "px solid"; /* dummy values */
+        }
+        
+        /* blank row for padding */
+        row = table.insertRow(3*i+3);
+        cell = row.insertCell(0);
+        cell.innerHTML = "&nbsp;";
+    }
 }
