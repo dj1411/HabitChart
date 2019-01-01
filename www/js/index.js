@@ -26,6 +26,10 @@ function main() {
     setStyle();
 }
 
+function onclickAddEditHabit() {
+    document.getElementById("modalAddEditHabit").style.display = "block";
+}
+
 function setStyle() {
     /* set the app name */
     document.title = APP_NAME;
@@ -33,4 +37,6 @@ function setStyle() {
     
     /* move the main body below header */
     document.getElementById("divBody").style.top = document.getElementById("divHeader").clientHeight + "px";
+    
+    /* control stacking of layers */
 }

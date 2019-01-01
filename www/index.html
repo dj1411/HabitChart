@@ -45,6 +45,7 @@
         <!-- main body, scrollable area -->
         <div id="divBody" class="w3-text-theme" style="position: relative">
             <table width="100%" class="w3-center" style="">
+                
                 <tr class="w3-small">
                     <td class="w3-border-bottom">Sat<br>30/12</td>
                     <td class="w3-border-bottom">Sun<br>31/12</td>
@@ -52,7 +53,6 @@
                     <td class="w3-border-bottom">Tue<br>2/1</td>
                 </tr>
                 
-                <tr><td>&nbsp;</td></tr>
                 <tr>
                     <td class="w3-text-black" style="max-width: 0; white-space: nowrap">
                         <i class="fas fa-circle"></i>
@@ -65,8 +65,8 @@
                     <td style="border-bottom: 10px solid"></td>
                     <td style="border-bottom: 30px solid"></td>
                 </tr>
+                <tr><td>&nbsp;</td></tr>
                 
-                <tr><td>&nbsp;</td></tr>
                 <tr>
                     <td class="w3-text-black" style="max-width: 0; white-space: nowrap">
                         <i class="fas fa-circle"></i>
@@ -79,9 +79,53 @@
                     <td style="border-bottom: 10px solid"></td>
                     <td style="border-bottom: 30px solid"></td>
                 </tr>
+                <tr><td>&nbsp;</td></tr>
+                
             </table>
         </div>
         
+        <!-- floating (+) button -->
+        <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddEditHabit()" style="position: fixed; right: 15px; bottom: 15px">
+            <i class="fas fa-plus"></i>
+        </button>
+        
+        <!-- add/edit habit modal -->
+        <div id="modalAddEditHabit" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                
+                <div id="titleAddEditHabit" class="w3-container w3-theme-action w3-large w3-padding">Title</div>
+                
+                <form class="w3-container" onsubmit="onsubmitAddEditHabit()">
+                    <div class="w3-margin-top">
+                        <label>Target</label>
+                        <select id="optionTarget" class="w3-select" onchange="onchangeTarget()">
+                            <option value="Improve" selected>I want to improve</option>
+                            <option value="Reduce">I want to reduce</option>
+                            <option value="Maintain">I want to maintain...</option>
+                        </select>
+                        <div id="divMaintain" class="w3-cell-row w3-small" style="display: none">
+                            <span><input id="textTimes" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
+                            <span><label class="w3-cell w3-padding">times in</label></span>
+                            <span><input id="textDays" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
+                            <span><label class="w3-cell w3-padding">days</label></span>
+                        </div>                        
+                    </div>
+                    
+                    <div class="w3-margin-top">
+                        <label>Name</label>
+                        <input id="textHabit" class="w3-input" type="text" required>                        
+                    </div>
+                    
+                    <div class="w3-bar w3-margin-top w3-margin-bottom">
+                        <input type="button" class="w3-button w3-theme-action w3-left" style="width:45%" onclick="document.getElementById('modalAddEditHabit').style.display='none'" value="Cancel" />
+                        <button type="submit" class="w3-button w3-theme-action w3-right" style="width:45%">Submit</button>
+                    </div>              
+                    
+                </form>
+                
+            </div>
+        </div>        
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/moment/moment.js"></script>
