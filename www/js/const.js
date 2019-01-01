@@ -28,3 +28,5 @@ const APP_VER = "2.0.0";
 const Z_INDEX_TOP = 5;
 const Z_INDEX_MED = 3;
 const Z_INDEX_BOTTOM = 1;
+
+const HEIGHT_DATA_CELL = 50;

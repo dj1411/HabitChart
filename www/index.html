@@ -33,15 +33,54 @@
         <!-- add all CSS stylesheets -->
         <link rel="stylesheet" type="text/css" href="css/w3/w3.css" />
         <link rel="stylesheet" type="text/css" href="css/w3/w3-theme-blue.css" />
+        <link rel="stylesheet" type="text/css" href="css/fontawesome-free-5.1.0-web/css/all.css" />
     </head>
     <body onload="document.addEventListener( 'deviceready', main() )">
         
         <!-- Header bar. Non scrollable -->
         <div id="divHeader" style="position: fixed; width: 100%">
-            <div id="titleWindow" class="w3-theme w3-xlarge w3-padding">Title</div>
+            <div id="titleWindow" class="w3-theme-action w3-xlarge w3-padding">Title</div>
         </div>    
         
+        <!-- main body, scrollable area -->
+        <div id="divBody" class="w3-text-theme" style="position: relative">
+            <table width="100%" class="w3-center">
+                <tr class="w3-small">
+                    <td>Sat<br>30/12</td>
+                    <td>Sun<br>31/12</td>
+                    <td>Mon<br>1/1</td>
+                    <td>Tue<br>2/1</td>
+                </tr>
+                <tr>
+                    <td style="max-width: 0; white-space: nowrap">
+                        <i class="fas fa-circle"></i>
+                        A really long habit name
+                    </td>
+                </tr>
+                <tr height="50px">
+                    <td style="border-bottom: 40px solid"></td>
+                    <td style="border-bottom: 50px solid"></td>
+                    <td style="border-bottom: 10px solid"></td>
+                    <td style="border-bottom: 30px solid"></td>
+                </tr>
+                <tr>
+                    <td style="max-width: 0; white-space: nowrap">
+                        <i class="fas fa-circle"></i>
+                        A really long habit name
+                    </td>
+                </tr>
+                <tr height="50px">
+                    <td style="border-bottom: 40px solid"></td>
+                    <td style="border-bottom: 50px solid"></td>
+                    <td style="border-bottom: 10px solid"></td>
+                    <td style="border-bottom: 30px solid"></td>
+                </tr>
+            </table>
+        </div>
+        
         <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="js/moment/moment.js"></script>
         <script type="text/javascript" src="js/const.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>

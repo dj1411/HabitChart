@@ -30,4 +30,7 @@ function setStyle() {
     /* set the app name */
     document.title = APP_NAME;
     document.getElementById("titleWindow").innerText = APP_NAME;    
+    
+    /* move the main body below header */
+    document.getElementById("divBody").style.top = document.getElementById("divHeader").clientHeight + "px";
 }
