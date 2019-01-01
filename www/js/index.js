@@ -23,4 +23,11 @@
  *******************************************************************************/
 
 function main() {
+    setStyle();
+}
+
+function setStyle() {
+    /* set the app name */
+    document.title = APP_NAME;
+    document.getElementById("titleWindow").innerText = APP_NAME;    
 }
