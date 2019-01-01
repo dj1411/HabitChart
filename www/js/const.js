@@ -30,3 +30,4 @@ const Z_INDEX_MED = 3;
 const Z_INDEX_BOTTOM = 1;
 
 const HEIGHT_DATA_CELL = 50;
+const WIDTH_DATA_CELL = 40;

@@ -28,6 +28,7 @@ var db = new DB();
 /* The main entry point. This function is entered when Cordova is ready. */
 function main() {
     setStyle();
+    showData();
 }
 
 /* do not change the order of setStyle() */
@@ -57,4 +58,24 @@ function onsubmitAddEditHabit() {
                  document.getElementById("optionHabitType").value,
                  document.getElementById("optionTarget").value
                )
+}
+
+function showData() {
+    /* clear the existing table */
+    document.getElementById("tableData").innerText = "";
+    
+    /* calculate number of columns */
+    var numCol = Math.floor( document.getElementById("tableData").clientWidth / WIDTH_DATA_CELL );
+    
+    /* get the table object */
+    var table = document.getElementById("tableData");
+    
+    /* create the date row */
+    var row = table.insertRow(0);
+    row.classList.add("w3-tiny");
+    for( var i=0; i<numCol; i++ ) {
+        var cell = row.insertCell(i);
+        cell.classList.add("w3-border-bottom");
+        cell.innerHTML = moment().subtract(numCol - (i+1), "days").format("ddd<br>DD/MM");
+    }
 }
