@@ -74,10 +74,10 @@
                     </td>
                 </tr>
                 <tr height="50px">
-                    <td style="border-bottom: 40px solid"></td>
+                    <td style="border-bottom: 30px solid"></td>
+                    <td style="border-bottom: 20px solid"></td>
                     <td style="border-bottom: 50px solid"></td>
                     <td style="border-bottom: 10px solid"></td>
-                    <td style="border-bottom: 30px solid"></td>
                 </tr>
                 <tr><td>&nbsp;</td></tr>
                 
@@ -85,7 +85,7 @@
         </div>
         
         <!-- floating (+) button -->
-        <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddEditHabit()" style="position: fixed; right: 15px; bottom: 15px">
+        <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddEditHabit(event)" style="position: fixed; right: 15px; bottom: 15px">
             <i class="fas fa-plus"></i>
         </button>
         
@@ -116,11 +116,20 @@
                         <input id="textHabit" class="w3-input" type="text" required>                        
                     </div>
                     
+                    <div class="w3-margin-top">
+                        <label>Type</label>
+                        <select id="optionHabitType" class="w3-select">
+                            <option value="checkbox">as true or false</option>
+                            <option value="rating">as rating</option>
+                            <option value="count">as count</option>
+                            <option value="value" selected>as a value</option>
+                        </select>
+                    </div>
+
                     <div class="w3-bar w3-margin-top w3-margin-bottom">
                         <input type="button" class="w3-button w3-theme-action w3-left" style="width:45%" onclick="document.getElementById('modalAddEditHabit').style.display='none'" value="Cancel" />
                         <button type="submit" class="w3-button w3-theme-action w3-right" style="width:45%">Submit</button>
                     </div>              
-                    
                 </form>
                 
             </div>
@@ -130,6 +139,7 @@
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/moment/moment.js"></script>
         <script type="text/javascript" src="js/const.js"></script>
+        <script type="text/javascript" src="js/db.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>

@@ -22,14 +22,15 @@
  * SOFTWARE.
  *******************************************************************************/
 
+/* global variables */
+var db = new DB();
+
+/* The main entry point. This function is entered when Cordova is ready. */
 function main() {
     setStyle();
 }
 
-function onclickAddEditHabit() {
-    document.getElementById("modalAddEditHabit").style.display = "block";
-}
-
+/* do not change the order of setStyle() */
 function setStyle() {
     /* set the app name */
     document.title = APP_NAME;
@@ -37,6 +38,23 @@ function setStyle() {
     
     /* move the main body below header */
     document.getElementById("divBody").style.top = document.getElementById("divHeader").clientHeight + "px";
+}
+
+function onclickAddEditHabit(event) {
+    if(event.target == document.getElementById("buttonAdd") || 
+       event.target.parentNode == document.getElementById("buttonAdd")
+      ) {
+        document.getElementById("titleAddEditHabit").innerText = "Add Habit";
+    }
+
+    document.getElementById("modalAddEditHabit").style.display = "block";
+}
+
+function onsubmitAddEditHabit() {
+    document.getElementById("modalAddEditHabit").style.display = "none";
     
-    /* control stacking of layers */
+    db.addHabit( document.getElementById("textHabit").value,
+                 document.getElementById("optionHabitType").value,
+                 document.getElementById("optionTarget").value
+               )
 }
