@@ -55,6 +55,11 @@ function onclickAddEditHabit(event) {
     document.getElementById("modalAddEditHabit").style.display = "block";
 }
 
+function onclickEditData(event) {
+    document.getElementById("modalEditData").style.display = "block";
+    console.log( event.target.id );
+}
+
 function onsubmitAddEditHabit() {
     document.getElementById("modalAddEditHabit").style.display = "none";
     
@@ -98,7 +103,9 @@ function showData() {
         row = table.insertRow(3*i+2);
         for(var j=0; j<numCol; j++) {
             cell = row.insertCell(j);
+            cell.id = "id_" + i + "_" + moment().subtract(numCol - (j+1), "days").format("YYMMDD");
             cell.style.borderBottom = HEIGHT_DATA_CELL + "px solid"; /* dummy values */
+            cell.onclick = onclickEditData;
         }
         
         /* blank row for padding */
