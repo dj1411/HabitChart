@@ -24,6 +24,7 @@
 
 /* global variables */
 var db = new DB();
+var selectedCell = null;
 
 /* The main entry point. This function is entered when Cordova is ready. */
 function main() {
@@ -56,8 +57,8 @@ function onclickAddEditHabit(event) {
 }
 
 function onclickEditData(event) {
+    selectedCell = event.target.id;
     document.getElementById("modalEditData").style.display = "block";
-    console.log( event.target.id );
 }
 
 function onsubmitAddEditHabit() {
@@ -67,6 +68,18 @@ function onsubmitAddEditHabit() {
                  document.getElementById("optionHabitType").value,
                  document.getElementById("optionTarget").value
                )
+}
+
+function onsubmitEditData(event) {
+    document.getElementById("modalEditData").style.display = "none";
+
+    db.addData( selectedCell.split("_")[1],                     // habit
+                moment(selectedCell.split("_")[2], "YYMMDD"),   // date
+                document.getElementById("textData").value       // data
+              );
+    
+    document.getElementById("textData").value = null;
+    event.preventDefault(); // prevent page reload on submit
 }
 
 function showData() {

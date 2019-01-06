@@ -25,22 +25,35 @@
 /* session storage is only to put simple data */
 /* only data can be stored in ss, not any references or objects */
 
+var flgInit = false;
 var ss = new Object();
 
 function ssInit() {
-    var s = sessionStorage.getItem("ssTimeTracker");
+    var s = sessionStorage.getItem("ss" + APP_NAME);
     if (s != null && s != undefined) {
         ss = JSON.parse(s);
     }    
+
+    flgInit = true;
 }
 
 /* it will overwrite any existing data */
 function ssSet(key, val) {
+    if(!flgInit) {
+        alert("Session Storage is not initialized");
+        return;
+    }
+    
     ss[key] = val;
-    sessionStorage.setItem("ssTimeTracker", JSON.stringify(ss));
+    sessionStorage.setItem("ss" + APP_NAME, JSON.stringify(ss));
 }
 
 function ssGet(key) {
+    if(!flgInit) {
+        alert("Session Storage is not initialized");
+        return;
+    }
+    
     if(ss[key] == null || ss[key] == undefined || ss[key] === "") {
         alert( "ssGet: could not find " + key );
         return null;
@@ -51,7 +64,12 @@ function ssGet(key) {
 }
 
 function ssReset(key) {
+    if(!flgInit) {
+        alert("Session Storage is not initialized");
+        return;
+    }
+    
     delete ss[key];
-    sessionStorage.setItem("ssTimeTracker", JSON.stringify(ss));
+    sessionStorage.setItem("ss" + APP_NAME, JSON.stringify(ss));
 }
 
