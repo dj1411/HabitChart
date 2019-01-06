@@ -41,6 +41,10 @@ function setStyle() {
     document.getElementById("divBody").style.top = document.getElementById("divHeader").clientHeight + "px";
 }
 
+/* retrieve data of a habit for a given date */
+function getEntry(idHabit, date) {
+}
+
 function onclickAddEditHabit(event) {
     if(event.target == document.getElementById("buttonAdd") || 
        event.target.parentNode == document.getElementById("buttonAdd")
@@ -87,14 +91,14 @@ function showData() {
         cell.classList.add("w3-text-black");
         cell.style.maxWidth = 0;
         cell.style.whiteSpace = "nowrap";
-        cell.innerHTML = "<i class='fas fa-circle'></i>";
+        cell.innerHTML = "<i class='fas fa-circle'></i> ";
         cell.innerHTML += db.root.data.arrHabit[i].name;
         
         /* the chart */
         row = table.insertRow(3*i+2);
         for(var j=0; j<numCol; j++) {
             cell = row.insertCell(j);
-            cell.style.borderBottom = 5 + i*j + "px solid"; /* dummy values */
+            cell.style.borderBottom = HEIGHT_DATA_CELL + "px solid"; /* dummy values */
         }
         
         /* blank row for padding */

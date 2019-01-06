@@ -135,10 +135,34 @@
             </div>
         </div>        
 
+        <!-- edit data modal -->
+        <div id="modalEditData" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                
+                <div id="titleEditData" class="w3-container w3-theme-action w3-large w3-padding">Edit data</div>
+                
+                <form class="w3-container" onsubmit="onsubmitEditData()">
+                    
+                    <div class="w3-margin-top">
+                        <label>Enter value</label>
+                        <input id="textData" class="w3-input" type="text" required>                        
+                    </div>
+
+                    <div class="w3-bar w3-margin-top w3-margin-bottom">
+                        <input type="button" class="w3-button w3-theme-action w3-left" style="width:45%" onclick="document.getElementById('modalEditData').style.display='none'" value="Cancel" />
+                        <button type="submit" class="w3-button w3-theme-action w3-right" style="width:45%">Submit</button>
+                    </div>                         
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/moment/moment.js"></script>
         <script type="text/javascript" src="js/const.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/db.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
