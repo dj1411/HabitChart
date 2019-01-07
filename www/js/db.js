@@ -25,7 +25,6 @@
 function Entry(idData, date, value) {
     this.date = date;
     this.value = value;
-    this.isValid = true;
 
     /* inheriting the signature elements */
     this.id = idData;
@@ -72,7 +71,7 @@ function DB() {
 /* load the database from local storage */
 /* do not reorder this function */
 DB.prototype.load = function () {
-    var d = localStorage.getItem("dbHabitChart");
+    var d = localStorage.getItem("db" + APP_NAME);
     if (d != null && d != undefined && d !== "") {
         this.root = JSON.parse(d);
     }
@@ -81,7 +80,7 @@ DB.prototype.load = function () {
 /* save the database to local storage */
 /* do not reorder this function */
 DB.prototype.save = function () {
-    localStorage.setItem("dbHabitChart", JSON.stringify(this.root));
+    localStorage.setItem("db" + APP_NAME, JSON.stringify(this.root));
 }
 
 DB.prototype.addHabit = function (name, type, target) {
@@ -161,7 +160,7 @@ DB.prototype.removeData = function (idHabit, idData) {
     this.save();
 }
 
-DB.prototype.editData = function (idHabit, idData, date, value) {
+DB.prototype.editData = function (idHabit, date, value) {
     /* find habit idx */
     var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
         return (habit.id == idHabit);
@@ -169,7 +168,7 @@ DB.prototype.editData = function (idHabit, idData, date, value) {
     
     /* find entry idx */
     var idxData = this.root.data.arrHabit[idxHabit].arrData.findIndex( function(entry)  {
-        return (entry.id == idData);
+        return isDateMatching( entry.date, date );
     } );   
     
     this.root.data.arrHabit[idxHabit].arrData[idxData].date = date;

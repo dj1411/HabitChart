@@ -42,8 +42,21 @@ function setStyle() {
     document.getElementById("divBody").style.top = document.getElementById("divHeader").clientHeight + "px";
 }
 
-/* retrieve data of a habit for a given date */
-function getEntry(idHabit, date) {
+function getData( idHabit, date ) {
+    var idxHabit = db.root.data.arrHabit.findIndex( function(habit) {
+        return (habit.id == idHabit);
+    } );
+    
+    var data = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+        return isDateMatching( moment(data.date), date );
+    } );
+    
+    if( data ) {
+        return data.value;
+    }
+    else {
+        return null;
+    }
 }
 
 function onclickAddEditHabit(event) {
@@ -54,11 +67,18 @@ function onclickAddEditHabit(event) {
     }
 
     document.getElementById("modalAddEditHabit").style.display = "block";
+    document.getElementById("textHabit").select();
 }
 
 function onclickEditData(event) {
     selectedCell = event.target.id;
+    
+    var idHabit = selectedCell.split("_")[1]; 
+    var date = moment(selectedCell.split("_")[2], "YYMMDD");    
+    document.getElementById("textData").value = getData(idHabit, date);
+    
     document.getElementById("modalEditData").style.display = "block";
+    document.getElementById("textData").select();
 }
 
 function onsubmitAddEditHabit() {
@@ -73,10 +93,16 @@ function onsubmitAddEditHabit() {
 function onsubmitEditData(event) {
     document.getElementById("modalEditData").style.display = "none";
 
-    db.addData( selectedCell.split("_")[1],                     // habit
-                moment(selectedCell.split("_")[2], "YYMMDD"),   // date
-                document.getElementById("textData").value       // data
-              );
+    var idHabit = selectedCell.split("_")[1]; 
+    var date = moment(selectedCell.split("_")[2], "YYMMDD");
+    var val = document.getElementById("textData").value;
+
+    if( getData(idHabit, date) ) {
+        db.editData( idHabit, date, val );
+    }
+    else {
+        db.addData( idHabit, date, val );
+    }
     
     document.getElementById("textData").value = null;
     event.preventDefault(); // prevent page reload on submit
