@@ -22,13 +22,13 @@
  * SOFTWARE.
  *******************************************************************************/
 
-function Entry(idEntry, date, value) {
+function Entry(idData, date, value) {
     this.date = date;
     this.value = value;
     this.isValid = true;
 
     /* inheriting the signature elements */
-    this.id = idEntry;
+    this.id = idData;
     this.timestamp = moment();
     this.isDeleted = false;
 }
@@ -38,7 +38,7 @@ function Habit(idHabit, name, type, target) {
     this.type = type; //  options are chart, checkbox and count
     this.target = target; // options are improve, reduce and maintain
     
-    this.arrEntry = new Array();
+    this.arrData = new Array();
     
     /* inheriting the signature elements */
     this.id = idHabit;
@@ -131,49 +131,49 @@ DB.prototype.addData = function (idHabit, date, value) {
     } );
     
     /* find an unique entry id */
-    var idEntry = 0;
-    while( ! this.root.data.arrHabit[idxHabit].arrEntry.every( function(entry) {
-        return (entry.id != idEntry);
+    var idData = 0;
+    while( ! this.root.data.arrHabit[idxHabit].arrData.every( function(entry) {
+        return (entry.id != idData);
     } ) ) {
-        idEntry++;
+        idData++;
     }
     
     /* create an entry and add to the habit */
-    var entry = new Entry(idEntry, date, value);
-    this.root.data.arrHabit[idxHabit].arrEntry.push(entry);
+    var entry = new Entry(idData, date, value);
+    this.root.data.arrHabit[idxHabit].arrData.push(entry);
     
     this.save();
 }
 
-DB.prototype.removeData = function (idHabit, idEntry) {
+DB.prototype.removeData = function (idHabit, idData) {
     /* find habit idx */
     var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
         return (habit.id == idHabit);
     } );
     
     /* find entry idx */
-    var idxEntry = this.root.data.arrHabit[idxHabit].arrEntry.findIndex( function(entry)  {
-        return (entry.id == idEntry);
+    var idxData = this.root.data.arrHabit[idxHabit].arrData.findIndex( function(entry)  {
+        return (entry.id == idData);
     } );    
     
-    this.root.data.arrHabit[idxHabit].arrEntry.splice( idxEntry, 1 );
+    this.root.data.arrHabit[idxHabit].arrData.splice( idxData, 1 );
     
     this.save();
 }
 
-DB.prototype.editData = function (idHabit, idEntry, date, value) {
+DB.prototype.editData = function (idHabit, idData, date, value) {
     /* find habit idx */
     var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
         return (habit.id == idHabit);
     } );
     
     /* find entry idx */
-    var idxEntry = this.root.data.arrHabit[idxHabit].arrEntry.findIndex( function(entry)  {
-        return (entry.id == idEntry);
+    var idxData = this.root.data.arrHabit[idxHabit].arrData.findIndex( function(entry)  {
+        return (entry.id == idData);
     } );   
     
-    this.root.data.arrHabit[idxHabit].arrEntry[idxEntry].date = date;
-    this.root.data.arrHabit[idxHabit].arrEntry[idxEntry].value = value;
+    this.root.data.arrHabit[idxHabit].arrData[idxData].date = date;
+    this.root.data.arrHabit[idxHabit].arrData[idxData].value = value;
     
     this.save();
 }
