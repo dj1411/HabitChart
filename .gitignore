@@ -14,3 +14,4 @@
 /platforms/android/app/build/outputs
 
 /platforms/android/.gradle
+/platforms/android/app/src
