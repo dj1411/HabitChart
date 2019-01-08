@@ -131,7 +131,7 @@ function showData() {
         /* habit name */
         row = table.insertRow(3*i+1);
         var cell = row.insertCell(0);
-        cell.classList.add("w3-text-black");
+        cell.classList.add("w3-text-dark");
         cell.style.maxWidth = 0;
         cell.style.whiteSpace = "nowrap";
         cell.innerHTML = "<i class='fas fa-circle'></i> ";
