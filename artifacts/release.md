@@ -1,0 +1,3 @@
+- cordova build android
+- update version number in const.js and config.xml. remove package.json to rebuild it.
+- github create release
