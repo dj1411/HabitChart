@@ -100,13 +100,7 @@ DB.prototype.addHabit = function (name, type, target) {
 }
 
 DB.prototype.removeHabit = function(idHabit) {
-    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
-        return (habit.id == idHabit);
-    } );
-
-    this.root.data.arrHabit.splice(idxHabit, 1);
-    
-    this.save();
+    // set the deleted flag
 }
 
 DB.prototype.editHabit = function (idHabit, name, type, target) {
@@ -145,19 +139,7 @@ DB.prototype.addData = function (idHabit, date, value) {
 }
 
 DB.prototype.removeData = function (idHabit, idData) {
-    /* find habit idx */
-    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
-        return (habit.id == idHabit);
-    } );
-    
-    /* find entry idx */
-    var idxData = this.root.data.arrHabit[idxHabit].arrData.findIndex( function(entry)  {
-        return (entry.id == idData);
-    } );    
-    
-    this.root.data.arrHabit[idxHabit].arrData.splice( idxData, 1 );
-    
-    this.save();
+    // set the deleted flag
 }
 
 DB.prototype.editData = function (idHabit, date, value) {

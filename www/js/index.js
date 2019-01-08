@@ -47,16 +47,9 @@ function getData( idHabit, date ) {
         return (habit.id == idHabit);
     } );
     
-    var data = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+    return db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
         return isDateMatching( moment(data.date), date );
     } );
-    
-    if( data ) {
-        return data.value;
-    }
-    else {
-        return null;
-    }
 }
 
 function onclickAddEditHabit(event) {
@@ -75,7 +68,12 @@ function onclickEditData(event) {
     
     var idHabit = selectedCell.split("_")[1]; 
     var date = moment(selectedCell.split("_")[2], "YYMMDD");    
-    document.getElementById("textData").value = getData(idHabit, date);
+    if( getData(idHabit, date) ) {
+        document.getElementById("textData").value = getData(idHabit, date).value;
+    }
+    else {
+        document.getElementById("textData").value = null;
+    }
     
     document.getElementById("modalEditData").style.display = "block";
     document.getElementById("textData").select();
@@ -104,6 +102,7 @@ function onsubmitEditData(event) {
         db.addData( idHabit, date, val );
     }
     
+    showData();
     document.getElementById("textData").value = null;
     event.preventDefault(); // prevent page reload on submit
 }
@@ -138,13 +137,36 @@ function showData() {
         cell.innerHTML = "<i class='fas fa-circle'></i> ";
         cell.innerHTML += db.root.data.arrHabit[i].name;
         
-        /* the chart */
+        /* empty data cells */
+        var arrData = new Array();
         row = table.insertRow(3*i+2);
         for(var j=0; j<numCol; j++) {
             cell = row.insertCell(j);
-            cell.id = "id_" + i + "_" + moment().subtract(numCol - (j+1), "days").format("YYMMDD");
-            cell.style.borderBottom = HEIGHT_DATA_CELL + "px solid"; /* dummy values */
+            var date = moment().subtract(numCol - (j+1), "days");
+            cell.id = "id_" + i + "_" + date.format("YYMMDD");
+            arrData.push( getData(db.root.data.arrHabit[i].id, date) );
             cell.onclick = onclickEditData;
+        }
+
+        /* calculate the max value */
+        var max = Math.max( ...( arrData.map( function(data) {
+            return (data ? data.value : 0);
+        } ) ) );
+        
+        /* fill the chart */
+        for(var j=0; j<numCol; j++) {
+            var date = moment().subtract(numCol - (j+1), "days");
+            var data = getData(db.root.data.arrHabit[i].id, date);
+            cell = document.getElementById("id_" + i + "_" + date.format("YYMMDD"));
+            
+            if(!data) {
+                cell.style.borderBottom = HEIGHT_DATA_CELL + "px solid";
+                cell.classList.add("w3-border-light-gray");
+            }
+            else {
+                var height = (data.value/max) * HEIGHT_DATA_CELL;
+                cell.style.borderBottom = height + "px solid";
+            }
         }
         
         /* blank row for padding */
