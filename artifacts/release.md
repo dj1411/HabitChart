@@ -1,3 +1,4 @@
-- cordova build android and store it under Releases folder
-- update version number in const.js and config.xml. remove package.json to rebuild it.
+- update version number in const.js and config.xml
+- remove package.json to rebuild it.
+- cordova build android and keep it for attaching as GitHub release
 - github create release
