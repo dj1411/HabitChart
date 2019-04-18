@@ -28,8 +28,11 @@ var selectedCell = null;
 
 /* The main entry point. This function is entered when Cordova is ready. */
 function main() {
-    setStyle();
+    /* show all the data */
     showData();
+    
+    /* set the style at the end, because the geometry may change in other functions */
+    setStyle();
 }
 
 /* do not change the order of setStyle() */
@@ -39,7 +42,11 @@ function setStyle() {
     document.getElementById("titleWindow").innerText = APP_NAME;    
     
     /* move the main body below header */
-    document.getElementById("divBody").style.top = document.getElementById("divHeader").clientHeight + "px";
+    document.getElementById("divBody").style.top = 
+        document.getElementById("divHeader").clientHeight + "px";
+    
+    /* set z-index of all elements */
+    document.getElementById("divHeader").style.zIndex = Z_INDEX_TOP;
 }
 
 function getData( idHabit, date ) {
@@ -50,6 +57,17 @@ function getData( idHabit, date ) {
     return db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
         return isDateMatching( moment(data.date), date );
     } );
+}
+
+
+/* display additional modal objects */
+function onchangeTarget(event) {
+    if(event.target.value == "Maintain") {
+        document.getElementById("divMaintain").style.display = "block";
+    }
+    else {
+        document.getElementById("divMaintain").style.display = "none";
+    }
 }
 
 function onclickAddEditHabit(event) {
@@ -89,12 +107,15 @@ function onsubmitAddEditHabit() {
 }
 
 function onsubmitEditData(event) {
+    /* hide the modal */
     document.getElementById("modalEditData").style.display = "none";
 
+    /* some local variables */
     var idHabit = selectedCell.split("_")[1]; 
     var date = moment(selectedCell.split("_")[2], "YYMMDD");
     var val = document.getElementById("textData").value;
 
+    /* enter in database */
     if( getData(idHabit, date) ) {
         db.editData( idHabit, date, val );
     }
@@ -102,6 +123,7 @@ function onsubmitEditData(event) {
         db.addData( idHabit, date, val );
     }
     
+    /* display the table and so some cleanup */
     showData();
     document.getElementById("textData").value = null;
     event.preventDefault(); // prevent page reload on submit
@@ -116,9 +138,10 @@ function showData() {
     
     /* get the table object */
     var table = document.getElementById("tableData");
+    var tableDate = document.getElementById("tableDate");
     
     /* create the date row */
-    var row = table.insertRow(0);
+    var row = tableDate.insertRow(-1);
     row.classList.add("w3-tiny");
     for( var i=0; i<numCol; i++ ) {
         var cell = row.insertCell(i);
@@ -127,24 +150,40 @@ function showData() {
     }
     
     /* create data rows */
-    for(var i=0; i<db.root.data.arrHabit.length; i++) {
-        /* habit name */
-        row = table.insertRow(3*i+1);
+    for(var idxHabit=0; idxHabit<db.root.data.arrHabit.length; idxHabit++) {
+        /* local variables */
+        var idHabit = db.root.data.arrHabit[idxHabit].id;
+        
+        /* row for the traffic light and habit name */
+        row = table.insertRow(-1);
         var cell = row.insertCell(0);
         cell.classList.add("w3-text-dark");
-        cell.style.maxWidth = 0;
         cell.style.whiteSpace = "nowrap";
-        cell.innerHTML = "<i class='fas fa-circle'></i> ";
-        cell.innerHTML += db.root.data.arrHabit[i].name;
+        
+        /* traffic light */
+        var span = document.createElement("span");
+        cell.appendChild(span);
+        var icon = document.createElement("i");
+        span.appendChild(icon);
+        icon.classList.add("fas");
+        icon.classList.add("fa-circle");
+//        cell.innerHTML = "<span><i class='fas fa-circle'></i></span>";
+        
+        /* habit name */
+        span = document.createElement("span");
+        cell.appendChild(span);
+        span.classList.add("w3-margin-left");
+        span.innerText = db.root.data.arrHabit[idxHabit].name;
+//        cell.innerHTML += "<span>" + db.root.data.arrHabit[idxHabit].name + "</span>";
         
         /* empty data cells */
         var arrData = new Array();
-        row = table.insertRow(3*i+2);
+        row = table.insertRow(-1);
         for(var j=0; j<numCol; j++) {
             cell = row.insertCell(j);
             var date = moment().subtract(numCol - (j+1), "days");
-            cell.id = "id_" + i + "_" + date.format("YYMMDD");
-            arrData.push( getData(db.root.data.arrHabit[i].id, date) );
+            cell.id = "id_" + idHabit + "_" + date.format("YYMMDD");
+            arrData.push( getData(idHabit, date) );
             cell.onclick = onclickEditData;
         }
 
@@ -156,13 +195,20 @@ function showData() {
         /* fill the chart */
         for(var j=0; j<numCol; j++) {
             var date = moment().subtract(numCol - (j+1), "days");
-            var data = getData(db.root.data.arrHabit[i].id, date);
-            cell = document.getElementById("id_" + i + "_" + date.format("YYMMDD"));
+            var data = getData(idHabit, date);
+            cell = document.getElementById("id_" + idHabit + "_" + date.format("YYMMDD"));
             
+            /* if no data present, fill the cell with gray */
             if(!data) {
                 cell.style.borderBottom = HEIGHT_DATA_CELL + "px solid";
                 cell.classList.add("w3-border-light-gray");
             }
+            /* if 0 is entered as data, put a 1px gray bar */
+            else if(data.value == 0) {
+                cell.style.borderBottom = "1px solid";
+                cell.classList.add("w3-border-light-gray");
+            }
+            /* for normal data, create a proportionate chart */
             else {
                 var height = (data.value/max) * HEIGHT_DATA_CELL;
                 cell.style.borderBottom = height + "px solid";
@@ -170,8 +216,15 @@ function showData() {
         }
         
         /* blank row for padding */
-        row = table.insertRow(3*i+3);
+        row = table.insertRow(-1);
         cell = row.insertCell(0);
         cell.innerHTML = "&nbsp;";
     }
+    
+    /* blank row to scroll past the (+) button */
+    row = table.insertRow(-1);
+    cell = row.insertCell(0);
+    cell.innerHTML = "&nbsp;";    
+    row.style.height = window.innerHeight - 
+        document.getElementById("buttonAdd").getBoundingClientRect().top + "px";
 }
