@@ -159,10 +159,17 @@ function showData() {
             var data = getData(db.root.data.arrHabit[i].id, date);
             cell = document.getElementById("id_" + i + "_" + date.format("YYMMDD"));
             
+            /* if no data present, fill the cell with gray */
             if(!data) {
                 cell.style.borderBottom = HEIGHT_DATA_CELL + "px solid";
                 cell.classList.add("w3-border-light-gray");
             }
+            /* if 0 is entered as data, put a 1px gray bar */
+            else if(data.value == 0) {
+                cell.style.borderBottom = "1px solid";
+                cell.classList.add("w3-border-light-gray");
+            }
+            /* for normal data, create a proportionate chart */
             else {
                 var height = (data.value/max) * HEIGHT_DATA_CELL;
                 cell.style.borderBottom = height + "px solid";
