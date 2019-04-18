@@ -192,4 +192,11 @@ function showData() {
         cell = row.insertCell(0);
         cell.innerHTML = "&nbsp;";
     }
+    
+    /* blank row to scroll past the (+) button */
+    row = table.insertRow(-1);
+    cell = row.insertCell(0);
+    cell.innerHTML = "&nbsp;";    
+    row.style.height = window.innerHeight - 
+        document.getElementById("buttonAdd").getBoundingClientRect().top + "px";
 }

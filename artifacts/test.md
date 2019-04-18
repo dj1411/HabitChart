@@ -1,3 +1,4 @@
 - add habit
 	- on clicking "Maintain", additional fields should appear
+	- with a huge list of habits, scrolling should be possible past the (+) button
 - edit data
