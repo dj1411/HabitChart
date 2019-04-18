@@ -1,2 +1,3 @@
 - add habit
+	- on clicking "Maintain", additional fields should appear
 - edit data

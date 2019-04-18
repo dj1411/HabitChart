@@ -52,6 +52,17 @@ function getData( idHabit, date ) {
     } );
 }
 
+
+/* display additional modal objects */
+function onchangeTarget(event) {
+    if(event.target.value == "Maintain") {
+        document.getElementById("divMaintain").style.display = "block";
+    }
+    else {
+        document.getElementById("divMaintain").style.display = "none";
+    }
+}
+
 function onclickAddEditHabit(event) {
     if(event.target == document.getElementById("buttonAdd") || 
        event.target.parentNode == document.getElementById("buttonAdd")

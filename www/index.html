@@ -100,17 +100,11 @@
                 <form class="w3-container" onsubmit="onsubmitAddEditHabit()">
                     <div class="w3-margin-top">
                         <label>Target</label>
-                        <select id="optionTarget" class="w3-select" onchange="onchangeTarget()">
+                        <select id="optionTarget" class="w3-select" onchange="onchangeTarget(event)">
                             <option value="Improve" selected>I want to improve</option>
                             <option value="Reduce">I want to reduce</option>
                             <option value="Maintain">I want to maintain...</option>
                         </select>
-                        <div id="divMaintain" class="w3-cell-row w3-small" style="display: none">
-                            <span><input id="textTimes" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
-                            <span><label class="w3-cell w3-padding">times in</label></span>
-                            <span><input id="textDays" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 80px"></span>
-                            <span><label class="w3-cell w3-padding">days</label></span>
-                        </div>                        
                     </div>
                     
                     <div class="w3-margin-top">
@@ -118,13 +112,20 @@
                         <input id="textHabit" class="w3-input" type="text" required>                        
                     </div>
                     
+                    <div id="divMaintain" class="w3-margin-top w3-cell-row" style="display: none">
+                        <span><input id="textTimes" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 50px"></span>
+                        <span><label class="w3-cell w3-padding">times in</label></span>
+                        <span><input id="textDays" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 50px"></span>
+                        <span><label class="w3-cell w3-padding">days</label></span>
+                    </div>                        
+
                     <div class="w3-margin-top">
-                        <label>Type</label>
+                        <label>Method</label>
                         <select id="optionHabitType" class="w3-select">
-                            <option value="checkbox">as true or false</option>
-                            <option value="rating">as rating</option>
-                            <option value="count">as count</option>
-                            <option value="value" selected>as a value</option>
+                            <option value="checkbox">with a yes or no</option>
+                            <option value="rating">by giving a performance rating</option>
+                            <option value="count">number of times in a day</option>
+                            <option value="value" selected>by recording a number</option>
                         </select>
                     </div>
 
