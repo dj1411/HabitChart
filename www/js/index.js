@@ -28,8 +28,11 @@ var selectedCell = null;
 
 /* The main entry point. This function is entered when Cordova is ready. */
 function main() {
-    setStyle();
+    /* show all the data */
     showData();
+    
+    /* set the style at the end, because the geometry may change in other functions */
+    setStyle();
 }
 
 /* do not change the order of setStyle() */
@@ -39,7 +42,8 @@ function setStyle() {
     document.getElementById("titleWindow").innerText = APP_NAME;    
     
     /* move the main body below header */
-    document.getElementById("divBody").style.top = document.getElementById("divHeader").clientHeight + "px";
+    document.getElementById("divBody").style.top = 
+        document.getElementById("divHeader").clientHeight + "px";
 }
 
 function getData( idHabit, date ) {
@@ -127,9 +131,10 @@ function showData() {
     
     /* get the table object */
     var table = document.getElementById("tableData");
+    var tableDate = document.getElementById("tableDate");
     
     /* create the date row */
-    var row = table.insertRow(0);
+    var row = tableDate.insertRow(-1);
     row.classList.add("w3-tiny");
     for( var i=0; i<numCol; i++ ) {
         var cell = row.insertCell(i);
@@ -140,7 +145,7 @@ function showData() {
     /* create data rows */
     for(var i=0; i<db.root.data.arrHabit.length; i++) {
         /* habit name */
-        row = table.insertRow(3*i+1);
+        row = table.insertRow(-1);
         var cell = row.insertCell(0);
         cell.classList.add("w3-text-dark");
         cell.style.maxWidth = 0;
@@ -150,7 +155,7 @@ function showData() {
         
         /* empty data cells */
         var arrData = new Array();
-        row = table.insertRow(3*i+2);
+        row = table.insertRow(-1);
         for(var j=0; j<numCol; j++) {
             cell = row.insertCell(j);
             var date = moment().subtract(numCol - (j+1), "days");
@@ -188,7 +193,7 @@ function showData() {
         }
         
         /* blank row for padding */
-        row = table.insertRow(3*i+3);
+        row = table.insertRow(-1);
         cell = row.insertCell(0);
         cell.innerHTML = "&nbsp;";
     }
