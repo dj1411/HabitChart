@@ -154,14 +154,27 @@ function showData() {
         /* local variables */
         var idHabit = db.root.data.arrHabit[idxHabit].id;
         
-        /* habit name */
+        /* row for the traffic light and habit name */
         row = table.insertRow(-1);
         var cell = row.insertCell(0);
         cell.classList.add("w3-text-dark");
         cell.style.whiteSpace = "nowrap";
         
-        cell.innerHTML = "<i class='fas fa-circle'></i> ";
-        cell.innerHTML += db.root.data.arrHabit[idxHabit].name;
+        /* traffic light */
+        var span = document.createElement("span");
+        cell.appendChild(span);
+        var icon = document.createElement("i");
+        span.appendChild(icon);
+        icon.classList.add("fas");
+        icon.classList.add("fa-circle");
+//        cell.innerHTML = "<span><i class='fas fa-circle'></i></span>";
+        
+        /* habit name */
+        span = document.createElement("span");
+        cell.appendChild(span);
+        span.classList.add("w3-margin-left");
+        span.innerText = db.root.data.arrHabit[idxHabit].name;
+//        cell.innerHTML += "<span>" + db.root.data.arrHabit[idxHabit].name + "</span>";
         
         /* empty data cells */
         var arrData = new Array();
