@@ -31,3 +31,9 @@ const Z_INDEX_BOTTOM = 1;
 
 const HEIGHT_DATA_CELL = 50;
 const WIDTH_DATA_CELL = 40;
+
+const MAX_HISTORY_DATA = 21; /* maximum data to compute the traffic light */
+
+const COLOR_TARGET_GREEN = "#74d14c";
+const COLOR_TARGET_YELLOW = "#ffe900";
+const COLOR_TARGET_RED = "red";

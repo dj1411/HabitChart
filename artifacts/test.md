@@ -5,3 +5,7 @@
 	- scrolling should be possible past the (+) button
 	- date bar should not be scrolled
 - traffic light
+	- improve
+	- reduce
+	- maintain
+- test with empty data

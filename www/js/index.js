@@ -35,6 +35,74 @@ function main() {
     setStyle();
 }
 
+/* set the color of traffic light for a given habit */
+function setColorLight(idHabit) {
+    /* local variables */
+    var idxHabit = db.root.data.arrHabit.findIndex( function(habit) {
+        return (habit.id == idHabit);
+    } );
+    
+    /* calculate the average of last 7 days and 'MAX_HISTORY_DATA' days */
+    var sum7 = sumMax = cnt7 = cntMax = curavg = oldavg = 0;
+    for(var offset = 0; offset<MAX_HISTORY_DATA; offset++) {
+        var data = getData(idHabit, moment().subtract(offset, "days"));
+        if(data != undefined) {
+            if(offset < 7) {
+                sum7 += parseInt(data.value);
+                cnt7++;
+            }
+
+            sumMax += parseInt(data.value);
+            cntMax++;
+        }
+    }
+    if(cntMax != 0) {
+        curavg = sum7 / cnt7;
+        oldavg = sumMax / cntMax;
+    }
+    
+    /* decide the color based on old and new average */
+    var color = "transparent";
+    var hi = oldavg + 0.1*oldavg;
+    var lo = oldavg - 0.1*oldavg;
+    switch(db.root.data.arrHabit[idxHabit].target) {
+        case "Improve":
+            if(curavg >= hi) color = COLOR_TARGET_GREEN;
+            else if(curavg < lo) color = COLOR_TARGET_RED;
+            else color = COLOR_TARGET_YELLOW;
+            break;
+            
+        case "Reduce":
+            if(curavg > hi) color = COLOR_TARGET_RED;
+            else if(curavg <= lo) color = COLOR_TARGET_GREEN;
+            else color = COLOR_TARGET_YELLOW;
+            break;
+            
+//        default:
+//            /* case Reach */
+//            if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
+//                var target = data.HabitList[r].Target.split("_")[1] / data.HabitList[r].Target.split("_")[2];
+//                var higreen = target + 0.1*target;
+//                var logreen = target - 0.1*target;
+//                var hiyellow = target + 0.25*target;
+//                var loyellow = target - 0.25*target;
+//                
+//                if(oldavg >= logreen && oldavg <= higreen)
+//                    color = COLOR_TARGET_GREEN;
+//                else if(oldavg > loyellow && oldavg < hiyellow) color = COLOR_TARGET_YELLOW
+//                else color = COLOR_TARGET_RED;
+//                
+//                break;
+//            }
+//            else { /* default */
+//                alert("Invalid Target data encountered");                
+//            }
+    }
+    
+    document.getElementById("light_" + idHabit).style.color = color;
+}
+
+
 /* do not change the order of setStyle() */
 function setStyle() {
     /* set the app name */
@@ -50,6 +118,9 @@ function setStyle() {
     document.getElementById("divHeader").style.zIndex = Z_INDEX_TOP;
 }
 
+
+/* idHabit = id of the habit */
+/* date = date in moment format */
 function getData( idHabit, date ) {
     var idxHabit = db.root.data.arrHabit.findIndex( function(habit) {
         return (habit.id == idHabit);
@@ -168,6 +239,8 @@ function showData() {
         span.appendChild(icon);
         icon.classList.add("fas");
         icon.classList.add("fa-circle");
+        icon.id = "light_" + idHabit;
+        setColorLight(idHabit);
         
         /* habit name */
         span = document.createElement("span");
