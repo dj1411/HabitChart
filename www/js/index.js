@@ -41,9 +41,10 @@ function setStyle() {
     document.title = APP_NAME;
     document.getElementById("titleWindow").innerText = APP_NAME;    
     
+    
     /* move the main body below header */
     document.getElementById("divBody").style.top = 
-        document.getElementById("divHeader").clientHeight + "px";
+        document.getElementById("divHeader").clientHeight + "px";    
     
     /* set z-index of all elements */
     document.getElementById("divHeader").style.zIndex = Z_INDEX_TOP;
@@ -131,7 +132,8 @@ function onsubmitEditData(event) {
 
 function showData() {
     /* clear the existing table */
-    document.getElementById("tableData").innerText = "";
+    document.getElementById("tableData").innerHTML = "";
+    document.getElementById("tableDate").innerHTML = "";
     
     /* calculate number of columns */
     var numCol = Math.floor( document.getElementById("tableData").clientWidth / WIDTH_DATA_CELL );
@@ -145,7 +147,6 @@ function showData() {
     row.classList.add("w3-tiny");
     for( var i=0; i<numCol; i++ ) {
         var cell = row.insertCell(i);
-        cell.classList.add("w3-border-bottom");
         cell.innerHTML = moment().subtract(numCol - (i+1), "days").format("ddd<br>DD/MM");
     }
     
@@ -167,14 +168,12 @@ function showData() {
         span.appendChild(icon);
         icon.classList.add("fas");
         icon.classList.add("fa-circle");
-//        cell.innerHTML = "<span><i class='fas fa-circle'></i></span>";
         
         /* habit name */
         span = document.createElement("span");
         cell.appendChild(span);
         span.classList.add("w3-margin-left");
         span.innerText = db.root.data.arrHabit[idxHabit].name;
-//        cell.innerHTML += "<span>" + db.root.data.arrHabit[idxHabit].name + "</span>";
         
         /* empty data cells */
         var arrData = new Array();
