@@ -44,6 +44,9 @@ function setStyle() {
     /* move the main body below header */
     document.getElementById("divBody").style.top = 
         document.getElementById("divHeader").clientHeight + "px";
+    
+    /* set z-index of all elements */
+    document.getElementById("divHeader").style.zIndex = Z_INDEX_TOP;
 }
 
 function getData( idHabit, date ) {
