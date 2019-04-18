@@ -107,12 +107,15 @@ function onsubmitAddEditHabit() {
 }
 
 function onsubmitEditData(event) {
+    /* hide the modal */
     document.getElementById("modalEditData").style.display = "none";
 
+    /* some local variables */
     var idHabit = selectedCell.split("_")[1]; 
     var date = moment(selectedCell.split("_")[2], "YYMMDD");
     var val = document.getElementById("textData").value;
 
+    /* enter in database */
     if( getData(idHabit, date) ) {
         db.editData( idHabit, date, val );
     }
@@ -120,6 +123,7 @@ function onsubmitEditData(event) {
         db.addData( idHabit, date, val );
     }
     
+    /* display the table and so some cleanup */
     showData();
     document.getElementById("textData").value = null;
     event.preventDefault(); // prevent page reload on submit
@@ -146,14 +150,18 @@ function showData() {
     }
     
     /* create data rows */
-    for(var i=0; i<db.root.data.arrHabit.length; i++) {
+    for(var idxHabit=0; idxHabit<db.root.data.arrHabit.length; idxHabit++) {
+        /* local variables */
+        var idHabit = db.root.data.arrHabit[idxHabit].id;
+        
         /* habit name */
         row = table.insertRow(-1);
         var cell = row.insertCell(0);
         cell.classList.add("w3-text-dark");
         cell.style.whiteSpace = "nowrap";
+        
         cell.innerHTML = "<i class='fas fa-circle'></i> ";
-        cell.innerHTML += db.root.data.arrHabit[i].name;
+        cell.innerHTML += db.root.data.arrHabit[idxHabit].name;
         
         /* empty data cells */
         var arrData = new Array();
@@ -161,8 +169,8 @@ function showData() {
         for(var j=0; j<numCol; j++) {
             cell = row.insertCell(j);
             var date = moment().subtract(numCol - (j+1), "days");
-            cell.id = "id_" + i + "_" + date.format("YYMMDD");
-            arrData.push( getData(db.root.data.arrHabit[i].id, date) );
+            cell.id = "id_" + idHabit + "_" + date.format("YYMMDD");
+            arrData.push( getData(idHabit, date) );
             cell.onclick = onclickEditData;
         }
 
@@ -174,8 +182,8 @@ function showData() {
         /* fill the chart */
         for(var j=0; j<numCol; j++) {
             var date = moment().subtract(numCol - (j+1), "days");
-            var data = getData(db.root.data.arrHabit[i].id, date);
-            cell = document.getElementById("id_" + i + "_" + date.format("YYMMDD"));
+            var data = getData(idHabit, date);
+            cell = document.getElementById("id_" + idHabit + "_" + date.format("YYMMDD"));
             
             /* if no data present, fill the cell with gray */
             if(!data) {

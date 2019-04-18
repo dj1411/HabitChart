@@ -4,3 +4,4 @@
 - scroll
 	- scrolling should be possible past the (+) button
 	- date bar should not be scrolled
+- traffic light
