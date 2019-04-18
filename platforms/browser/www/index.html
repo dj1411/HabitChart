@@ -1,49 +1,176 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<!------------------------------------------------------------------------------
+    MIT License
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    Copyright (c) 2018 Jayanta Debnath
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+------------------------------------------------------------------------------->
 <html>
     <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <title>Title</title>
+        
+        <!-- add all CSS stylesheets -->
+        <link rel="stylesheet" type="text/css" href="css/w3/w3.css" />
+        <link rel="stylesheet" type="text/css" href="css/w3/w3-theme-blue.css" />
+        <link rel="stylesheet" type="text/css" href="css/fontawesome-free-5.1.0-web/css/all.css" />
     </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+    <body onload="document.addEventListener( 'deviceready', main() )">
+        
+        <!-- Header bar. Non scrollable -->
+        <div id="divHeader" style="position: fixed; width: 100%">
+            <div id="titleWindow" class="w3-theme-action w3-xlarge w3-padding">Title</div>
+            <div>
+                <table id="tableDate" class="w3-center w3-theme-light w3-text-theme" style="width: 100%"></table>
             </div>
+        </div>    
+        
+        <!-- main body, scrollable area -->
+        <div id="divBody" class="w3-text-theme" style="position: relative">
+            <table id="tableData" class="w3-center" style="table-layout: fixed; width: 100%">
+                
+                <!-- dummy entries
+                <tr class="w3-tiny">
+                    <td class="w3-border-bottom">Sat<br>30/12</td>
+                    <td class="w3-border-bottom">Sun<br>31/12</td>
+                    <td class="w3-border-bottom">Mon<br>1/1</td>
+                    <td class="w3-border-bottom">Tue<br>2/1</td>
+                </tr>
+                
+                <tr>
+                    <td class="w3-text-black" style="max-width: 0; white-space: nowrap">
+                        <i class='fas fa-circle'></i>
+                        A really long habit name
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 40px solid"></td>
+                    <td style="border-bottom: 50px solid"></td>
+                    <td style="border-bottom: 10px solid"></td>
+                    <td style="border-bottom: 30px solid"></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                
+                <tr>
+                    <td class="w3-text-black" style="max-width: 0; white-space: nowrap">
+                        <i class="fas fa-circle"></i>
+                        A really long habit name
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 30px solid"></td>
+                    <td style="border-bottom: 20px solid"></td>
+                    <td style="border-bottom: 50px solid"></td>
+                    <td style="border-bottom: 10px solid"></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                -->
+                
+            </table>
         </div>
+        
+        <!-- floating (+) button -->
+        <button id="buttonAdd" class="w3-button w3-xlarge w3-circle w3-theme-action w3-card-4 w3-ripple" onclick="onclickAddEditHabit(event)" style="position: fixed; right: 15px; bottom: 15px">
+            <i class="fas fa-plus"></i>
+        </button>
+        
+        <!-- add/edit habit modal -->
+        <div id="modalAddEditHabit" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                
+                <div id="titleAddEditHabit" class="w3-container w3-theme-action w3-large w3-padding">Title</div>
+                
+                <form class="w3-container" onsubmit="onsubmitAddEditHabit()">
+                    <div class="w3-margin-top">
+                        <label>Target</label>
+                        <select id="optionTarget" class="w3-select" onchange="onchangeTarget(event)">
+                            <option value="Improve" selected>I want to improve</option>
+                            <option value="Reduce">I want to reduce</option>
+                            <option value="Maintain">I want to maintain...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="w3-margin-top">
+                        <label>Name</label>
+                        <input id="textHabit" class="w3-input" type="text" required>                        
+                    </div>
+                    
+                    <div id="divMaintain" class="w3-margin-top w3-cell-row" style="display: none">
+                        <span><input id="textTimes" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 50px"></span>
+                        <span><label class="w3-cell w3-padding">times in</label></span>
+                        <span><input id="textDays" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 50px"></span>
+                        <span><label class="w3-cell w3-padding">days</label></span>
+                    </div>                        
+
+                    <div class="w3-margin-top">
+                        <label>Method</label>
+                        <select id="optionHabitType" class="w3-select">
+                            <option value="checkbox">with a yes or no</option>
+                            <option value="rating">by giving a performance rating</option>
+                            <option value="count">number of times in a day</option>
+                            <option value="value" selected>by recording a number</option>
+                        </select>
+                    </div>
+
+                    <div class="w3-bar w3-margin-top w3-margin-bottom">
+                        <input type="button" class="w3-button w3-theme-action w3-left" style="width:45%" onclick="document.getElementById('modalAddEditHabit').style.display='none'" value="Cancel" />
+                        <button type="submit" class="w3-button w3-theme-action w3-right" style="width:45%">Submit</button>
+                    </div>              
+                </form>
+                
+            </div>
+        </div>        
+
+        <!-- edit data modal -->
+        <div id="modalEditData" class="w3-modal">
+            <div class="w3-modal-content w3-text-theme" style="max-width:600px">
+                
+                <div id="titleEditData" class="w3-container w3-theme-action w3-large w3-padding">Edit data</div>
+                
+                <form class="w3-container" onsubmit="onsubmitEditData(event)">
+                    
+                    <div class="w3-margin-top">
+                        <label>Enter value</label>
+                        <input id="textData" class="w3-input" type="text" required>                        
+                    </div>
+
+                    <div class="w3-bar w3-margin-top w3-margin-bottom">
+                        <input type="button" class="w3-button w3-theme-action w3-left" style="width:45%" onclick="document.getElementById('modalEditData').style.display='none'" value="Cancel" />
+                        <button type="submit" class="w3-button w3-theme-action w3-right" style="width:45%">Submit</button>
+                    </div>                         
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
         <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="js/moment/moment.js"></script>
+        <script type="text/javascript" src="js/const.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/db.js"></script>
+        <script type="text/javascript" src="js/ss.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>
