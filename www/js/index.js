@@ -217,7 +217,8 @@ function setStyle() {
         document.getElementById("divHeader").clientHeight + "px";
 
     /* set z-index of all elements */
-    document.getElementById("divHeader").style.zIndex = Z_INDEX_TOP;
+    document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
+    $(".w3-modal").css("z-index", Z_INDEX_TOP);
 }
 
 
