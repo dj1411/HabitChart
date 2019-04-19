@@ -55,7 +55,10 @@ function showData() {
 
         /* row for the traffic light and habit name */
         row = table.insertRow(-1);
-        row.classList.add("Habit_" + idHabit);
+        row.id = "rowHabitName_" + idHabit;
+        row.addEventListener( "contextmenu", function(event) {
+            oncontextmenuHabit(event);
+        } );
         var cell = row.insertCell(0);
         cell.classList.add("w3-text-dark");
         cell.style.whiteSpace = "nowrap";
@@ -79,11 +82,14 @@ function showData() {
         /* empty data cells */
         var arrData = [];
         row = table.insertRow(-1);
-        row.classList.add("Habit_" + idHabit);
+        row.id = "rowHabitData_" + idHabit;
+        row.addEventListener( "contextmenu", function(event) {
+            oncontextmenuHabit(event);
+        } );        
         for (var j = 0; j < numCol; j++) {
             cell = row.insertCell(j);
             var date = moment().subtract(numCol - (j + 1), "days");
-            cell.id = "id_" + idHabit + "_" + date.format("YYMMDD");
+            cell.id = "datacell_" + idHabit + "_" + date.format("YYMMDD");
             arrData.push(getData(idHabit, date));
             cell.onclick = onclickEditData;
         }
@@ -97,7 +103,7 @@ function showData() {
         for (var j = 0; j < numCol; j++) {
             var date = moment().subtract(numCol - (j + 1), "days");
             var data = getData(idHabit, date);
-            cell = document.getElementById("id_" + idHabit + "_" + date.format("YYMMDD"));
+            cell = document.getElementById("datacell_" + idHabit + "_" + date.format("YYMMDD"));
 
             /* if no data present, fill the cell with gray */
             if (!data) {
@@ -120,14 +126,6 @@ function showData() {
         row = table.insertRow(-1);
         cell = row.insertCell(0);
         cell.innerHTML = "&nbsp;";
-        
-        /* add event handlers for habit */
-        var elems = document.getElementsByClassName("Habit_" + idHabit);
-        for (var i=0; i<elems.length; i++) {
-            elems[i].addEventListener("contextmenu", function(event) {
-                oncontextmenuHabit(event);
-            })
-        }
     }
 
     /* blank row to scroll past the (+) button */
@@ -291,7 +289,11 @@ function onclickEditData(event) {
 
 /* do something upon selecting a habit */
 function oncontextmenuHabit(event) {
-    console.log(event);
+    /* determining the habit id */
+    var idxPath = event.path.findIndex(function(val, idx, arr) {
+        return (val.id.split("_")[0] === "rowHabitName" || val.id.split("_")[0] === "rowHabitData")
+    });
+    var idHabit = event.path[idxPath].id.split("_")[1];
 }
 
 
