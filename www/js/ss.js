@@ -21,55 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 /* session storage is only to put simple data */
 /* only data can be stored in ss, not any references or objects */
 
 var flgInit = false;
-var ss = new Object();
+var ss = {};
 
 function ssInit() {
+    "use strict";
     var s = sessionStorage.getItem("ss" + APP_NAME);
-    if (s != null && s != undefined) {
+    if (s !== null && s !== undefined) {
         ss = JSON.parse(s);
-    }    
+    }
 
     flgInit = true;
 }
 
 /* it will overwrite any existing data */
 function ssSet(key, val) {
-    if(!flgInit) {
+    "use strict";
+    if (!flgInit) {
         alert("Session Storage is not initialized");
         return;
     }
-    
+
     ss[key] = val;
     sessionStorage.setItem("ss" + APP_NAME, JSON.stringify(ss));
 }
 
 function ssGet(key) {
-    if(!flgInit) {
+    "use strict";
+    if (!flgInit) {
         alert("Session Storage is not initialized");
         return;
     }
-    
-    if(ss[key] == null || ss[key] == undefined || ss[key] === "") {
-        alert( "ssGet: could not find " + key );
+
+    if (ss[key] === null || ss[key] === undefined || ss[key] === "") {
+        alert("ssGet: could not find " + key);
         return null;
-    }
-    else {
+    } else {
         return ss[key];
     }
 }
 
 function ssReset(key) {
-    if(!flgInit) {
+    "use strict";
+    if (!flgInit) {
         alert("Session Storage is not initialized");
         return;
     }
-    
+
     delete ss[key];
     sessionStorage.setItem("ss" + APP_NAME, JSON.stringify(ss));
 }
-

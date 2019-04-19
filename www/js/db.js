@@ -23,6 +23,8 @@
  *******************************************************************************/
 
 function Entry(idData, date, value) {
+    "use strict";
+
     this.date = date;
     this.value = value;
 
@@ -33,12 +35,14 @@ function Entry(idData, date, value) {
 }
 
 function Habit(idHabit, name, type, target) {
+    "use strict";
+    
     this.name = name;
     this.type = type; //  options are chart, checkbox and count
     this.target = target; // options are improve, reduce and maintain
-    
-    this.arrData = new Array();
-    
+
+    this.arrData = [];
+
     /* inheriting the signature elements */
     this.id = idHabit;
     this.timestamp = moment();
@@ -46,23 +50,28 @@ function Habit(idHabit, name, type, target) {
 }
 
 function Data() {
-    this.arrHabit = new Array();
+    "use strict";
+    
+    this.arrHabit = [];
 }
 
 function Config() {
+    "use strict";
 }
 
 /* root object */
 function DB() {
-    this.root = new Object();
-    this.load();
+    "use strict";
     
-    if(this.root.data == undefined || this.root.data == null || this.root.data === "") {
+    this.root = {};
+    this.load();
+
+    if (this.root.data === undefined || this.root.data === null || this.root.data === "") {
         this.root.data = new Data();
         this.save();
     }
 
-    if(this.root.config == undefined || this.root.config == null || this.root.config === "") {
+    if (this.root.config === undefined || this.root.config === null || this.root.config === "") {
         this.root.config = new Config();
         this.save();
     }
@@ -71,90 +80,99 @@ function DB() {
 /* load the database from local storage */
 /* do not reorder this function */
 DB.prototype.load = function () {
+    "use strict";
     var d = localStorage.getItem("db" + APP_NAME);
-    if (d != null && d != undefined && d !== "") {
+    if (d !== null && d !== undefined && d !== "") {
         this.root = JSON.parse(d);
     }
-}
+};
 
 /* save the database to local storage */
 /* do not reorder this function */
 DB.prototype.save = function () {
+    "use strict";
     localStorage.setItem("db" + APP_NAME, JSON.stringify(this.root));
-}
+};
 
 DB.prototype.addHabit = function (name, type, target) {
+    "use strict";
+    
     /* find an unique habit id */
     var idHabit = 0;
-    while( ! this.root.data.arrHabit.every( function(habit) {
-        return (habit.id != idHabit);
-    } ) ) {
-        idHabit++;
+    while (!this.root.data.arrHabit.every(function (habit) {
+            return (habit.id !== idHabit);
+        })) {
+        idHabit += 1;
     }
-    
+
     /* create a habit object and append to the habit array */
     var habit = new Habit(idHabit, name, type, target);
     this.root.data.arrHabit.push(habit);
-    
-    this.save();
-}
 
-DB.prototype.removeHabit = function(idHabit) {
+    this.save();
+};
+
+DB.prototype.removeHabit = function (idHabit) {
+    "use strict";
     // set the deleted flag
-}
+};
 
 DB.prototype.editHabit = function (idHabit, name, type, target) {
+    "use strict";
     /* find habit idx */
-    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
-        return (habit.id == idHabit);
-    } );
-    
+    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id === idHabit);
+    });
+
     /* update */
     this.root.data.arrHabit[idxHabit].name = name;
     this.root.data.arrHabit[idxHabit].type = type;
     this.root.data.arrHabit[idxHabit].target = target;
-    
+
     this.save();
-}
+};
 
 DB.prototype.addData = function (idHabit, date, value) {
+    "use strict";
     /* find habit idx */
-    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
-        return (habit.id == idHabit);
-    } );
-    
+    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id === idHabit);
+    });
+
     /* find an unique entry id */
     var idData = 0;
-    while( ! this.root.data.arrHabit[idxHabit].arrData.every( function(entry) {
-        return (entry.id != idData);
-    } ) ) {
-        idData++;
+    while (!this.root.data.arrHabit[idxHabit].arrData.every(function (entry) {
+            return (entry.id !== idData);
+        })) {
+        idData += 1;
     }
-    
+
     /* create an entry and add to the habit */
     var entry = new Entry(idData, date, value);
     this.root.data.arrHabit[idxHabit].arrData.push(entry);
-    
+
     this.save();
-}
+};
 
 DB.prototype.removeData = function (idHabit, idData) {
+    "use strict";
     // set the deleted flag
-}
+};
 
 DB.prototype.editData = function (idHabit, date, value) {
+    "use strict";
     /* find habit idx */
-    var idxHabit = this.root.data.arrHabit.findIndex( function(habit)  {
-        return (habit.id == idHabit);
-    } );
-    
+    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id === idHabit);
+    });
+
     /* find entry idx */
-    var idxData = this.root.data.arrHabit[idxHabit].arrData.findIndex( function(entry)  {
-        return isDateMatching( entry.date, date );
-    } );   
-    
+    var idxData = this.root.data.arrHabit[idxHabit].arrData.findIndex(function (entry) {
+        return isDateMatching(entry.date, date);
+    });
+
     this.root.data.arrHabit[idxHabit].arrData[idxData].date = date;
     this.root.data.arrHabit[idxHabit].arrData[idxData].value = value;
-    
+
     this.save();
-}
+};

@@ -22,18 +22,18 @@
  * SOFTWARE.
  *******************************************************************************/
 
-const APP_NAME = "Habit Chart";
-const APP_VER = "2.0.0";
+var APP_NAME = "Habit Chart";
+var APP_VER = "2.0.0";
 
-const Z_INDEX_TOP = 5;
-const Z_INDEX_MED = 3;
-const Z_INDEX_BOTTOM = 1;
+var Z_INDEX_TOP = 5;
+var Z_INDEX_MED = 3;
+var Z_INDEX_BOTTOM = 1;
 
-const HEIGHT_DATA_CELL = 50;
-const WIDTH_DATA_CELL = 40;
+var HEIGHT_DATA_CELL = 50;
+var WIDTH_DATA_CELL = 40;
 
-const MAX_HISTORY_DATA = 21; /* maximum data to compute the traffic light */
+var MAX_HISTORY_DATA = 21; /* maximum data to compute the traffic light */
 
-const COLOR_TARGET_GREEN = "#74d14c";
-const COLOR_TARGET_YELLOW = "#ffe900";
-const COLOR_TARGET_RED = "red";
+var COLOR_TARGET_GREEN = "#74d14c";
+var COLOR_TARGET_YELLOW = "#ffe900";
+var COLOR_TARGET_RED = "red";
