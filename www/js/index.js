@@ -147,6 +147,18 @@ function main() {
 }
 
 
+/* select a given habit by changing the background color */
+function selectHabit(idHabit) {
+    document.getElementById("overlayHabitSelectBG").style.display = "block";
+    var y = document.getElementById("rowHabitName_" + idHabit)
+        .getBoundingClientRect().top;
+    document.getElementById("overlayHabitSelect").setAttribute("y", y + "px");
+    var height = document.getElementById("rowHabitName_" + idHabit).clientHeight
+        + document.getElementById("rowHabitData_" + idHabit).clientHeight
+        + 10;
+    document.getElementById("overlayHabitSelect").setAttribute("height", height + "px");    
+}
+
 /* set the color of traffic light for a given habit */
 function setColorLight(idHabit) {
     /* local variables */
@@ -228,6 +240,7 @@ function setStyle() {
     /* set z-index of all elements */
     document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
     $(".w3-modal").css("z-index", Z_INDEX_TOP);
+    document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_TOP;
     
     /* prepare for element selection */
     /* disable text selection and context menu */
@@ -237,6 +250,12 @@ function setStyle() {
     });
 }
 
+
+/* deselect any selected habit and reset the toolbar */
+function deselectHabit() {
+    /* todo: find the habit to be de-selected */
+    document.getElementById('overlayHabitSelectBG').style.display = 'none';
+}
 
 /* idHabit = id of the habit */
 /* date = date in moment format */
@@ -291,11 +310,13 @@ function onclickEditData(event) {
 function oncontextmenuHabit(event) {
     /* determining the habit id */
     var idxPath = event.path.findIndex(function(val, idx, arr) {
-        return (val.id.split("_")[0] === "rowHabitName" || val.id.split("_")[0] === "rowHabitData")
+        return (val.id.split("_")[0] === "rowHabitName" 
+                || val.id.split("_")[0] === "rowHabitData")
     });
     var idHabit = event.path[idxPath].id.split("_")[1];
     
-    /* background color change for selected habit */
+    /* Select the habit */
+    selectHabit(idHabit);
 }
 
 

@@ -39,7 +39,7 @@
         
         <!-- Header bar. Non scrollable -->
         <div id="divHeader" style="position: fixed; width: 100%">
-            <div id="titleWindow" class="w3-theme-action w3-xlarge w3-padding">Title</div>
+            <div id="titleWindow" class="w3-theme-dark w3-xlarge w3-padding">Title</div>
             <div>
                 <table id="tableDate" class="w3-center w3-theme-light" style="width: 100%"></table>
             </div>
@@ -166,8 +166,11 @@
         
         
         <!-- overlay habit selection -->
-        <svg width="100%" height="100%" style="position: fixed; left: 0; top: 0; z-index: 10; opacity: 0.1; display: block">
-            <rect x="0" y="90px" rx="10" ry="10" width="100%" height="90px" />
+        <svg id="overlayHabitSelectBG" width="100%" height="100%" 
+             style="position: fixed; left: 0; top: 0; opacity: 0.1; display: none"
+             onclick="deselectHabit()">
+            <rect id="overlayHabitSelect" x="0" y="90px" rx="10" ry="10" 
+                  width="100%" height="90px" style="fill: #074b83;" />
         </svg>
         
         <script type="text/javascript" src="cordova.js"></script>
