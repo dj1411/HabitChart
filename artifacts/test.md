@@ -1,5 +1,6 @@
 - add habit
 	- on clicking "Maintain", additional fields should appear
+- delete habit
 - edit data
 - scroll
 	- scrolling should be possible past the (+) button

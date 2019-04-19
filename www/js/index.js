@@ -26,6 +26,7 @@
 var db = new DB();
 var selectedCell = null;
 
+
 /* display the main table */
 function showData() {
     /* clear the existing table */
@@ -47,13 +48,14 @@ function showData() {
         cell.innerHTML = moment().subtract(numCol - (i + 1), "days").format("ddd<br>DD/MM");
     }
 
-    /* create data rows */
+    /* create habits and their data rows */
     for (var idxHabit = 0; idxHabit < db.root.data.arrHabit.length; idxHabit++) {
         /* local variables */
         var idHabit = db.root.data.arrHabit[idxHabit].id;
 
         /* row for the traffic light and habit name */
         row = table.insertRow(-1);
+        row.classList.add("Habit_" + idHabit);
         var cell = row.insertCell(0);
         cell.classList.add("w3-text-dark");
         cell.style.whiteSpace = "nowrap";
@@ -75,8 +77,9 @@ function showData() {
         span.innerText = db.root.data.arrHabit[idxHabit].name;
 
         /* empty data cells */
-        var arrData = new Array();
+        var arrData = [];
         row = table.insertRow(-1);
+        row.classList.add("Habit_" + idHabit);
         for (var j = 0; j < numCol; j++) {
             cell = row.insertCell(j);
             var date = moment().subtract(numCol - (j + 1), "days");
@@ -117,6 +120,14 @@ function showData() {
         row = table.insertRow(-1);
         cell = row.insertCell(0);
         cell.innerHTML = "&nbsp;";
+        
+        /* add event handlers for habit */
+        var elems = document.getElementsByClassName("Habit_" + idHabit);
+        for (var i=0; i<elems.length; i++) {
+            elems[i].addEventListener("contextmenu", function(event) {
+                oncontextmenuHabit(event);
+            })
+        }
     }
 
     /* blank row to scroll past the (+) button */
@@ -136,6 +147,7 @@ function main() {
     /* set the style at the end, because the geometry may change in other functions */
     setStyle();
 }
+
 
 /* set the color of traffic light for a given habit */
 function setColorLight(idHabit) {
@@ -211,7 +223,6 @@ function setStyle() {
     document.title = APP_NAME;
     document.getElementById("titleWindow").innerText = APP_NAME;
 
-
     /* move the main body below header */
     document.getElementById("divBody").style.top =
         document.getElementById("divHeader").clientHeight + "px";
@@ -219,6 +230,13 @@ function setStyle() {
     /* set z-index of all elements */
     document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
     $(".w3-modal").css("z-index", Z_INDEX_TOP);
+    
+    /* prepare for element selection */
+    /* disable text selection and context menu */
+    document.body.style.userSelect = "none";
+    document.body.addEventListener("contextmenu", function(event) {
+        event.preventDefault();
+    });
 }
 
 
@@ -269,6 +287,13 @@ function onclickEditData(event) {
     document.getElementById("modalEditData").style.display = "block";
     document.getElementById("textData").select();
 }
+
+
+/* do something upon selecting a habit */
+function oncontextmenuHabit(event) {
+    console.log(event);
+}
+
 
 function onsubmitAddEditHabit() {
     document.getElementById("modalAddEditHabit").style.display = "none";
