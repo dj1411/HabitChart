@@ -294,6 +294,8 @@ function oncontextmenuHabit(event) {
         return (val.id.split("_")[0] === "rowHabitName" || val.id.split("_")[0] === "rowHabitData")
     });
     var idHabit = event.path[idxPath].id.split("_")[1];
+    
+    /* background color change for selected habit */
 }
 
 
