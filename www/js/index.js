@@ -29,6 +29,8 @@ var selectedCell = null;
 
 /* The main entry point. This function is entered when Cordova is ready. */
 function main() {
+    "use strict";
+    
     /* initialize session storage */
     ssInit();
     
@@ -42,15 +44,17 @@ function main() {
 
 /* select a given habit by changing the background color */
 function selectHabit(idHabit) {
+    "use strict";
+    
     /* change background of habit */
     document.getElementById("overlayHabitSelectBG").style.display = "block";
     var y = document.getElementById("rowHabitName_" + idHabit)
         .getBoundingClientRect().top;
-     document.getElementById("overlayHabitSelect").style.top = y + "px";
+    document.getElementById("overlayHabitSelect").style.top = y + "px";
     var height = document.getElementById("rowHabitName_" + idHabit).clientHeight
         + document.getElementById("rowHabitData_" + idHabit).clientHeight
         + 10;
-     document.getElementById("overlayHabitSelect").style.height = height + "px";    
+    document.getElementById("overlayHabitSelect").style.height = height + "px";
     
     /* change toolbar */
     document.getElementById("titleWindow").innerHTML = "";
@@ -62,13 +66,20 @@ function selectHabit(idHabit) {
 
 /* set the color of traffic light for a given habit */
 function setColorLight(idHabit) {
+    "use strict";
+    
     /* local variables */
     var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id == idHabit);
+        return (habit.id === idHabit);
     });
 
     /* calculate the average of last 7 days and 'MAX_HISTORY_DATA' days */
-    var sum7 = sumMax = cnt7 = cntMax = curavg = oldavg = 0;
+    var sum7 = 0;
+    var sumMax = 0;
+    var cnt7 = 0;
+    var cntMax = 0;
+    var curavg = 0;
+    var oldavg = 0;
     for (var offset = 0; offset < MAX_HISTORY_DATA; offset++) {
         var data = getData(idHabit, moment().subtract(offset, "days"));
         if (data != undefined) {
@@ -130,6 +141,8 @@ function setColorLight(idHabit) {
 
 /* do not change the order of setStyle() */
 function setStyle() {
+    "use strict";
+    
     /* title bar settings */
     document.title = APP_NAME;
     document.getElementById("titleWindow").innerText = APP_NAME;
@@ -156,6 +169,8 @@ function setStyle() {
 
 /* deselect any selected habit and reset the toolbar */
 function deselectHabit() {
+    "use strict";
+    
     /* reset selection */
     ssReset("idHabitSelect");
     document.getElementById('overlayHabitSelectBG').style.display = 'none';
@@ -186,6 +201,8 @@ function deselectHabit() {
 /* idHabit = id of the habit */
 /* date = date in moment format */
 function getData(idHabit, date) {
+    "use strict";
+    
     var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
         return (habit.id == idHabit);
     });
@@ -198,6 +215,8 @@ function getData(idHabit, date) {
 
 /* display additional modal objects */
 function onchangeTarget(event) {
+    "use strict";
+    
     if (event.target.value == "Maintain") {
         document.getElementById("divMaintain").style.display = "block";
     } else {
@@ -206,6 +225,8 @@ function onchangeTarget(event) {
 }
 
 function onclickAddEditHabit(event) {
+    "use strict";
+    
     if (event.target == document.getElementById("buttonAdd") ||
         event.target.parentNode == document.getElementById("buttonAdd")
     ) {
@@ -218,14 +239,17 @@ function onclickAddEditHabit(event) {
 
 
 function onclickDeleteHabit() {
-    db.removeHabit(parseInt(ssGet("idHabitSelect")));
+    "use strict";
     
-    /* remove any selections */
+    db.removeHabit(parseInt(ssGet("idHabitSelect")));
     deselectHabit();
+    showData();
 }
 
 
 function onclickEditData(event) {
+    "use strict";
+    
     selectedCell = event.target.id;
 
     var idHabit = selectedCell.split("_")[1];
@@ -243,6 +267,8 @@ function onclickEditData(event) {
 
 /* do something upon selecting a habit */
 function oncontextmenuHabit(event) {
+    "use strict";
+    
     /* determining the habit id */
     var idxPath = event.path.findIndex(function(val, idx, arr) {
         return (val.id.split("_")[0] === "rowHabitName" 
@@ -257,6 +283,8 @@ function oncontextmenuHabit(event) {
 
 
 function onsubmitAddEditHabit() {
+    "use strict";
+    
     document.getElementById("modalAddEditHabit").style.display = "none";
 
     db.addHabit(document.getElementById("textHabit").value,
@@ -266,6 +294,8 @@ function onsubmitAddEditHabit() {
 }
 
 function onsubmitEditData(event) {
+    "use strict";
+    
     /* hide the modal */
     document.getElementById("modalEditData").style.display = "none";
 
@@ -290,12 +320,15 @@ function onsubmitEditData(event) {
 
 /* display the main table */
 function showData() {
+    "use strict";
+    
     /* clear the existing table */
     document.getElementById("tableData").innerHTML = "";
     document.getElementById("tableDate").innerHTML = "";
 
     /* calculate number of columns */
-    var numCol = Math.floor(document.getElementById("tableData").clientWidth / WIDTH_DATA_CELL);
+    var numCol = Math.floor(document.getElementById("tableData").clientWidth 
+                            / WIDTH_DATA_CELL);
 
     /* get the table object */
     var table = document.getElementById("tableData");
@@ -311,6 +344,11 @@ function showData() {
 
     /* create habits and their data rows */
     for (var idxHabit = 0; idxHabit < db.root.data.arrHabit.length; idxHabit++) {
+        /* skip deleted habits */
+        if(db.root.data.arrHabit[idxHabit].isDeleted == true) {
+            continue;
+        }
+        
         /* local variables */
         var idHabit = db.root.data.arrHabit[idxHabit].id;
 
@@ -400,6 +438,8 @@ function showData() {
 
 /* toolbar when there is no habit selected */
 function showToolbarNormal() {
+    "use strict";
+    
     /* toolbar color */
     document.getElementById("divTitle").classList.remove("w3-theme-dark");
     document.getElementById("divTitle").classList.add("w3-theme-d1");
