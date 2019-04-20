@@ -9,5 +9,7 @@ web version
 show statistics
 
 **Future Ideas**
-- popup message e.g. upon going green --> Yeh! You have successfully achieved your goal
+- popup achievement message and display level
+	- level 1: upon entering data for 7 days
+	- upon going green --> Yeh! You have successfully achieved your goal
 	

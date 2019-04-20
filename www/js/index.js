@@ -184,12 +184,12 @@ function setStyle() {
     /* title bar settings */
     document.title = APP_NAME;
     document.getElementById("titleWindow").innerText = APP_NAME;
-    document.getElementById("divTitle").style.height = HEIGHT_TITLE_BAR + "px";
 
     /* move the elements below header */
     document.getElementById("divBody").style.top =
         document.getElementById("divHeader").clientHeight + "px";
-    document.getElementById("overlayHabitSelectBG").style.top = HEIGHT_TITLE_BAR + "px";
+    document.getElementById("overlayHabitSelectBG").style.top = 
+         document.getElementById("divTitle").clientHeight + "px";
 
     /* set z-index of all elements */
     document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
