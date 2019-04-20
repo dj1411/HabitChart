@@ -351,9 +351,9 @@ function onsubmitEditData(event) {
 
     /* enter in database */
     if (getData(idHabit, date)) {
-        db.editData(idHabit, date, val);
+        db.editData(parseInt(idHabit), date, val);
     } else {
-        db.addData(idHabit, date, val);
+        db.addData(parseInt(idHabit), date, val);
     }
 
     /* display the table and so some cleanup */
