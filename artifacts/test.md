@@ -2,13 +2,11 @@
 	- on clicking "Maintain", additional fields should appear
 - delete habit
 - edit data
+- chart
 - scroll
-	- scrolling should be possible past the (+) button
-	- date bar should not be scrolled
 - traffic light
-	- improve
-	- reduce
-	- maintain
+	- different targets
+	- different methods
 - back button
 	- close modal
 	- deselect

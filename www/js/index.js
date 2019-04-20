@@ -248,7 +248,8 @@ function onBack() {
     }
     
     /* if not on main page, just go back to previous page */
-    if(location.href.split('/').reverse()[0] != "index.html") {
+    var page = location.href.split('/').reverse()[0];
+    if (page != "index.html" && page != "index.html?") {
         window.history.back();
     }
     /* else if on main page, exit app */
@@ -419,11 +420,6 @@ function showData() {
         cell.style.whiteSpace = "nowrap";
         cell.innerText = db.root.data.arrHabit[idxHabit].name;
         
-        /* dummy cells for the habit name row */
-        for (var j = 2; j < numCol; j++) {
-            cell = row.insertCell(-1);
-        }
-        
         /* empty data cells */
         var arrData = [];
         row = table.insertRow(-1);
@@ -437,6 +433,7 @@ function showData() {
             cell.id = "datacell_" + idHabit + "_" + date.format("YYMMDD");
             arrData.push(getData(idHabit, date));
             cell.onclick = onclickEditData;
+            cell.classList.add("mybutton");
         }
 
         /* calculate the max value */
@@ -448,7 +445,8 @@ function showData() {
         for (var j = 0; j < numCol; j++) {
             var date = moment().subtract(numCol - (j + 1), "days");
             var data = getData(idHabit, date);
-            cell = document.getElementById("datacell_" + idHabit + "_" + date.format("YYMMDD"));
+            cell = document.getElementById("datacell_" + idHabit + "_" + 
+                                           date.format("YYMMDD"));
 
             /* if no data present, fill the cell with gray */
             if (!data) {
