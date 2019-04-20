@@ -31,6 +31,7 @@ var Z_INDEX_BOTTOM = 1;
 
 var HEIGHT_DATA_CELL = 50;
 var WIDTH_DATA_CELL = 40;
+var HEIGHT_TITLE_BAR = 50;
 
 var MAX_HISTORY_DATA = 21; /* maximum data to compute the traffic light */
 

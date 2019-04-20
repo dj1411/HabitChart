@@ -130,20 +130,22 @@ function setColorLight(idHabit) {
 
 /* do not change the order of setStyle() */
 function setStyle() {
-    /* set the app name */
+    /* title bar settings */
     document.title = APP_NAME;
     document.getElementById("titleWindow").innerText = APP_NAME;
+    document.getElementById("divTitle").style.height = HEIGHT_TITLE_BAR + "px";
 
-    /* move the main body below header */
+    /* move the elements below header */
     document.getElementById("divBody").style.top =
         document.getElementById("divHeader").clientHeight + "px";
+    document.getElementById("overlayHabitSelectBG").style.top = HEIGHT_TITLE_BAR + "px";
 
     /* set z-index of all elements */
     document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
     $(".w3-modal").css("z-index", Z_INDEX_TOP);
     document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_TOP;
     
-    /* prepare for element selection */
+    /* prepare for habit selection */
     /* disable text selection and context menu */
     document.body.style.userSelect = "none";
     document.body.addEventListener("contextmenu", function(event) {
@@ -164,6 +166,21 @@ function deselectHabit() {
     document.getElementById("divTitle").classList.remove("w3-theme-d1");
     document.getElementById("toolbarNormal").style.display = "block";
     document.getElementById("toolbarSelect").style.display = "none";
+    
+    /* use cordova plugins on android */
+    /* todo: in future extend to iOS also */
+    if(navigator.userAgent.indexOf("Android") >= 0) {
+        /* button click sound */
+        nativeclick.watch(["mybutton"]);
+        
+        /* button click vibration */
+        var arrButtons = document.getElementsByClassName("mybutton");
+        for( var i=0; i<arrButtons.length; i++) {
+            arrButtons[i].addEventListener( "click", function() {
+                navigator.vibrate(20);
+            } );
+        }
+    }
 }
 
 /* idHabit = id of the habit */
@@ -198,6 +215,15 @@ function onclickAddEditHabit(event) {
     document.getElementById("modalAddEditHabit").style.display = "block";
     document.getElementById("textHabit").select();
 }
+
+
+function onclickDeleteHabit() {
+    console.log(ssGet("idHabitSelect"));
+    
+    /* remove any selections */
+    deselectHabit();
+}
+
 
 function onclickEditData(event) {
     selectedCell = event.target.id;

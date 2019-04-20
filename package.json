@@ -8,12 +8,16 @@
       "browser"
     ],
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-vibration": {},
+      "cordova-plugin-nativeclicksound": {}
     }
   },
   "dependencies": {
     "cordova-android": "^7.1.4",
-    "cordova-browser": "^5.0.4"
+    "cordova-browser": "^5.0.4",
+    "cordova-plugin-nativeclicksound": "0.0.4",
+    "cordova-plugin-vibration": "^3.1.0"
   },
   "devDependencies": {
     "cordova-plugin-whitelist": "1"
