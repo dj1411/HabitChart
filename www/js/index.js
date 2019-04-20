@@ -152,11 +152,11 @@ function selectHabit(idHabit) {
     document.getElementById("overlayHabitSelectBG").style.display = "block";
     var y = document.getElementById("rowHabitName_" + idHabit)
         .getBoundingClientRect().top;
-    document.getElementById("overlayHabitSelect").setAttribute("y", y + "px");
+     document.getElementById("overlayHabitSelect").style.top = y + "px";
     var height = document.getElementById("rowHabitName_" + idHabit).clientHeight
         + document.getElementById("rowHabitData_" + idHabit).clientHeight
         + 10;
-    document.getElementById("overlayHabitSelect").setAttribute("height", height + "px");    
+     document.getElementById("overlayHabitSelect").style.height = height + "px";    
 }
 
 /* set the color of traffic light for a given habit */
