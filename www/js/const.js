@@ -26,7 +26,9 @@ var APP_NAME = "Habit Chart";
 var APP_VER = "2.0.0";
 
 var Z_INDEX_TOP = 5;
+var Z_INDEX_MEDHI = 4;
 var Z_INDEX_MED = 3;
+var Z_INDEX_MEDLO = 2;
 var Z_INDEX_BOTTOM = 1;
 
 var HEIGHT_DATA_CELL = 50;

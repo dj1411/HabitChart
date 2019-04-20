@@ -58,6 +58,16 @@ function handleGlobalEvents() {
         event.preventDefault();
     });
     
+    /* move the selection overlay upon scrolling */
+    document.addEventListener("scroll", function(event) {
+        var idHabit = ssGet("idHabitSelect");
+        if( idHabit != undefined) {
+            var y = document.getElementById("rowHabitName_" + idHabit)
+                .getBoundingClientRect().top;
+            document.getElementById("overlayHabitSelect").style.top = y + "px";
+        }
+    });
+    
     /* use cordova plugins on android and iPhone */
     if(navigator.userAgent.indexOf("Android") >= 0 ||
        navigator.userAgent.indexOf("iPhone") >= 0) {
@@ -85,6 +95,11 @@ function selectHabit(idHabit) {
     "use strict";
     
     /* change background of habit */
+    /* this is purely a workaround. ideally, the background color of the row
+     * should have been changed, plus the border perhaps. But In our case,
+     * we are using the border for draw the chart. So, we cant play around with
+     * the border too much.
+     */
     document.getElementById("overlayHabitSelectBG").style.display = "block";
     var y = document.getElementById("rowHabitName_" + idHabit)
         .getBoundingClientRect().top;
@@ -194,7 +209,7 @@ function setStyle() {
     /* set z-index of all elements */
     document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
     $(".w3-modal").css("z-index", Z_INDEX_TOP);
-    document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_TOP;
+    document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_MEDLO;
 }
 
 
@@ -388,26 +403,27 @@ function showData() {
         row.addEventListener( "contextmenu", function(event) {
             oncontextmenuHabit(event);
         } );
-        var cell = row.insertCell(0);
-        cell.classList.add("w3-text-dark");
-        cell.style.whiteSpace = "nowrap";
 
         /* traffic light */
-        var span = document.createElement("span");
-        cell.appendChild(span);
+        var cell = row.insertCell(-1);
         var icon = document.createElement("i");
-        span.appendChild(icon);
+        cell.appendChild(icon);
         icon.classList.add("fas");
         icon.classList.add("fa-circle");
         icon.id = "light_" + idHabit;
         setColorLight(idHabit);
 
         /* habit name */
-        span = document.createElement("span");
-        cell.appendChild(span);
-        span.classList.add("w3-margin-left");
-        span.innerText = db.root.data.arrHabit[idxHabit].name;
-
+        cell = row.insertCell(-1);
+        cell.classList.add("w3-text-dark");
+        cell.style.whiteSpace = "nowrap";
+        cell.innerText = db.root.data.arrHabit[idxHabit].name;
+        
+        /* dummy cells for the habit name row */
+        for (var j = 2; j < numCol; j++) {
+            cell = row.insertCell(-1);
+        }
+        
         /* empty data cells */
         var arrData = [];
         row = table.insertRow(-1);
