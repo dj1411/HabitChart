@@ -27,6 +27,241 @@ var db = new DB();
 var selectedCell = null;
 
 
+/* The main entry point. This function is entered when Cordova is ready. */
+function main() {
+    /* initialize session storage */
+    ssInit();
+    
+    /* show all the data */
+    showData();
+
+    /* set the style at the end, because the geometry may change in other functions */
+    setStyle();
+}
+
+
+/* select a given habit by changing the background color */
+function selectHabit(idHabit) {
+    /* change background of habit */
+    document.getElementById("overlayHabitSelectBG").style.display = "block";
+    var y = document.getElementById("rowHabitName_" + idHabit)
+        .getBoundingClientRect().top;
+     document.getElementById("overlayHabitSelect").style.top = y + "px";
+    var height = document.getElementById("rowHabitName_" + idHabit).clientHeight
+        + document.getElementById("rowHabitData_" + idHabit).clientHeight
+        + 10;
+     document.getElementById("overlayHabitSelect").style.height = height + "px";    
+    
+    /* change toolbar */
+    document.getElementById("titleWindow").innerHTML = "";
+    document.getElementById("divTitle").classList.remove("w3-theme-dark");
+    document.getElementById("divTitle").classList.add("w3-theme-d1");
+    document.getElementById("toolbarNormal").style.display = "none";
+    document.getElementById("toolbarSelect").style.display = "block";
+}
+
+/* set the color of traffic light for a given habit */
+function setColorLight(idHabit) {
+    /* local variables */
+    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id == idHabit);
+    });
+
+    /* calculate the average of last 7 days and 'MAX_HISTORY_DATA' days */
+    var sum7 = sumMax = cnt7 = cntMax = curavg = oldavg = 0;
+    for (var offset = 0; offset < MAX_HISTORY_DATA; offset++) {
+        var data = getData(idHabit, moment().subtract(offset, "days"));
+        if (data != undefined) {
+            if (offset < 7) {
+                sum7 += parseInt(data.value);
+                cnt7++;
+            }
+
+            sumMax += parseInt(data.value);
+            cntMax++;
+        }
+    }
+    if (cntMax != 0) {
+        curavg = sum7 / cnt7;
+        oldavg = sumMax / cntMax;
+    }
+
+    /* decide the color based on old and new average */
+    var color = "transparent";
+    var hi = oldavg + 0.1 * oldavg;
+    var lo = oldavg - 0.1 * oldavg;
+    switch (db.root.data.arrHabit[idxHabit].target) {
+        case "Improve":
+            if (curavg >= hi) color = COLOR_TARGET_GREEN;
+            else if (curavg < lo) color = COLOR_TARGET_RED;
+            else color = COLOR_TARGET_YELLOW;
+            break;
+
+        case "Reduce":
+            if (curavg > hi) color = COLOR_TARGET_RED;
+            else if (curavg <= lo) color = COLOR_TARGET_GREEN;
+            else color = COLOR_TARGET_YELLOW;
+            break;
+
+            //        default:
+            //            /* case Reach */
+            //            if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
+            //                var target = data.HabitList[r].Target.split("_")[1] / data.HabitList[r].Target.split("_")[2];
+            //                var higreen = target + 0.1*target;
+            //                var logreen = target - 0.1*target;
+            //                var hiyellow = target + 0.25*target;
+            //                var loyellow = target - 0.25*target;
+            //                
+            //                if(oldavg >= logreen && oldavg <= higreen)
+            //                    color = COLOR_TARGET_GREEN;
+            //                else if(oldavg > loyellow && oldavg < hiyellow) color = COLOR_TARGET_YELLOW
+            //                else color = COLOR_TARGET_RED;
+            //                
+            //                break;
+            //            }
+            //            else { /* default */
+            //                alert("Invalid Target data encountered");                
+            //            }
+    }
+
+    document.getElementById("light_" + idHabit).style.color = color;
+}
+
+
+/* do not change the order of setStyle() */
+function setStyle() {
+    /* set the app name */
+    document.title = APP_NAME;
+    document.getElementById("titleWindow").innerText = APP_NAME;
+
+    /* move the main body below header */
+    document.getElementById("divBody").style.top =
+        document.getElementById("divHeader").clientHeight + "px";
+
+    /* set z-index of all elements */
+    document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
+    $(".w3-modal").css("z-index", Z_INDEX_TOP);
+    document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_TOP;
+    
+    /* prepare for element selection */
+    /* disable text selection and context menu */
+    document.body.style.userSelect = "none";
+    document.body.addEventListener("contextmenu", function(event) {
+        event.preventDefault();
+    });
+}
+
+
+/* deselect any selected habit and reset the toolbar */
+function deselectHabit() {
+    /* reset selection */
+    ssReset("idHabitSelect");
+    document.getElementById('overlayHabitSelectBG').style.display = 'none';
+    
+    /* change toolbar */
+    document.getElementById("titleWindow").innerText = APP_NAME;
+    document.getElementById("divTitle").classList.add("w3-theme-dark");
+    document.getElementById("divTitle").classList.remove("w3-theme-d1");
+    document.getElementById("toolbarNormal").style.display = "block";
+    document.getElementById("toolbarSelect").style.display = "none";
+}
+
+/* idHabit = id of the habit */
+/* date = date in moment format */
+function getData(idHabit, date) {
+    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id == idHabit);
+    });
+
+    return db.root.data.arrHabit[idxHabit].arrData.find(function (data) {
+        return isDateMatching(moment(data.date), date);
+    });
+}
+
+
+/* display additional modal objects */
+function onchangeTarget(event) {
+    if (event.target.value == "Maintain") {
+        document.getElementById("divMaintain").style.display = "block";
+    } else {
+        document.getElementById("divMaintain").style.display = "none";
+    }
+}
+
+function onclickAddEditHabit(event) {
+    if (event.target == document.getElementById("buttonAdd") ||
+        event.target.parentNode == document.getElementById("buttonAdd")
+    ) {
+        document.getElementById("titleAddEditHabit").innerText = "Add Habit";
+    }
+
+    document.getElementById("modalAddEditHabit").style.display = "block";
+    document.getElementById("textHabit").select();
+}
+
+function onclickEditData(event) {
+    selectedCell = event.target.id;
+
+    var idHabit = selectedCell.split("_")[1];
+    var date = moment(selectedCell.split("_")[2], "YYMMDD");
+    if (getData(idHabit, date)) {
+        document.getElementById("textData").value = getData(idHabit, date).value;
+    } else {
+        document.getElementById("textData").value = null;
+    }
+
+    document.getElementById("modalEditData").style.display = "block";
+    document.getElementById("textData").select();
+}
+
+
+/* do something upon selecting a habit */
+function oncontextmenuHabit(event) {
+    /* determining the habit id */
+    var idxPath = event.path.findIndex(function(val, idx, arr) {
+        return (val.id.split("_")[0] === "rowHabitName" 
+                || val.id.split("_")[0] === "rowHabitData")
+    });
+    var idHabit = event.path[idxPath].id.split("_")[1];
+    
+    /* Select the habit */
+    ssSet("idHabitSelect", idHabit);
+    selectHabit(idHabit);
+}
+
+
+function onsubmitAddEditHabit() {
+    document.getElementById("modalAddEditHabit").style.display = "none";
+
+    db.addHabit(document.getElementById("textHabit").value,
+        document.getElementById("optionHabitType").value,
+        document.getElementById("optionTarget").value
+    )
+}
+
+function onsubmitEditData(event) {
+    /* hide the modal */
+    document.getElementById("modalEditData").style.display = "none";
+
+    /* some local variables */
+    var idHabit = selectedCell.split("_")[1];
+    var date = moment(selectedCell.split("_")[2], "YYMMDD");
+    var val = document.getElementById("textData").value;
+
+    /* enter in database */
+    if (getData(idHabit, date)) {
+        db.editData(idHabit, date, val);
+    } else {
+        db.addData(idHabit, date, val);
+    }
+
+    /* display the table and so some cleanup */
+    showData();
+    document.getElementById("textData").value = null;
+    event.preventDefault(); // prevent page reload on submit
+}
+
+
 /* display the main table */
 function showData() {
     /* clear the existing table */
@@ -137,216 +372,12 @@ function showData() {
 }
 
 
-/* The main entry point. This function is entered when Cordova is ready. */
-function main() {
-    /* show all the data */
-    showData();
-
-    /* set the style at the end, because the geometry may change in other functions */
-    setStyle();
+/* toolbar when there is no habit selected */
+function showToolbarNormal() {
+    /* toolbar color */
+    document.getElementById("divTitle").classList.remove("w3-theme-dark");
+    document.getElementById("divTitle").classList.add("w3-theme-d1");
 }
 
 
-/* select a given habit by changing the background color */
-function selectHabit(idHabit) {
-    document.getElementById("overlayHabitSelectBG").style.display = "block";
-    var y = document.getElementById("rowHabitName_" + idHabit)
-        .getBoundingClientRect().top;
-     document.getElementById("overlayHabitSelect").style.top = y + "px";
-    var height = document.getElementById("rowHabitName_" + idHabit).clientHeight
-        + document.getElementById("rowHabitData_" + idHabit).clientHeight
-        + 10;
-     document.getElementById("overlayHabitSelect").style.height = height + "px";    
-}
 
-/* set the color of traffic light for a given habit */
-function setColorLight(idHabit) {
-    /* local variables */
-    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id == idHabit);
-    });
-
-    /* calculate the average of last 7 days and 'MAX_HISTORY_DATA' days */
-    var sum7 = sumMax = cnt7 = cntMax = curavg = oldavg = 0;
-    for (var offset = 0; offset < MAX_HISTORY_DATA; offset++) {
-        var data = getData(idHabit, moment().subtract(offset, "days"));
-        if (data != undefined) {
-            if (offset < 7) {
-                sum7 += parseInt(data.value);
-                cnt7++;
-            }
-
-            sumMax += parseInt(data.value);
-            cntMax++;
-        }
-    }
-    if (cntMax != 0) {
-        curavg = sum7 / cnt7;
-        oldavg = sumMax / cntMax;
-    }
-
-    /* decide the color based on old and new average */
-    var color = "transparent";
-    var hi = oldavg + 0.1 * oldavg;
-    var lo = oldavg - 0.1 * oldavg;
-    switch (db.root.data.arrHabit[idxHabit].target) {
-        case "Improve":
-            if (curavg >= hi) color = COLOR_TARGET_GREEN;
-            else if (curavg < lo) color = COLOR_TARGET_RED;
-            else color = COLOR_TARGET_YELLOW;
-            break;
-
-        case "Reduce":
-            if (curavg > hi) color = COLOR_TARGET_RED;
-            else if (curavg <= lo) color = COLOR_TARGET_GREEN;
-            else color = COLOR_TARGET_YELLOW;
-            break;
-
-            //        default:
-            //            /* case Reach */
-            //            if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
-            //                var target = data.HabitList[r].Target.split("_")[1] / data.HabitList[r].Target.split("_")[2];
-            //                var higreen = target + 0.1*target;
-            //                var logreen = target - 0.1*target;
-            //                var hiyellow = target + 0.25*target;
-            //                var loyellow = target - 0.25*target;
-            //                
-            //                if(oldavg >= logreen && oldavg <= higreen)
-            //                    color = COLOR_TARGET_GREEN;
-            //                else if(oldavg > loyellow && oldavg < hiyellow) color = COLOR_TARGET_YELLOW
-            //                else color = COLOR_TARGET_RED;
-            //                
-            //                break;
-            //            }
-            //            else { /* default */
-            //                alert("Invalid Target data encountered");                
-            //            }
-    }
-
-    document.getElementById("light_" + idHabit).style.color = color;
-}
-
-
-/* do not change the order of setStyle() */
-function setStyle() {
-    /* set the app name */
-    document.title = APP_NAME;
-    document.getElementById("titleWindow").innerText = APP_NAME;
-
-    /* move the main body below header */
-    document.getElementById("divBody").style.top =
-        document.getElementById("divHeader").clientHeight + "px";
-
-    /* set z-index of all elements */
-    document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
-    $(".w3-modal").css("z-index", Z_INDEX_TOP);
-    document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_TOP;
-    
-    /* prepare for element selection */
-    /* disable text selection and context menu */
-    document.body.style.userSelect = "none";
-    document.body.addEventListener("contextmenu", function(event) {
-        event.preventDefault();
-    });
-}
-
-
-/* deselect any selected habit and reset the toolbar */
-function deselectHabit() {
-    /* todo: find the habit to be de-selected */
-    document.getElementById('overlayHabitSelectBG').style.display = 'none';
-}
-
-/* idHabit = id of the habit */
-/* date = date in moment format */
-function getData(idHabit, date) {
-    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id == idHabit);
-    });
-
-    return db.root.data.arrHabit[idxHabit].arrData.find(function (data) {
-        return isDateMatching(moment(data.date), date);
-    });
-}
-
-
-/* display additional modal objects */
-function onchangeTarget(event) {
-    if (event.target.value == "Maintain") {
-        document.getElementById("divMaintain").style.display = "block";
-    } else {
-        document.getElementById("divMaintain").style.display = "none";
-    }
-}
-
-function onclickAddEditHabit(event) {
-    if (event.target == document.getElementById("buttonAdd") ||
-        event.target.parentNode == document.getElementById("buttonAdd")
-    ) {
-        document.getElementById("titleAddEditHabit").innerText = "Add Habit";
-    }
-
-    document.getElementById("modalAddEditHabit").style.display = "block";
-    document.getElementById("textHabit").select();
-}
-
-function onclickEditData(event) {
-    selectedCell = event.target.id;
-
-    var idHabit = selectedCell.split("_")[1];
-    var date = moment(selectedCell.split("_")[2], "YYMMDD");
-    if (getData(idHabit, date)) {
-        document.getElementById("textData").value = getData(idHabit, date).value;
-    } else {
-        document.getElementById("textData").value = null;
-    }
-
-    document.getElementById("modalEditData").style.display = "block";
-    document.getElementById("textData").select();
-}
-
-
-/* do something upon selecting a habit */
-function oncontextmenuHabit(event) {
-    /* determining the habit id */
-    var idxPath = event.path.findIndex(function(val, idx, arr) {
-        return (val.id.split("_")[0] === "rowHabitName" 
-                || val.id.split("_")[0] === "rowHabitData")
-    });
-    var idHabit = event.path[idxPath].id.split("_")[1];
-    
-    /* Select the habit */
-    selectHabit(idHabit);
-}
-
-
-function onsubmitAddEditHabit() {
-    document.getElementById("modalAddEditHabit").style.display = "none";
-
-    db.addHabit(document.getElementById("textHabit").value,
-        document.getElementById("optionHabitType").value,
-        document.getElementById("optionTarget").value
-    )
-}
-
-function onsubmitEditData(event) {
-    /* hide the modal */
-    document.getElementById("modalEditData").style.display = "none";
-
-    /* some local variables */
-    var idHabit = selectedCell.split("_")[1];
-    var date = moment(selectedCell.split("_")[2], "YYMMDD");
-    var val = document.getElementById("textData").value;
-
-    /* enter in database */
-    if (getData(idHabit, date)) {
-        db.editData(idHabit, date, val);
-    } else {
-        db.addData(idHabit, date, val);
-    }
-
-    /* display the table and so some cleanup */
-    showData();
-    document.getElementById("textData").value = null;
-    event.preventDefault(); // prevent page reload on submit
-}

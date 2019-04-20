@@ -24,68 +24,46 @@
 ------------------------------------------------------------------------------->
 <html>
     <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta http-equiv="Content-Security-Policy" 
+              content="default-src 'self' data: gap: https://ssl.gstatic.com 
+                       'unsafe-eval' 'unsafe-inline'; style-src 'self' 
+                       'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <title>Title</title>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, 
+                                       maximum-scale=1, minimum-scale=1, 
+                                       width=device-width">
+        <title></title>
         
         <!-- add all CSS stylesheets -->
         <link rel="stylesheet" type="text/css" href="css/w3/w3.css" />
         <link rel="stylesheet" type="text/css" href="css/w3/w3-theme-blue.css" />
-        <link rel="stylesheet" type="text/css" href="css/fontawesome-free-5.1.0-web/css/all.css" />
+        <link rel="stylesheet" type="text/css" 
+              href="css/fontawesome-free-5.1.0-web/css/all.css" />
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
     </head>
     <body onload="document.addEventListener( 'deviceready', main() )">
         
         <!-- Header bar. Non scrollable -->
         <div id="divHeader" style="position: fixed; width: 100%">
-            <div id="titleWindow" class="w3-theme-dark w3-xlarge w3-padding">Title</div>
+            <div id="divTitle" class="w3-theme-dark w3-xlarge w3-padding"
+                 style="height: 50px" >
+                <span id="titleWindow"></span>
+                <span id="toolbarNormal" class="w3-right"></span>
+                <span id="toolbarSelect" class="w3-right" style="display: none">
+                    <i class="fas fa-trash-alt mybutton"></i>
+                </span>
+            </div>
             <div>
-                <table id="tableDate" class="w3-center w3-theme-light" style="width: 100%"></table>
+                <table id="tableDate" class="w3-center w3-theme-light" 
+                       style="width: 100%"></table>
             </div>
         </div>    
         
         <!-- main body, scrollable area -->
         <div id="divBody" class="w3-text-theme" style="position: relative">
-            <table id="tableData" class="w3-center" style="table-layout: fixed; width: 100%">
-                
-                <!-- dummy entries
-                <tr class="w3-tiny">
-                    <td class="w3-border-bottom">Sat<br>30/12</td>
-                    <td class="w3-border-bottom">Sun<br>31/12</td>
-                    <td class="w3-border-bottom">Mon<br>1/1</td>
-                    <td class="w3-border-bottom">Tue<br>2/1</td>
-                </tr>
-                
-                <tr>
-                    <td class="w3-text-black" style="max-width: 0; white-space: nowrap">
-                        <i class='fas fa-circle'></i>
-                        A really long habit name
-                    </td>
-                </tr>
-                <tr>
-                    <td style="border-bottom: 40px solid"></td>
-                    <td style="border-bottom: 50px solid"></td>
-                    <td style="border-bottom: 10px solid"></td>
-                    <td style="border-bottom: 30px solid"></td>
-                </tr>
-                <tr><td>&nbsp;</td></tr>
-                
-                <tr>
-                    <td class="w3-text-black" style="max-width: 0; white-space: nowrap">
-                        <i class="fas fa-circle"></i>
-                        A really long habit name
-                    </td>
-                </tr>
-                <tr>
-                    <td style="border-bottom: 30px solid"></td>
-                    <td style="border-bottom: 20px solid"></td>
-                    <td style="border-bottom: 50px solid"></td>
-                    <td style="border-bottom: 10px solid"></td>
-                </tr>
-                <tr><td>&nbsp;</td></tr>
-                -->
-                
+            <table id="tableData" class="w3-center" 
+                   style="table-layout: fixed; width: 100%">
             </table>
         </div>
         
@@ -173,7 +151,7 @@
              style="position: fixed; width: 100%; height: 100%; 
                     left: 0; top: 0; opacity: 0.1; display: none">
             <div id="overlayHabitSelect" class="w3-border" 
-                 style="background: #074b83; position: fixed; 
+                 style="background: #0c87eb; position: fixed; 
                         width: 100%; height: 100px; left: 0; top: 100px; ">
             </div>
         </div>
