@@ -9,4 +9,9 @@
 	- improve
 	- reduce
 	- maintain
+- back button
+	- close modal
+	- deselect
+	- go back if any other page
+	- exit
 - test with empty data

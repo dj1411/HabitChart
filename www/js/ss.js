@@ -54,15 +54,10 @@ function ssGet(key) {
     "use strict";
     if (!flgInit) {
         alert("Session Storage is not initialized");
-        return;
+        return null;
     }
 
-    if (ss[key] === null || ss[key] === undefined || ss[key] === "") {
-        alert("ssGet: could not find " + key);
-        return null;
-    } else {
-        return ss[key];
-    }
+    return ss[key];
 }
 
 function ssReset(key) {

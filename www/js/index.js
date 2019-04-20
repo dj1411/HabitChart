@@ -31,16 +31,54 @@ var selectedCell = null;
 function main() {
     "use strict";
     
-    /* initialize session storage */
     ssInit();
-    
-    /* show all the data */
     showData();
-
-    /* set the style at the end, because the geometry may change in other functions */
     setStyle();
+    handleGlobalEvents();
 }
 
+/* idHabit = id of the habit */
+/* date = date in moment format */
+function getData(idHabit, date) {
+    "use strict";
+    
+    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id == idHabit);
+    });
+
+    return db.root.data.arrHabit[idxHabit].arrData.find(function (data) {
+        return isDateMatching(moment(data.date), date);
+    });
+}
+
+function handleGlobalEvents() {
+    /* disable text selection and context menu */
+    document.body.style.userSelect = "none";
+    document.body.addEventListener("contextmenu", function(event) {
+        event.preventDefault();
+    });
+    
+    /* use cordova plugins on android and iPhone */
+    if(navigator.userAgent.indexOf("Android") >= 0 ||
+       navigator.userAgent.indexOf("iPhone") >= 0) {
+        /* button click sound */
+        nativeclick.watch(["mybutton"]);
+        
+        /* button click vibration */
+        var arrButtons = document.getElementsByClassName("mybutton");
+        for( var i=0; i<arrButtons.length; i++) {
+            arrButtons[i].addEventListener( "click", function() {
+                navigator.vibrate(20);
+            } );
+        }
+    }
+
+    /* only Android specific events */
+    if(navigator.userAgent.indexOf("Android") >= 0) {
+        /* back button */
+        document.addEventListener("backbutton", onBack);
+    }
+}
 
 /* select a given habit by changing the background color */
 function selectHabit(idHabit) {
@@ -157,13 +195,6 @@ function setStyle() {
     document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
     $(".w3-modal").css("z-index", Z_INDEX_TOP);
     document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_TOP;
-    
-    /* prepare for habit selection */
-    /* disable text selection and context menu */
-    document.body.style.userSelect = "none";
-    document.body.addEventListener("contextmenu", function(event) {
-        event.preventDefault();
-    });
 }
 
 
@@ -181,35 +212,34 @@ function deselectHabit() {
     document.getElementById("divTitle").classList.remove("w3-theme-d1");
     document.getElementById("toolbarNormal").style.display = "block";
     document.getElementById("toolbarSelect").style.display = "none";
-    
-    /* use cordova plugins on android */
-    /* todo: in future extend to iOS also */
-    if(navigator.userAgent.indexOf("Android") >= 0) {
-        /* button click sound */
-        nativeclick.watch(["mybutton"]);
-        
-        /* button click vibration */
-        var arrButtons = document.getElementsByClassName("mybutton");
-        for( var i=0; i<arrButtons.length; i++) {
-            arrButtons[i].addEventListener( "click", function() {
-                navigator.vibrate(20);
-            } );
-        }
-    }
 }
 
-/* idHabit = id of the habit */
-/* date = date in moment format */
-function getData(idHabit, date) {
-    "use strict";
-    
-    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id == idHabit);
-    });
 
-    return db.root.data.arrHabit[idxHabit].arrData.find(function (data) {
-        return isDateMatching(moment(data.date), date);
-    });
+/* handle back button for Android */
+function onBack() {
+    /* close any open modal */
+    var modals = document.getElementsByClassName("w3-modal");
+    for(var i=0; i<modals.length; i++) {
+        if(modals[i].style.display === "block") {
+            modals[i].style.display = "none";
+            return;
+        }
+    }
+    
+    /* deselect habit if any */
+    if(ssGet("idHabitSelect") != undefined) {
+        deselectHabit();
+        return;
+    }
+    
+    /* if not on main page, just go back to previous page */
+    if(location.href.split('/').reverse()[0] != "index.html") {
+        window.history.back();
+    }
+    /* else if on main page, exit app */
+    else {
+        navigator.app.exitApp();
+    }
 }
 
 
