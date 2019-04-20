@@ -218,7 +218,7 @@ function onclickAddEditHabit(event) {
 
 
 function onclickDeleteHabit() {
-    console.log(ssGet("idHabitSelect"));
+    db.removeHabit(parseInt(ssGet("idHabitSelect")));
     
     /* remove any selections */
     deselectHabit();

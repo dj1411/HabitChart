@@ -114,7 +114,14 @@ DB.prototype.addHabit = function (name, type, target) {
 
 DB.prototype.removeHabit = function (idHabit) {
     "use strict";
-    // set the deleted flag
+    
+    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id === idHabit);
+    });
+
+    this.root.data.arrHabit[idxHabit].isDeleted = true;
+    
+    this.save();
 };
 
 DB.prototype.editHabit = function (idHabit, name, type, target) {
