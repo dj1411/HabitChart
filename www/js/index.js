@@ -40,11 +40,14 @@ function main() {
 function createBar(cell, height, color) {
     "use strict";
     
+    var suffix = cell.id.slice( 8 );
+    
     var ns = "http://www.w3.org/2000/svg";
     
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("width", WIDTH_DATA_CELL);
     svg.setAttribute("height", HEIGHT_DATA_CELL);
+    svg.id = "datasvg" + suffix;
     cell.appendChild(svg);
     
     var rect = document.createElementNS(ns, "rect");
@@ -53,6 +56,7 @@ function createBar(cell, height, color) {
     rect.setAttribute("x", 0);
     rect.setAttribute("y", HEIGHT_DATA_CELL - height);
     rect.setAttribute("fill", color);
+    rect.id = "datarect" + suffix;
     svg.appendChild(rect);
 }
 
