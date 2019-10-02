@@ -32,9 +32,43 @@ function main() {
     "use strict";
     
     ssInit();
-    showData();
+//    showData();
+    createBar( document.getElementById("divBody"), 0, 20, 20, 0 );
     setStyle();
     handleGlobalEvents();
+}
+
+/* Create bar chart for a table cell */
+function createBar(cell, top, right, bottom, left) {
+    "use strict";
+    
+    var width = right - left;
+    var height = bottom - top;
+
+//    var svg = document.createElement( "svg" );
+//    cell.appendChild( svg );
+//    svg.setAttribute( "width", "100%" );
+//    svg.setAttribute( "height", "100%" );
+//    
+//    var rect = document.createElement( "rect" );
+//    rect.setAttribute( "width", 100 );
+//    rect.setAttribute( "height", 100 );
+//    rect.setAttribute( "style", "fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" );
+//    svg.appendChild( rect );
+    
+//    var ns = 'http://www.w3.org/2000/svg';
+//    var div = document.getElementById('divBody');
+//    var svg = document.createElementNS(ns, 'svg');
+//    svg.setAttribute('width', '100%');
+//    svg.setAttribute('height', '100%');
+//    div.appendChild(svg);
+//    var rect = document.createElementNS(ns, 'rect');
+//    rect.setAttribute('width', 100);
+//    rect.setAttribute('height', 100);
+//    rect.setAttribute('fill', '#f06');
+//    svg.appendChild(rect);
+    
+    console.log( 'we are here' );
 }
 
 /* idHabit = id of the habit */
@@ -461,7 +495,9 @@ function showData() {
             /* for normal data, create a proportionate chart */
             else {
                 var height = (data.value / max) * HEIGHT_DATA_CELL;
-                cell.style.borderBottom = height + "px solid";
+//                cell.style.borderBottom = height + "px solid";
+                var rect = cell.getBoundingClientRect();
+                createBar(cell, rect.top, rect.right, rect.bottom, rect.left);
             }
         }
 
