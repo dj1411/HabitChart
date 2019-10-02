@@ -26,49 +26,40 @@
 var db = new DB();
 var selectedCell = null;
 
-
 /* The main entry point. This function is entered when Cordova is ready. */
 function main() {
     "use strict";
     
     ssInit();
-//    showData();
-    createBar( document.getElementById("divBody"), 0, 20, 20, 0 );
+    showData();
     setStyle();
-    handleGlobalEvents();
+    handleGlobalEvents(); // this may fail without real device
 }
 
 /* Create bar chart for a table cell */
-function createBar(cell, top, right, bottom, left) {
+function createBar(cell, height, color) {
     "use strict";
     
-    var width = right - left;
-    var height = bottom - top;
+    var ns = "http://www.w3.org/2000/svg";
+    
+    var svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("width", WIDTH_DATA_CELL);
+    svg.setAttribute("height", HEIGHT_DATA_CELL);
+    cell.appendChild(svg);
+    
+    var rect = document.createElementNS(ns, "rect");
+    rect.setAttribute("width", WIDTH_DATA_CELL);
+    rect.setAttribute("height", height);
+    rect.setAttribute("x", 0);
+    rect.setAttribute("y", HEIGHT_DATA_CELL - height);
+    rect.setAttribute("fill", color);
+    svg.appendChild(rect);
+}
 
-//    var svg = document.createElement( "svg" );
-//    cell.appendChild( svg );
-//    svg.setAttribute( "width", "100%" );
-//    svg.setAttribute( "height", "100%" );
-//    
-//    var rect = document.createElement( "rect" );
-//    rect.setAttribute( "width", 100 );
-//    rect.setAttribute( "height", 100 );
-//    rect.setAttribute( "style", "fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" );
-//    svg.appendChild( rect );
-    
-//    var ns = 'http://www.w3.org/2000/svg';
-//    var div = document.getElementById('divBody');
-//    var svg = document.createElementNS(ns, 'svg');
-//    svg.setAttribute('width', '100%');
-//    svg.setAttribute('height', '100%');
-//    div.appendChild(svg);
-//    var rect = document.createElementNS(ns, 'rect');
-//    rect.setAttribute('width', 100);
-//    rect.setAttribute('height', 100);
-//    rect.setAttribute('fill', '#f06');
-//    svg.appendChild(rect);
-    
-    console.log( 'we are here' );
+/* get a corresponding color from the current theme */
+function getColor( idColor ) {
+    var div = document.getElementById( idColor );
+    return window.getComputedStyle(div, null).getPropertyValue("background-color");
 }
 
 /* idHabit = id of the habit */
@@ -484,20 +475,17 @@ function showData() {
 
             /* if no data present, fill the cell with gray */
             if (!data) {
-                cell.style.borderBottom = HEIGHT_DATA_CELL + "px solid";
-                cell.classList.add("w3-border-light-gray");
+                createBar( cell, HEIGHT_DATA_CELL, COLOR_GRAY );
             }
             /* if 0 is entered as data, put a 1px gray bar */
             else if (data.value == 0) {
-                cell.style.borderBottom = "1px solid";
-                cell.classList.add("w3-border-light-gray");
+                createBar( cell, 1, COLOR_GRAY );
             }
             /* for normal data, create a proportionate chart */
             else {
                 var height = (data.value / max) * HEIGHT_DATA_CELL;
-//                cell.style.borderBottom = height + "px solid";
                 var rect = cell.getBoundingClientRect();
-                createBar(cell, rect.top, rect.right, rect.bottom, rect.left);
+                createBar( cell, height, getColor("w3-theme") );
             }
         }
 

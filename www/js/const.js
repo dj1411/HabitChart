@@ -39,3 +39,4 @@ var MAX_HISTORY_DATA = 21; /* maximum data to compute the traffic light */
 var COLOR_TARGET_GREEN = "#74d14c";
 var COLOR_TARGET_YELLOW = "#ffe900";
 var COLOR_TARGET_RED = "red";
+var COLOR_GRAY = "#EBEBEB";
