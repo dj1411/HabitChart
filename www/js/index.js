@@ -40,18 +40,18 @@ function main() {
 function createBar(cell, height, color) {
     "use strict";
     
-    var suffix = cell.id.slice( 8 );
-    
+    var suffix = cell.id.slice( 8 ); // todo: change the algorithm
     var ns = "http://www.w3.org/2000/svg";
-    
+
     var svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("width", WIDTH_DATA_CELL);
-    svg.setAttribute("height", HEIGHT_DATA_CELL);
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("height", "100%");
     svg.id = "datasvg" + suffix;
     cell.appendChild(svg);
+    svg.style.display = "block"; // by this the entire cell is filled with SVG
     
     var rect = document.createElementNS(ns, "rect");
-    rect.setAttribute("width", WIDTH_DATA_CELL);
+    rect.setAttribute("width", "100%");
     rect.setAttribute("height", height);
     rect.setAttribute("x", 0);
     rect.setAttribute("y", HEIGHT_DATA_CELL - height);
@@ -463,6 +463,9 @@ function showData() {
             arrData.push(getData(idHabit, date));
             cell.onclick = onclickEditData;
             cell.classList.add("mybutton");
+            cell.style.border = "1px solid";
+            cell.height = HEIGHT_DATA_CELL;
+            cell.width = WIDTH_DATA_CELL;
         }
 
         /* calculate the max value */
@@ -481,14 +484,9 @@ function showData() {
             if (!data) {
                 createBar( cell, HEIGHT_DATA_CELL, COLOR_GRAY );
             }
-            /* if 0 is entered as data, put a 1px gray bar */
-            else if (data.value == 0) {
-                createBar( cell, 1, COLOR_GRAY );
-            }
             /* for normal data, create a proportionate chart */
             else {
                 var height = (data.value / max) * HEIGHT_DATA_CELL;
-                var rect = cell.getBoundingClientRect();
                 createBar( cell, height, getColor("w3-theme") );
             }
         }
