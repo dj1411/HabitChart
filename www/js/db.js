@@ -22,6 +22,16 @@
  * SOFTWARE.
  *******************************************************************************/
 
+
+function TargetType(name, data1, data2) {
+    "use strict";
+    
+    this.name = name;
+    this.data1 = data1;
+    this.data2 = data2;
+}
+
+
 function Entry(idData, date, value) {
     "use strict";
 
@@ -33,6 +43,7 @@ function Entry(idData, date, value) {
     this.timestamp = moment();
     this.isDeleted = false;
 }
+
 
 function Habit(idHabit, name, type, target) {
     "use strict";
@@ -49,15 +60,18 @@ function Habit(idHabit, name, type, target) {
     this.isDeleted = false;
 }
 
+
 function Data() {
     "use strict";
     
     this.arrHabit = [];
 }
 
+
 function Config() {
     "use strict";
 }
+
 
 /* root object */
 function DB() {
@@ -77,6 +91,7 @@ function DB() {
     }
 }
 
+
 /* load the database from local storage */
 /* do not reorder this function */
 DB.prototype.load = function () {
@@ -87,12 +102,14 @@ DB.prototype.load = function () {
     }
 };
 
+
 /* save the database to local storage */
 /* do not reorder this function */
 DB.prototype.save = function () {
     "use strict";
     localStorage.setItem("db" + APP_NAME, JSON.stringify(this.root));
 };
+
 
 DB.prototype.addHabit = function (name, type, target) {
     "use strict";
@@ -112,6 +129,7 @@ DB.prototype.addHabit = function (name, type, target) {
     this.save();
 };
 
+
 DB.prototype.removeHabit = function (idHabit) {
     "use strict";
     
@@ -123,6 +141,7 @@ DB.prototype.removeHabit = function (idHabit) {
     
     this.save();
 };
+
 
 DB.prototype.editHabit = function (idHabit, name, type, target) {
     "use strict";
@@ -138,6 +157,7 @@ DB.prototype.editHabit = function (idHabit, name, type, target) {
 
     this.save();
 };
+
 
 DB.prototype.addData = function (idHabit, date, value) {
     "use strict";
@@ -161,10 +181,12 @@ DB.prototype.addData = function (idHabit, date, value) {
     this.save();
 };
 
+
 DB.prototype.removeData = function (idHabit, idData) {
     "use strict";
     // set the deleted flag
 };
+
 
 DB.prototype.editData = function (idHabit, date, value) {
     "use strict";
@@ -183,3 +205,4 @@ DB.prototype.editData = function (idHabit, date, value) {
 
     this.save();
 };
+

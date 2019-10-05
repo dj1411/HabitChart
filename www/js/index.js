@@ -183,7 +183,7 @@ function setColorLight(idHabit) {
     var color = "transparent";
     var hi = oldavg + 0.1 * oldavg;
     var lo = oldavg - 0.1 * oldavg;
-    switch (db.root.data.arrHabit[idxHabit].target) {
+    switch (db.root.data.arrHabit[idxHabit].target.name) {
         case "Improve":
             if (curavg >= hi) color = COLOR_TARGET_GREEN;
             else if (curavg < lo) color = COLOR_TARGET_RED;
@@ -294,8 +294,12 @@ function onchangeTarget(event) {
     
     if (event.target.value == "Maintain") {
         document.getElementById("divMaintain").style.display = "block";
+        document.getElementById("textTimes").required = true;
+        document.getElementById("textDays").required = true;
     } else {
         document.getElementById("divMaintain").style.display = "none";
+        document.getElementById("textTimes").required = false;
+        document.getElementById("textDays").required = false;
     }
 }
 
@@ -362,11 +366,26 @@ function onsubmitAddEditHabit() {
     
     document.getElementById("modalAddEditHabit").style.display = "none";
 
+    /* populate the "target" data structure */
+    var target = null;
+    var ot = document.getElementById("optionTarget").value;
+    if( ot == "Maintain" ) {
+        target = new TargetType(document.getElementById("optionTarget").value,
+                                document.getElementById("textTimes").value,
+                                document.getElementById("textDays").value
+                               );
+    }
+    else {
+        target = new TargetType(document.getElementById("optionTarget").value);
+    }
+    
+    /* add the habit to database */
     db.addHabit(document.getElementById("textHabit").value,
         document.getElementById("optionHabitType").value,
-        document.getElementById("optionTarget").value
+        target
     )
 }
+
 
 function onsubmitEditData(event) {
     "use strict";

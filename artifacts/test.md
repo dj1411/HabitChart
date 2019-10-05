@@ -1,5 +1,5 @@
 - add habit
-	- on clicking "Maintain", additional fields should appear
+	- test with different targets
 - delete habit
 - edit data
 - chart
