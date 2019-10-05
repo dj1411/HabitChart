@@ -158,85 +158,105 @@ function setColorLight(idHabit) {
     /* local variables to be used for calculation of traffic light */
     var curavg = 0;
     var oldavg = 0;
-    var cntDataRef = 0;
+    var maxDataRef = 0;
     
     /* get the reference data for computation */
+    
+    /* filter all non-zero values */
     var arrDataRef = db.root.data.arrHabit[idxHabit].arrData.filter( 
-        /* filter all non-zero values */
         function(data, idx, arr) {
             return data.value > 0;
         } );
+    /* sort by date */
     arrDataRef.sort( function(a,b) {
-        /* sort by date */
         if( moment(a.date).isAfter( moment(b.date) ) )
             return -1;
         else
             return 1;
     } );
-    /* splice till reference number of data. remove today's data */
-    arrDataRef.splice( REF_HISTORY_DATA, arrDataRef.length - REF_HISTORY_DATA );
-    if( isDateMatching(arrDataRef[0].date, moment()) ) {
-        arrDataRef.shift();
-    }
+    /* remove today's data */
     if( arrDataRef.length > 0 ) {
-        cntDataRef = Math.ceil( moment.duration( moment().diff( 
+        if( isDateMatching(arrDataRef[0].date, moment()) ) {
+            arrDataRef.shift();
+        }
+    }
+    /* splice till reference number of data. */
+    arrDataRef.splice( REF_HISTORY_DATA, arrDataRef.length - REF_HISTORY_DATA );
+    /* calculate the days since the last reference data.
+     * today is not counted.
+     */
+    if( arrDataRef.length > 0 ) {
+        maxDataRef = Math.floor( moment.duration( moment().diff( 
             moment(arrDataRef[arrDataRef.length-1].date) ) ).asDays() );
     }
     
+    /* for no data entered */
+    if( db.root.data.arrHabit[idxHabit].arrData.length == 0 ) {
+        /* nothing to do */
+    }
+    
     /* some data entered but not enough history data available */
-    if( db.root.data.arrHabit[idxHabit].arrData.length > 0 
-       && arrDataRef.length == 0 ) {
+    else if( arrDataRef.length == 0 ) {
+        /* calculate current average, which is actually the value for today */
         curavg = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
             return isDateMatching(data.date, moment());
         } ).value;
     }
+    
     /* data entered for very few days */
-    else if( arrDataRef.length < REF_HISTORY_DATA && arrDataRef.length > 0) {
+    else if( arrDataRef.length < REF_HISTORY_DATA ) {
         /* calculate current average, which is actually the value for today */
         curavg = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
             return isDateMatching(data.date, moment());
         } ).value;
         
-        /* calculate old average */
+        /* calculate old average, which is actually the reference data */
         arrDataRef.forEach( function(data) {
             oldavg += data.value;
         } );
-        oldavg /= cntDataRef;
+        oldavg /= maxDataRef;
     }
-//    else { // for habits > REF_HISTORY_DATA
-//        /* calculate current average */
-//        arrDataRef.forEach( function(data) {
-//            curavg += data.value;
-//        } );
-//        curavg /= arrDataRef.length;
-//        
-//        /* calculate old average */
-//    }
     
-    /* calculate the average of last 7 days and 'MAX_HISTORY_DATA' days */
-//    var sum7 = 0;
-//    var sumMax = 0;
-//    var cnt7 = 0;
-//    var cntMax = 0;
-//    var curavg = 0;
-//    var oldavg = 0;
-//    for (var offset = 0; offset < MAX_HISTORY_DATA; offset++) {
-//        var data = getData(idHabit, moment().subtract(offset, "days"));
-//        if (data != undefined) {
-//            if (offset < 7) {
-//                sum7 += parseInt(data.value);
-//                cnt7++;
-//            }
-//
-//            sumMax += parseInt(data.value);
-//            cntMax++;
-//        }
-//    }
-//    if (cntMax != 0) {
-//        curavg = sum7 / cnt7;
-//        oldavg = sumMax / cntMax;
-//    }
-
+    /* data available for longer days */
+    /* I am elaborating the else path for more clarity */
+    else if(arrDataRef.length == REF_HISTORY_DATA
+            && db.root.data.arrHabit[idxHabit].arrData.length > maxDataRef
+           ) {
+        /* calculate current average, which is the average of today's data
+         * and reference data 
+         */
+        curavg = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+            return isDateMatching(data.date, moment());
+        } ).value;
+        arrDataRef.forEach( function(data) {
+            curavg += data.value;
+        } );
+        curavg /= (maxDataRef+1);
+        
+        /* calculate old average, which is beyond the reference data */
+        /* calculation is starting at maxDataRef and not maxDataRef+1,
+         * otherwise there is a glitch in traffic light when there is
+         * transition from few days data to longer days.
+         */
+        var sumMax = 0;
+        var cntMax = 0;
+        for (var offset = maxDataRef; offset < MAX_HISTORY_DATA; offset++) { 
+            var data = getData(idHabit, moment().subtract(offset, "days"));
+            if (data != undefined) {
+                sumMax += parseInt(data.value);
+                cntMax++;
+            }
+        }
+        if (cntMax > 0) {
+            oldavg = sumMax / cntMax;
+        }
+    }
+    
+    /* unknown path */
+    else {
+        alert( "unknown path entered while displaying traffic light" );
+    }
+    
     /* decide the color based on old and new average */
     var color = "transparent";
     var hi = oldavg + 0.1 * oldavg;
