@@ -205,7 +205,8 @@ function setColorLight(idHabit) {
     
     /* data entered for very few days */
     else if( arrDataRef.length < REF_HISTORY_DATA ) {
-        /* calculate current average, which is actually the value for today */
+        /* calculate current average */
+        /* which is actually the value for today */
         curavg = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
             return isDateMatching(data.date, moment());
         } ).value;
@@ -225,9 +226,12 @@ function setColorLight(idHabit) {
         /* calculate current average, which is the average of today's data
          * and reference data 
          */
-        curavg = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
-            return isDateMatching(data.date, moment());
-        } ).value;
+        data = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+                return isDateMatching(data.date, moment());
+            } );
+        if( data != undefined ) {
+            curavg = data.value;
+        }
         arrDataRef.forEach( function(data) {
             curavg += data.value;
         } );
@@ -274,25 +278,37 @@ function setColorLight(idHabit) {
             else color = COLOR_TARGET_YELLOW;
             break;
 
-            //        default:
-            //            /* case Reach */
-            //            if( data.HabitList[r].Target.slice(0,5) == "Reach" ) {
-            //                var target = data.HabitList[r].Target.split("_")[1] / data.HabitList[r].Target.split("_")[2];
-            //                var higreen = target + 0.1*target;
-            //                var logreen = target - 0.1*target;
-            //                var hiyellow = target + 0.25*target;
-            //                var loyellow = target - 0.25*target;
-            //                
-            //                if(oldavg >= logreen && oldavg <= higreen)
-            //                    color = COLOR_TARGET_GREEN;
-            //                else if(oldavg > loyellow && oldavg < hiyellow) color = COLOR_TARGET_YELLOW
-            //                else color = COLOR_TARGET_RED;
-            //                
-            //                break;
-            //            }
-            //            else { /* default */
-            //                alert("Invalid Target data encountered");                
-            //            }
+        case "Maintain":
+            /* special case, override the current average */
+            /* which is the average of today's data and reference data */
+            data = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+                return isDateMatching(data.date, moment());
+            } );
+            if( data != undefined ) {
+                curavg = data.value;
+            }
+            arrDataRef.forEach( function(data) {
+                curavg += data.value;
+            } );
+            curavg /= (maxDataRef+1);
+            
+            /* calculate the goal average */
+            var goal = db.root.data.arrHabit[idxHabit].target.data1 / db.root.data.arrHabit[idxHabit].target.data2;
+            var higreen = goal + 0.1*goal;
+            var logreen = goal - 0.1*goal;
+            var hiyellow = goal + 0.25*goal;
+            var loyellow = goal - 0.25*goal;
+
+            if(curavg >= logreen && curavg <= higreen)
+                color = COLOR_TARGET_GREEN;
+            else if(curavg > loyellow && curavg < hiyellow) 
+                color = COLOR_TARGET_YELLOW
+            else 
+                color = COLOR_TARGET_RED;
+            break;
+            
+        default:
+            alert( "Invalid case when showing traffic light" );
     }
 
     document.getElementById("light_" + idHabit).style.color = color;
