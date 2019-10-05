@@ -35,6 +35,7 @@ var HEIGHT_DATA_CELL = 50;
 var WIDTH_DATA_CELL = 40;
 
 var MAX_HISTORY_DATA = 21; /* maximum data to compute the traffic light */
+var REF_HISTORY_DATA = 5; /* number of reference data for computation */
 
 var COLOR_TARGET_GREEN = "#74d14c";
 var COLOR_TARGET_YELLOW = "#ffe900";

@@ -155,29 +155,59 @@ function setColorLight(idHabit) {
         return (habit.id === idHabit);
     });
 
-    /* calculate the average of last 7 days and 'MAX_HISTORY_DATA' days */
-    var sum7 = 0;
-    var sumMax = 0;
-    var cnt7 = 0;
-    var cntMax = 0;
+    /* get the reference data for computation */
+    var arrDataRef = db.root.data.arrHabit[idxHabit].arrData.filter( function(data, idx, arr) {
+        return parseInt(data.value) > 0;
+    } );
+    arrDataRef.sort( function(a,b) {
+        if( moment(a.date).isAfter( moment(b.date) ) )
+            return -1;
+        else
+            return 1;
+    } );
+    arrDataRef.splice( REF_HISTORY_DATA, arrDataRef.length - REF_HISTORY_DATA );
+    
+    /* local variables to be used for calculation of traffic light */
     var curavg = 0;
     var oldavg = 0;
-    for (var offset = 0; offset < MAX_HISTORY_DATA; offset++) {
-        var data = getData(idHabit, moment().subtract(offset, "days"));
-        if (data != undefined) {
-            if (offset < 7) {
-                sum7 += parseInt(data.value);
-                cnt7++;
-            }
-
-            sumMax += parseInt(data.value);
-            cntMax++;
-        }
+    
+    /* computation is different for new habits */
+    if( arrDataRef.length < REF_HISTORY_DATA && arrDataRef.length != 0 ) {
+        curavg = parseInt(arrDataRef[0].value);
+        
+        arrDataRef.forEach( function(data) {
+            oldavg += parseInt(data.value);
+        } );
+        oldavg /= arrDataRef.length;
+        console.log(oldavg);
     }
-    if (cntMax != 0) {
-        curavg = sum7 / cnt7;
-        oldavg = sumMax / cntMax;
+    else { // for habits > REF_HISTORY_DATA
+        
     }
+    
+    /* calculate the average of last 7 days and 'MAX_HISTORY_DATA' days */
+//    var sum7 = 0;
+//    var sumMax = 0;
+//    var cnt7 = 0;
+//    var cntMax = 0;
+//    var curavg = 0;
+//    var oldavg = 0;
+//    for (var offset = 0; offset < MAX_HISTORY_DATA; offset++) {
+//        var data = getData(idHabit, moment().subtract(offset, "days"));
+//        if (data != undefined) {
+//            if (offset < 7) {
+//                sum7 += parseInt(data.value);
+//                cnt7++;
+//            }
+//
+//            sumMax += parseInt(data.value);
+//            cntMax++;
+//        }
+//    }
+//    if (cntMax != 0) {
+//        curavg = sum7 / cnt7;
+//        oldavg = sumMax / cntMax;
+//    }
 
     /* decide the color based on old and new average */
     var color = "transparent";
