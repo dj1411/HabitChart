@@ -61,7 +61,7 @@ function createBar(cell, height, color) {
 }
 
 /* get a corresponding color from the current theme */
-function getColor( idColor ) {
+function getThemeColor( idColor ) {
     var div = document.getElementById( idColor );
     return window.getComputedStyle(div, null).getPropertyValue("background-color");
 }
@@ -155,34 +155,63 @@ function setColorLight(idHabit) {
         return (habit.id === idHabit);
     });
 
+    /* local variables to be used for calculation of traffic light */
+    var curavg = 0;
+    var oldavg = 0;
+    var cntDataRef = 0;
+    
     /* get the reference data for computation */
-    var arrDataRef = db.root.data.arrHabit[idxHabit].arrData.filter( function(data, idx, arr) {
-        return parseInt(data.value) > 0;
-    } );
+    var arrDataRef = db.root.data.arrHabit[idxHabit].arrData.filter( 
+        /* filter all non-zero values */
+        function(data, idx, arr) {
+            return data.value > 0;
+        } );
     arrDataRef.sort( function(a,b) {
+        /* sort by date */
         if( moment(a.date).isAfter( moment(b.date) ) )
             return -1;
         else
             return 1;
     } );
+    /* splice till reference number of data. remove today's data */
     arrDataRef.splice( REF_HISTORY_DATA, arrDataRef.length - REF_HISTORY_DATA );
+    if( isDateMatching(arrDataRef[0].date, moment()) ) {
+        arrDataRef.shift();
+    }
+    if( arrDataRef.length > 0 ) {
+        cntDataRef = Math.ceil( moment.duration( moment().diff( 
+            moment(arrDataRef[arrDataRef.length-1].date) ) ).asDays() );
+    }
     
-    /* local variables to be used for calculation of traffic light */
-    var curavg = 0;
-    var oldavg = 0;
-    
-    /* computation is different for new habits */
-    if( arrDataRef.length < REF_HISTORY_DATA && arrDataRef.length != 0 ) {
-        curavg = parseInt(arrDataRef[0].value);
+    /* some data entered but not enough history data available */
+    if( db.root.data.arrHabit[idxHabit].arrData.length > 0 
+       && arrDataRef.length == 0 ) {
+        curavg = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+            return isDateMatching(data.date, moment());
+        } ).value;
+    }
+    /* data entered for very few days */
+    else if( arrDataRef.length < REF_HISTORY_DATA && arrDataRef.length > 0) {
+        /* calculate current average, which is actually the value for today */
+        curavg = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+            return isDateMatching(data.date, moment());
+        } ).value;
         
+        /* calculate old average */
         arrDataRef.forEach( function(data) {
-            oldavg += parseInt(data.value);
+            oldavg += data.value;
         } );
-        oldavg /= arrDataRef.length;
+        oldavg /= cntDataRef;
     }
-    else { // for habits > REF_HISTORY_DATA
-        
-    }
+//    else { // for habits > REF_HISTORY_DATA
+//        /* calculate current average */
+//        arrDataRef.forEach( function(data) {
+//            curavg += data.value;
+//        } );
+//        curavg /= arrDataRef.length;
+//        
+//        /* calculate old average */
+//    }
     
     /* calculate the average of last 7 days and 'MAX_HISTORY_DATA' days */
 //    var sum7 = 0;
@@ -533,9 +562,12 @@ function showData() {
                 createBar( cell, HEIGHT_DATA_CELL, COLOR_GRAY );
             }
             /* for normal data, create a proportionate chart */
-            else {
+            else if(data.value > 0) {
                 var height = (data.value / max) * HEIGHT_DATA_CELL;
-                createBar( cell, height, getColor("w3-theme") );
+                createBar( cell, height, getThemeColor("w3-theme") );
+            }
+            else {
+                /* data value is 0, dont create any chart */
             }
         }
 
