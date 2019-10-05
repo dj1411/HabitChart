@@ -179,7 +179,6 @@ function setColorLight(idHabit) {
             oldavg += parseInt(data.value);
         } );
         oldavg /= arrDataRef.length;
-        console.log(oldavg);
     }
     else { // for habits > REF_HISTORY_DATA
         

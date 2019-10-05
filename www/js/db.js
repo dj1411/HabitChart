@@ -175,7 +175,7 @@ DB.prototype.addData = function (idHabit, date, value) {
     }
 
     /* create an entry and add to the habit */
-    var entry = new Entry(idData, date, value);
+    var entry = new Entry(idData, date, parseInt(value));
     this.root.data.arrHabit[idxHabit].arrData.push(entry);
 
     this.save();
@@ -201,7 +201,7 @@ DB.prototype.editData = function (idHabit, date, value) {
     });
 
     this.root.data.arrHabit[idxHabit].arrData[idxData].date = date;
-    this.root.data.arrHabit[idxHabit].arrData[idxData].value = value;
+    this.root.data.arrHabit[idxHabit].arrData[idxData].value = parseInt(value);
 
     this.save();
 };
