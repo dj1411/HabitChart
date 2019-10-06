@@ -3907,6 +3907,7 @@
 								"$ref": "AAAAAAFnsxcTkKby9DM="
 							},
 							"name": "type",
+							"documentation": "value, checkbox etc",
 							"type": ""
 						},
 						{
@@ -3916,6 +3917,7 @@
 								"$ref": "AAAAAAFnsxcTkKby9DM="
 							},
 							"name": "target",
+							"documentation": "Improve, Reduce, Maintain",
 							"type": "TargetType"
 						}
 					]
@@ -4015,6 +4017,7 @@
 								"$ref": "AAAAAAFtl+QOJJY1hL8="
 							},
 							"name": "name",
+							"documentation": "Improve, Reduce, Maintain",
 							"type": ""
 						},
 						{
@@ -4044,7 +4047,7 @@
 								"$ref": "AAAAAAFtl+QOJJY1hL8="
 							},
 							"name": "data3",
-							"documentation": "option \"maintain\"",
+							"documentation": "exact, more, less",
 							"type": "string"
 						}
 					]

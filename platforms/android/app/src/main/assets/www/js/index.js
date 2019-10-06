@@ -53,9 +53,11 @@ function main() {
 function createBar(cell, height, color) {
     "use strict";
     
+    /* local variables */
     var suffix = cell.id.slice( 8 ); // todo: change the algorithm
     var ns = "http://www.w3.org/2000/svg";
 
+    /* create svg element */
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", "100%");
@@ -63,6 +65,7 @@ function createBar(cell, height, color) {
     cell.appendChild(svg);
     svg.style.display = "block"; // by this the entire cell is filled with SVG
     
+    /* create rectangle */
     var rect = document.createElementNS(ns, "rect");
     rect.setAttribute("width", "100%");
     rect.setAttribute("height", height);
@@ -73,11 +76,23 @@ function createBar(cell, height, color) {
     svg.appendChild(rect);
 }
 
-/* get a corresponding color from the current theme */
-function getThemeColor( idColor ) {
-    var div = document.getElementById( idColor );
-    return window.getComputedStyle(div, null).getPropertyValue("background-color");
+
+/* Create checkbox in the given cell with the given status */
+function createCheckbox(cell, status) {
+    /* create the checkbox */
+    cell.innerHTML = "";
+    var input = document.createElement( "input" );
+    cell.appendChild( input );
+    input.classList.add( "w3-check" );
+    input.type = "checkbox";
+    input.checked = status;
+    
+    /* set the id */
+    var pos = cell.id.indexOf("_");
+    var suffix = cell.id.substr(pos);
+    input.id = "checkbox" + suffix;
 }
+
 
 /* idHabit = id of the habit */
 /* date = date in moment format */
@@ -92,6 +107,24 @@ function getData(idHabit, date) {
         return isDateMatching(moment(data.date), date);
     });
 }
+
+
+/* get the idxHabit from idHabit */
+function getIdxHabit( idHabit ) {
+    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id === idHabit);
+    });
+    
+    return idxHabit;
+}
+
+
+/* get a corresponding color from the current theme */
+function getThemeColor( idColor ) {
+    var div = document.getElementById( idColor );
+    return window.getComputedStyle(div, null).getPropertyValue("background-color");
+}
+
 
 function handleGlobalEvents() {
     /* disable text selection and context menu */
@@ -119,7 +152,7 @@ function handleGlobalEvents() {
         var arrButtons = document.getElementsByClassName("mybutton");
         for( var i=0; i<arrButtons.length; i++) {
             arrButtons[i].addEventListener( "click", function() {
-                navigator.vibrate(30);
+                navigator.vibrate(20);
             } );
         }
         
@@ -461,18 +494,50 @@ function onclickDeleteHabit() {
 function onclickEditData(event) {
     "use strict";
     
+    /* global variables */
     selectedCell = event.target.id;
-
-    var idHabit = selectedCell.split("_")[1];
+    
+    /* local variables */
+    var idHabit = parseInt( selectedCell.split("_")[1] );
+    var idxHabit = getIdxHabit( idHabit );
     var date = moment(selectedCell.split("_")[2], "YYMMDD");
-    if (getData(idHabit, date)) {
-        document.getElementById("textData").value = getData(idHabit, date).value;
-    } else {
-        document.getElementById("textData").value = null;
+    var data = getData(idHabit, date);
+    
+    /* habit method */
+    switch( db.root.data.arrHabit[idxHabit].type ) {
+        case "value":
+            if (data) {
+                document.getElementById("textData").value = data.value;
+            } 
+            else {
+                document.getElementById("textData").value = null;
+            }
+            document.getElementById("modalEditData").style.display = "block";
+            document.getElementById("textData").select();     
+            break;
+            
+        case "checkbox":
+            var pos = selectedCell.indexOf("_");
+            var suffix = selectedCell.substr(pos);
+            
+            if(data == undefined) {
+                var cell = document.getElementById( "datacell" + suffix );
+                createCheckbox(cell, true);
+                db.addData(idHabit, date, 1);
+            }
+            else {
+                var checkbox = document.getElementById("checkbox" + suffix);
+                if(data.value > 0) {
+                    checkbox.checked = false;
+                    db.editData(idHabit, date, 0);
+                }
+                else {
+                    checkbox.checked = true;
+                    db.editData(idHabit, date, 1);
+                }
+            }
+            break;
     }
-
-    document.getElementById("modalEditData").style.display = "block";
-    document.getElementById("textData").select();
 }
 
 
@@ -539,7 +604,7 @@ function onsubmitEditData(event) {
     }
 
     /* display the table and so some cleanup */
-    showData();
+    showData(); // todo: just refresh the cell, not entire table
     document.getElementById("textData").value = null;
     event.preventDefault(); // prevent page reload on submit
 }
@@ -632,17 +697,34 @@ function showData() {
             cell = document.getElementById("datacell_" + idHabit + "_" + 
                                            date.format("YYMMDD"));
 
-            /* if no data present, fill the cell with gray */
-            if (!data) {
-                createBar( cell, HEIGHT_DATA_CELL, COLOR_GRAY );
-            }
-            /* for normal data, create a proportionate chart */
-            else if(data.value > 0) {
-                var height = (data.value / max) * HEIGHT_DATA_CELL;
-                createBar( cell, height, getThemeColor("w3-theme") );
-            }
-            else {
-                /* data value is 0, dont create any chart */
+            switch( db.root.data.arrHabit[idxHabit].type ) {
+                case "value":
+                    /* if no data present, fill the cell with gray */
+                    if (!data) {
+                        createBar( cell, HEIGHT_DATA_CELL, COLOR_GRAY );
+                    }
+                    /* for normal data, create a proportionate chart */
+                    else if(data.value > 0) {
+                        var height = (data.value / max) * HEIGHT_DATA_CELL;
+                        createBar( cell, height, getThemeColor("w3-theme") );
+                    }
+                    else {
+                        /* data value is 0, dont create any chart */
+                    }
+                    break;
+                    
+                case "checkbox":
+                    /* if no data present, fill the cell with gray */
+                    if (!data) {
+                        createBar( cell, HEIGHT_DATA_CELL, COLOR_GRAY );
+                    }
+                    else {
+                        if( data.value == 0 )
+                            createCheckbox( cell, false );
+                        else
+                            createCheckbox( cell, true );
+                    }
+                    break;
             }
         }
 
