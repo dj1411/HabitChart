@@ -5,8 +5,12 @@
 - chart
 - scroll
 - traffic light
-	- different targets
+	- different targets (maintain tested separately below)
 	- different methods
+- Maintain
+	- exactly
+	- more than 
+	- less than
 - back button
 	- close modal
 	- deselect

@@ -304,7 +304,7 @@ function setColorLight(idHabit) {
             } );
             curavg /= (maxDataRef+1);
             
-            /* calculate the goal average */
+            /* calculate the goal */
             var goal = db.root.data.arrHabit[idxHabit].target.data1 / db.root.data.arrHabit[idxHabit].target.data2;
             var higreen = goal + 0.1*goal;
             var logreen = goal - 0.1*goal;

@@ -188,7 +188,7 @@ DB.prototype.loadFromFile = function () {
 /* do not reorder this function */
 DB.prototype.load = function () {
     "use strict";
-    var d = localStorage.getItem("db" + APP_NAME);
+    var d = localStorage.getItem( getStorName("db") );
     if (d !== null && d !== undefined && d !== "") {
         this.root = JSON.parse(d);
     }
@@ -199,7 +199,8 @@ DB.prototype.load = function () {
 /* do not reorder this function */
 DB.prototype.save = function () {
     "use strict";
-    localStorage.setItem("db" + APP_NAME, JSON.stringify(this.root));
+    
+    localStorage.setItem(getStorName("db"), JSON.stringify(this.root));
 };
 
 

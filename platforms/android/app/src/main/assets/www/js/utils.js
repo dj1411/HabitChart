@@ -34,3 +34,10 @@ function isDateMatching(date1, date2) {
         return false;
     }
 }
+
+/* return the name for local storage */
+function getStorName( prefix ) {
+    var name = prefix + APP_NAME;
+    name = name.replace(" ", "");
+    return name;
+}

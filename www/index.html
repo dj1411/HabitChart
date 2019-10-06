@@ -83,8 +83,8 @@
                 <div id="titleAddEditHabit" class="w3-container w3-theme-action w3-large w3-padding">Title</div>
                 
                 <form class="w3-container" onsubmit="onsubmitAddEditHabit()">
+                    <!-- target: Improve, Reduce, Maintain -->
                     <div class="w3-margin-top">
-                        <label>Target</label>
                         <select id="optionTarget" class="w3-select" onchange="onchangeTarget(event)">
                             <option value="Improve" selected>I want to improve</option>
                             <option value="Reduce">I want to reduce</option>
@@ -92,20 +92,27 @@
                         </select>
                     </div>
                     
+                    <!-- name of the habit -->
                     <div class="w3-margin-top">
-                        <label>Name</label>
-                        <input id="textHabit" class="w3-input" type="text" required>                        
+                        <label>the habit</label>
+                        <input id="textHabit" type="text" class="w3-margin-left w3-border-0 w3-border-bottom" required />                        
                     </div>
                     
-                    <div id="divMaintain" class="w3-margin-top w3-cell-row" style="display: none">
-                        <span><input id="textTimes" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 50px"></span>
-                        <span><label class="w3-cell w3-padding">times in</label></span>
-                        <span><input id="textDays" type="number" class="w3-cell w3-padding w3-border-0 w3-border-bottom" style="width: 50px"></span>
-                        <span><label class="w3-cell w3-padding">days</label></span>
-                    </div>                        
+                    <!-- extra inputs for "Maintain" -->
+                    <div id="divMaintain" class="w3-margin-top" style="display: none">
+                        <select id="optionMaintain" class="w3-select w3-border-0" style="width: 100px">
+                            <option value="exactly" selected>exactly</option>
+                            <option value="more">more than</option>
+                            <option value="less">less than</option>
+                        </select>
+                        <input id="textTimes" type="number" class="w3-border-0 w3-border-bottom w3-center" style="width: 30px">
+                        <label>times in</label>
+                        <input id="textDays" type="number" class="w3-border-0 w3-border-bottom w3-center" style="width: 30px">
+                        <label>days</label>
+                    </div>
 
+                    <!-- Method: checkbox, bar chart, smiley, counter -->
                     <div class="w3-margin-top">
-                        <label>Method</label>
                         <select id="optionHabitType" class="w3-select">
                             <option value="checkbox">with a yes or no</option>
                             <option value="rating">with a smiley</option>
@@ -114,6 +121,7 @@
                         </select>
                     </div>
 
+                    <!-- submit, cancel buttons -->
                     <div class="w3-bar w3-margin-top w3-margin-bottom">
                         <input type="button" class="w3-button mybutton w3-theme-action w3-left" style="width:45%" onclick="document.getElementById('modalAddEditHabit').style.display='none'" value="Cancel" />
                         <button type="submit" class="w3-button mybutton w3-theme-action w3-right" style="width:45%">Submit</button>

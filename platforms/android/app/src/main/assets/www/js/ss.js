@@ -30,7 +30,8 @@ var ss = {};
 
 function ssInit() {
     "use strict";
-    var s = sessionStorage.getItem("ss" + APP_NAME);
+    
+    var s = sessionStorage.getItem(getStorName("ss"));
     if (s !== null && s !== undefined) {
         ss = JSON.parse(s);
     }
@@ -47,7 +48,7 @@ function ssSet(key, val) {
     }
 
     ss[key] = val;
-    sessionStorage.setItem("ss" + APP_NAME, JSON.stringify(ss));
+    sessionStorage.setItem(getStorName("ss"), JSON.stringify(ss));
 }
 
 function ssGet(key) {
@@ -68,5 +69,5 @@ function ssReset(key) {
     }
 
     delete ss[key];
-    sessionStorage.setItem("ss" + APP_NAME, JSON.stringify(ss));
+    sessionStorage.setItem(getStorName("ss"), JSON.stringify(ss));
 }

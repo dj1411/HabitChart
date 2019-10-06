@@ -48,6 +48,7 @@ function main() {
     handleGlobalEvents(); // this may fail without real device
 }
 
+
 /* Create bar chart for a table cell */
 function createBar(cell, height, color) {
     "use strict";
@@ -61,7 +62,6 @@ function createBar(cell, height, color) {
     svg.id = "datasvg" + suffix;
     cell.appendChild(svg);
     svg.style.display = "block"; // by this the entire cell is filled with SVG
-//    svg.classList.add("mybutton");
     
     var rect = document.createElementNS(ns, "rect");
     rect.setAttribute("width", "100%");
@@ -71,7 +71,6 @@ function createBar(cell, height, color) {
     rect.setAttribute("fill", color);
     rect.id = "datarect" + suffix;
     svg.appendChild(rect);
-//    rect.classList.add("mybutton");
 }
 
 /* get a corresponding color from the current theme */
@@ -111,7 +110,7 @@ function handleGlobalEvents() {
         }
     });
     
-    /* use cordova plugins on android and iPhone */
+    /* use cordova plugins on android */
     if(navigator.userAgent.indexOf("Android") >= 0) {
         /* button click sound */
         nativeclick.watch(["mybutton"]);
@@ -123,11 +122,8 @@ function handleGlobalEvents() {
                 navigator.vibrate(30);
             } );
         }
-    }
-
-    /* only Android specific events */
-    if(navigator.userAgent.indexOf("Android") >= 0) {
-        /* back button */
+        
+        /* handle back button */
         document.addEventListener("backbutton", onBack);
     }
 }
@@ -308,7 +304,7 @@ function setColorLight(idHabit) {
             } );
             curavg /= (maxDataRef+1);
             
-            /* calculate the goal average */
+            /* calculate the goal */
             var goal = db.root.data.arrHabit[idxHabit].target.data1 / db.root.data.arrHabit[idxHabit].target.data2;
             var higreen = goal + 0.1*goal;
             var logreen = goal - 0.1*goal;
