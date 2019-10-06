@@ -42,7 +42,6 @@ function DataEntry(idData, date, value) {
     /* inheriting the signature elements */
     this.id = idData;
     this.timestamp = moment();
-    this.isDeleted = false;
 }
 
 
@@ -58,7 +57,6 @@ function Habit(idHabit, name, type, target) {
     /* inheriting the signature elements */
     this.id = idHabit;
     this.timestamp = moment();
-    this.isDeleted = false;
 }
 
 
@@ -227,12 +225,8 @@ DB.prototype.addHabit = function (name, type, target) {
 DB.prototype.removeHabit = function (idHabit) {
     "use strict";
     
-    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id === idHabit);
-    });
-
-    this.root.data.arrHabit[idxHabit].isDeleted = true;
-    
+    var idxHabit = getIdxHabit(idHabit);
+    this.root.data.arrHabit.splice( idxHabit, 1 );
     this.save();
 };
 

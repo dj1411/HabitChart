@@ -1,13 +1,12 @@
 - add habit
-	- test with different targets
-- delete habit
 - edit data
 - chart
 - checkbox
-- scroll
 - traffic light
 	- different targets (maintain tested separately below)
 	- different methods
+- delete habit
+- scroll
 - Maintain
 	- exactly
 	- more than 

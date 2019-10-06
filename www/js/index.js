@@ -519,6 +519,7 @@ function onclickEditData(event) {
                     db.editData(idHabit, date, 1);
                 }
             }
+            setColorLight(idHabit);
             break;
     }
 }
@@ -619,11 +620,6 @@ function showData() {
 
     /* create habits and their data rows */
     for (var idxHabit = 0; idxHabit < db.root.data.arrHabit.length; idxHabit++) {
-        /* skip deleted habits */
-        if(db.root.data.arrHabit[idxHabit].isDeleted == true) {
-            continue;
-        }
-        
         /* local variables */
         var idHabit = db.root.data.arrHabit[idxHabit].id;
 
