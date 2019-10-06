@@ -26,10 +26,22 @@
 var db = new DB();
 var selectedCell = null;
 
+/* on Android start main only when 'deviceready' */
+if (navigator.userAgent.indexOf("Android") >= 0) {
+    document.addEventListener("deviceready", main);
+} else {
+    main();
+}
+
 /* The main entry point. This function is entered when Cordova is ready. */
 function main() {
     "use strict";
     
+    /* experimental features. for release saveToFile = enabled, loadFromFile = disabled */
+    db.saveToFile();
+//    db.loadFromFile();
+    
+    /* The main sequence */
     ssInit();
     showData();
     setStyle();
@@ -98,8 +110,7 @@ function handleGlobalEvents() {
     });
     
     /* use cordova plugins on android and iPhone */
-    if(navigator.userAgent.indexOf("Android") >= 0 ||
-       navigator.userAgent.indexOf("iPhone") >= 0) {
+    if(navigator.userAgent.indexOf("Android") >= 0) {
         /* button click sound */
         nativeclick.watch(["mybutton"]);
         
@@ -107,7 +118,7 @@ function handleGlobalEvents() {
         var arrButtons = document.getElementsByClassName("mybutton");
         for( var i=0; i<arrButtons.length; i++) {
             arrButtons[i].addEventListener( "click", function() {
-                navigator.vibrate(20);
+                navigator.vibrate(30);
             } );
         }
     }

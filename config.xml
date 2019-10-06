@@ -24,6 +24,4 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <icon src="www/img/logo.png" />
-    <engine name="android" spec="^7.1.4" />
-    <engine name="browser" spec="^5.0.4" />
 </widget>
