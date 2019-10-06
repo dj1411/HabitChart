@@ -1,6 +1,14 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/cordova-plugin-nativeclicksound/www/nativeclick.js",
+        "id": "cordova-plugin-nativeclicksound.nativeclick",
+        "pluginId": "cordova-plugin-nativeclicksound",
+        "clobbers": [
+            "nativeclick"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-vibration/src/browser/Vibration.js",
         "id": "cordova-plugin-vibration.Vibration",
         "pluginId": "cordova-plugin-vibration",
@@ -15,22 +23,14 @@ module.exports = [
         "merges": [
             "navigator"
         ]
-    },
-    {
-        "file": "plugins/cordova-plugin-nativeclicksound/www/nativeclick.js",
-        "id": "cordova-plugin-nativeclicksound.nativeclick",
-        "pluginId": "cordova-plugin-nativeclicksound",
-        "clobbers": [
-            "nativeclick"
-        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-vibration": "3.1.0",
-    "cordova-plugin-nativeclicksound": "0.0.4"
+    "cordova-plugin-whitelist": "1.3.4",
+    "cordova-plugin-nativeclicksound": "0.0.4",
+    "cordova-plugin-vibration": "3.1.1"
 }
 // BOTTOM OF METADATA
 });

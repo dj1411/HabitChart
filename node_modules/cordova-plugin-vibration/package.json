@@ -1,8 +1,8 @@
 {
   "_from": "cordova-plugin-vibration",
-  "_id": "cordova-plugin-vibration@3.1.0",
+  "_id": "cordova-plugin-vibration@3.1.1",
   "_inBundle": false,
-  "_integrity": "sha1-Y+V6HecuMYsJRO9yfXxO/xPKLJM=",
+  "_integrity": "sha512-qgv67Rueo4Pydfant3TwnXeFiN9dl+6lKMM6h5jYg9XewiGAGOr8vfWsTvQssC3m3xMKGS1ap3xPNH+BzZ4RMA==",
   "_location": "/cordova-plugin-vibration",
   "_phantomChildren": {},
   "_requested": {
@@ -19,10 +19,10 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-vibration/-/cordova-plugin-vibration-3.1.0.tgz",
-  "_shasum": "63e57a1de72e318b0944ef727d7c4eff13ca2c93",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-vibration/-/cordova-plugin-vibration-3.1.1.tgz",
+  "_shasum": "38fcdd9a7675cfb44d86339c1b2cb129017e9e00",
   "_spec": "cordova-plugin-vibration",
-  "_where": "T:\\GitRepos\\HabitChart",
+  "_where": "C:\\Users\\jayanta\\Downloads\\HabitChart",
   "author": {
     "name": "Apache Software Foundation"
   },
@@ -76,5 +76,5 @@
     "test": "npm run eslint"
   },
   "types": "./types/index.d.ts",
-  "version": "3.1.0"
+  "version": "3.1.1"
 }

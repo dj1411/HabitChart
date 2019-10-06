@@ -1,6 +1,6 @@
 {
   "name": "com.debnath.habitchart",
-  "version": "2.0.0",
+  "version": "4.0.0",
   "displayName": "HabitChart",
   "cordova": {
     "platforms": [
@@ -9,15 +9,13 @@
     ],
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-vibration": {},
-      "cordova-plugin-nativeclicksound": {}
+      "cordova-plugin-nativeclicksound": {},
+      "cordova-plugin-vibration": {}
     }
   },
   "dependencies": {
     "cordova-android": "^7.1.4",
-    "cordova-browser": "^5.0.4",
-    "cordova-plugin-nativeclicksound": "0.0.4",
-    "cordova-plugin-vibration": "^3.1.0"
+    "cordova-browser": "^5.0.4"
   },
   "devDependencies": {
     "cordova-plugin-whitelist": "1"

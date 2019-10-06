@@ -4,14 +4,8 @@
   "name": "HabitChart",
   "short_name": "HabitChart",
   "version": "com.debnath.habitchart",
-  "description": "keep track of your habits",
-  "author": "Jayanta Debnath",
-  "icons": [
-    {
-      "src": "www/img/logo.png",
-      "type": "image/png",
-      "sizes": "undefinedxundefined"
-    }
-  ],
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "author": "Apache Cordova Team",
+  "icons": [],
   "start_url": "index.html"
 }
