@@ -3310,13 +3310,30 @@
 											"height": 13,
 											"text": "+data2: string",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAFtoHgirl+NjAs=",
+											"_parent": {
+												"$ref": "AAAAAAFtl+QOKJY90E4="
+											},
+											"model": {
+												"$ref": "AAAAAAFtoHgilF97Xww="
+											},
+											"font": "Arial;13;0",
+											"left": 461,
+											"top": 427,
+											"width": 79.13623046875,
+											"height": 13,
+											"text": "+data3: string",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 456,
 									"top": 377,
 									"width": 89.13623046875,
-									"height": 53
+									"height": 68
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -3329,7 +3346,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 456,
-									"top": 430,
+									"top": 445,
 									"width": 89.13623046875,
 									"height": 10
 								},
@@ -3371,7 +3388,7 @@
 							"left": 456,
 							"top": 352,
 							"width": 89.13623046875,
-							"height": 88,
+							"height": 103,
 							"nameCompartment": {
 								"$ref": "AAAAAAFtl+QOKJY4Gkc="
 							},
@@ -4007,6 +4024,7 @@
 								"$ref": "AAAAAAFtl+QOJJY1hL8="
 							},
 							"name": "data1",
+							"documentation": "number of times",
 							"type": "string"
 						},
 						{
@@ -4016,6 +4034,17 @@
 								"$ref": "AAAAAAFtl+QOJJY1hL8="
 							},
 							"name": "data2",
+							"documentation": "in how many days",
+							"type": "string"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAFtoHgilF97Xww=",
+							"_parent": {
+								"$ref": "AAAAAAFtl+QOJJY1hL8="
+							},
+							"name": "data3",
+							"documentation": "option \"maintain\"",
 							"type": "string"
 						}
 					]

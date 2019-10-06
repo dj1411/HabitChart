@@ -101,13 +101,15 @@
                     <!-- extra inputs for "Maintain" -->
                     <div id="divMaintain" class="w3-margin-top" style="display: none">
                         <select id="optionMaintain" class="w3-select w3-border-0" style="width: 100px">
-                            <option value="exactly" selected>exactly</option>
+                            <option value="exact" selected>exactly</option>
                             <option value="more">more than</option>
                             <option value="less">less than</option>
                         </select>
-                        <input id="textTimes" type="number" class="w3-border-0 w3-border-bottom w3-center" style="width: 30px">
+                        <input id="textTimes" type="number" class="w3-border-0 w3-border-bottom w3-center" style="width: 3ch" 
+                               oninput="event.target.style.width = event.target.value.length + 'ch'">
                         <label>times in</label>
-                        <input id="textDays" type="number" class="w3-border-0 w3-border-bottom w3-center" style="width: 30px">
+                        <input id="textDays" type="number" class="w3-border-0 w3-border-bottom w3-center" style="width: 3ch" 
+                               oninput="event.target.style.width = event.target.value.length + 'ch'">
                         <label>days</label>
                     </div>
 

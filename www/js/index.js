@@ -207,16 +207,19 @@ function setColorLight(idHabit) {
     /* some data entered but not enough history data available */
     else if( arrDataRef.length == 0 ) {
         /* calculate current average, which is actually the value for today */
-        curavg = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+        var data = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
             return isDateMatching(data.date, moment());
-        } ).value;
+        } );
+        if( data != undefined ) {
+            curavg = data.value;
+        }
     }
     
     /* data entered for very few days */
     else if( arrDataRef.length < REF_HISTORY_DATA ) {
         /* calculate current average */
         /* which is actually the value for today */
-        data = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
+        var data = db.root.data.arrHabit[idxHabit].arrData.find( function(data) {
                 return isDateMatching(data.date, moment());
             } );
         if( data != undefined ) {
@@ -311,12 +314,35 @@ function setColorLight(idHabit) {
             var hiyellow = goal + 0.25*goal;
             var loyellow = goal - 0.25*goal;
 
-            if(curavg >= logreen && curavg <= higreen)
-                color = COLOR_TARGET_GREEN;
-            else if(curavg > loyellow && curavg < hiyellow) 
-                color = COLOR_TARGET_YELLOW
-            else 
-                color = COLOR_TARGET_RED;
+            /* select color based on the type of "maintain" */
+            switch( db.root.data.arrHabit[idxHabit].target.data3 ) {
+                case "exact":
+                    if(curavg >= logreen && curavg <= higreen)
+                        color = COLOR_TARGET_GREEN;
+                    else if(curavg > loyellow && curavg < hiyellow) 
+                        color = COLOR_TARGET_YELLOW
+                    else 
+                        color = COLOR_TARGET_RED;
+                    break;
+                    
+                case "more":
+                    if( curavg > goal )
+                        color = COLOR_TARGET_GREEN;
+                    else if( curavg <= goal && curavg > loyellow )
+                        color = COLOR_TARGET_YELLOW;
+                    else if( curavg <= loyellow )
+                        color = COLOR_TARGET_RED;
+                    break;
+                    
+                case "less":
+                    if( curavg < goal )
+                        color = COLOR_TARGET_GREEN;
+                    else if( curavg >= goal && curavg < hiyellow )
+                        color = COLOR_TARGET_YELLOW;
+                    else if( curavg >= hiyellow )
+                        color = COLOR_TARGET_RED;
+                    break;
+            }
             break;
             
         default:
@@ -478,7 +504,8 @@ function onsubmitAddEditHabit() {
     if( ot == "Maintain" ) {
         target = new TargetType(document.getElementById("optionTarget").value,
                                 document.getElementById("textTimes").value,
-                                document.getElementById("textDays").value
+                                document.getElementById("textDays").value,
+                                document.getElementById("optionMaintain").value
                                );
     }
     else {
