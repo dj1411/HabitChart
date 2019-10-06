@@ -109,7 +109,7 @@ function handleGlobalEvents() {
         }
     });
     
-    /* use cordova plugins on android and iPhone */
+    /* use cordova plugins on android */
     if(navigator.userAgent.indexOf("Android") >= 0) {
         /* button click sound */
         nativeclick.watch(["mybutton"]);
@@ -121,11 +121,8 @@ function handleGlobalEvents() {
                 navigator.vibrate(30);
             } );
         }
-    }
-
-    /* only Android specific events */
-    if(navigator.userAgent.indexOf("Android") >= 0) {
-        /* back button */
+        
+        /* handle back button */
         document.addEventListener("backbutton", onBack);
     }
 }
