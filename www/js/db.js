@@ -253,6 +253,19 @@ DB.prototype.editHabit = function (idHabit, name, type, target) {
 };
 
 
+DB.prototype.getData = function (idHabit, date) {
+    "use strict";
+    
+    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id == idHabit);
+    });
+
+    return this.root.data.arrHabit[idxHabit].arrData.find(function (data) {
+        return isDateMatching(moment(data.date), date);
+    });    
+}
+
+
 DB.prototype.addData = function (idHabit, date, value) {
     "use strict";
     /* find habit idx */

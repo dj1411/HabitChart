@@ -94,28 +94,11 @@ function createCheckbox(cell, status) {
 }
 
 
-/* idHabit = id of the habit */
-/* date = date in moment format */
-function getData(idHabit, date) {
-    "use strict";
-    
-    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id == idHabit);
-    });
-
-    return db.root.data.arrHabit[idxHabit].arrData.find(function (data) {
-        return isDateMatching(moment(data.date), date);
-    });
-}
-
-
 /* get the idxHabit from idHabit */
 function getIdxHabit( idHabit ) {
-    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
+    return db.root.data.arrHabit.findIndex(function (habit) {
         return (habit.id === idHabit);
     });
-    
-    return idxHabit;
 }
 
 
@@ -293,7 +276,7 @@ function setColorLight(idHabit) {
         var sumMax = 0;
         var cntMax = 0;
         for (var offset = maxDataRef; offset < MAX_HISTORY_DATA; offset++) { 
-            var data = getData(idHabit, moment().subtract(offset, "days"));
+            var data = db.getData(idHabit, moment().subtract(offset, "days"));
             if (data != undefined) {
                 sumMax += parseInt(data.value);
                 cntMax++;
@@ -501,7 +484,7 @@ function onclickEditData(event) {
     var idHabit = parseInt( selectedCell.split("_")[1] );
     var idxHabit = getIdxHabit( idHabit );
     var date = moment(selectedCell.split("_")[2], "YYMMDD");
-    var data = getData(idHabit, date);
+    var data = db.getData(idHabit, date);
     
     /* habit method */
     switch( db.root.data.arrHabit[idxHabit].type ) {
@@ -597,7 +580,7 @@ function onsubmitEditData(event) {
     var val = document.getElementById("textData").value;
 
     /* enter in database */
-    if (getData(idHabit, date)) {
+    if (db.getData(idHabit, date)) {
         db.editData(parseInt(idHabit), date, val);
     } else {
         db.addData(parseInt(idHabit), date, val);
@@ -677,7 +660,7 @@ function showData() {
             cell = row.insertCell(j);
             var date = moment().subtract(numCol - (j + 1), "days");
             cell.id = "datacell_" + idHabit + "_" + date.format("YYMMDD");
-            arrData.push(getData(idHabit, date));
+            arrData.push(db.getData(idHabit, date));
             cell.onclick = onclickEditData;
             cell.classList.add("mybutton");
             cell.style.border = "1px solid";
@@ -693,7 +676,7 @@ function showData() {
         /* fill the chart */
         for (var j = 0; j < numCol; j++) {
             var date = moment().subtract(numCol - (j + 1), "days");
-            var data = getData(idHabit, date);
+            var data = db.getData(idHabit, date);
             cell = document.getElementById("datacell_" + idHabit + "_" + 
                                            date.format("YYMMDD"));
 
