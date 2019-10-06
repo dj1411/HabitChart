@@ -94,6 +94,18 @@ function createCheckbox(cell, status) {
 }
 
 
+/* get the idxData from idHabit and idData */
+function getIdxData( idHabit, idData ) {
+    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id === idHabit);
+    });
+    
+    return db.root.data.arrHabit[idxHabit].arrData.findIndex( function(data) {
+        return (data.id == idData);
+    });
+}
+
+
 /* get the idxHabit from idHabit */
 function getIdxHabit( idHabit ) {
     return db.root.data.arrHabit.findIndex(function (habit) {

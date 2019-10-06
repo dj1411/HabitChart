@@ -3,10 +3,7 @@
 - chart
 - checkbox
 - traffic light
-	- different targets (maintain tested separately below)
-	- different methods
 - delete habit
-- scroll
 - Maintain
 	- exactly
 	- more than 
@@ -17,4 +14,3 @@
 	- go back if any other page
 	- exit
 - clicking outside modal should close it
-- test with empty data
