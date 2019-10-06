@@ -23,12 +23,13 @@
  *******************************************************************************/
 
 
-function TargetType(name, data1, data2) {
+function TargetType(name, data1, data2, data3) {
     "use strict";
     
-    this.name = name;
-    this.data1 = data1;
-    this.data2 = data2;
+    this.name = name;   // name of the target
+    this.data1 = data1; // number of times
+    this.data2 = data2; // in how many days
+    this.data3 = data3; // exact, more or less
 }
 
 

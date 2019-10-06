@@ -119,7 +119,7 @@ function handleGlobalEvents() {
         var arrButtons = document.getElementsByClassName("mybutton");
         for( var i=0; i<arrButtons.length; i++) {
             arrButtons[i].addEventListener( "click", function() {
-                navigator.vibrate(30);
+                navigator.vibrate(20);
             } );
         }
         

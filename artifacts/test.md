@@ -3,6 +3,7 @@
 - delete habit
 - edit data
 - chart
+- checkbox
 - scroll
 - traffic light
 	- different targets (maintain tested separately below)
