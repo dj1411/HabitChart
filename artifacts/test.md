@@ -12,4 +12,5 @@
 	- deselect
 	- go back if any other page
 	- exit
+- clicking outside modal should close it
 - test with empty data

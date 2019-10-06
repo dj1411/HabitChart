@@ -48,6 +48,7 @@ function main() {
     handleGlobalEvents(); // this may fail without real device
 }
 
+
 /* Create bar chart for a table cell */
 function createBar(cell, height, color) {
     "use strict";

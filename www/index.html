@@ -76,7 +76,8 @@
         </button>
         
         <!-- add/edit habit modal -->
-        <div id="modalAddEditHabit" class="w3-modal">
+        <div id="modalAddEditHabit" class="w3-modal" 
+             onclick="if(event.target.id == 'modalAddEditHabit') document.getElementById('modalAddEditHabit').style.display='none'">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
                 
                 <div id="titleAddEditHabit" class="w3-container w3-theme-action w3-large w3-padding">Title</div>
@@ -123,7 +124,8 @@
         </div>        
 
         <!-- edit data modal -->
-        <div id="modalEditData" class="w3-modal">
+        <div id="modalEditData" class="w3-modal" 
+             onclick="if(event.target.id == 'modalEditData') document.getElementById('modalEditData').style.display='none'">
             <div class="w3-modal-content w3-text-theme" style="max-width:600px">
                 
                 <div id="titleEditData" class="w3-container w3-theme-action w3-large w3-padding">Edit data</div>
