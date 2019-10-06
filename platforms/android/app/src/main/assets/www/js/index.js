@@ -58,6 +58,7 @@ function createBar(cell, height, color) {
     var ns = "http://www.w3.org/2000/svg";
 
     /* create svg element */
+    cell.innerHTML = "";
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", "100%");
@@ -94,28 +95,23 @@ function createCheckbox(cell, status) {
 }
 
 
-/* idHabit = id of the habit */
-/* date = date in moment format */
-function getData(idHabit, date) {
-    "use strict";
-    
+/* get the idxData from idHabit and idData */
+function getIdxData( idHabit, idData ) {
     var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id == idHabit);
+        return (habit.id === idHabit);
     });
-
-    return db.root.data.arrHabit[idxHabit].arrData.find(function (data) {
-        return isDateMatching(moment(data.date), date);
+    
+    return db.root.data.arrHabit[idxHabit].arrData.findIndex( function(data) {
+        return (data.id == idData);
     });
 }
 
 
 /* get the idxHabit from idHabit */
 function getIdxHabit( idHabit ) {
-    var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
+    return db.root.data.arrHabit.findIndex(function (habit) {
         return (habit.id === idHabit);
     });
-    
-    return idxHabit;
 }
 
 
@@ -267,10 +263,7 @@ function setColorLight(idHabit) {
     }
     
     /* data available for longer days */
-    /* I am elaborating the else path for more clarity */
-    else if(arrDataRef.length == REF_HISTORY_DATA
-            && db.root.data.arrHabit[idxHabit].arrData.length > maxDataRef
-           ) {
+    else {
         /* calculate current average, which is the average of today's data
          * and reference data 
          */
@@ -293,7 +286,7 @@ function setColorLight(idHabit) {
         var sumMax = 0;
         var cntMax = 0;
         for (var offset = maxDataRef; offset < MAX_HISTORY_DATA; offset++) { 
-            var data = getData(idHabit, moment().subtract(offset, "days"));
+            var data = db.getData(idHabit, moment().subtract(offset, "days"));
             if (data != undefined) {
                 sumMax += parseInt(data.value);
                 cntMax++;
@@ -302,11 +295,6 @@ function setColorLight(idHabit) {
         if (cntMax > 0) {
             oldavg = sumMax / cntMax;
         }
-    }
-    
-    /* unknown path */
-    else {
-        alert( "unknown path entered while displaying traffic light" );
     }
     
     /* decide the color based on old and new average */
@@ -501,7 +489,7 @@ function onclickEditData(event) {
     var idHabit = parseInt( selectedCell.split("_")[1] );
     var idxHabit = getIdxHabit( idHabit );
     var date = moment(selectedCell.split("_")[2], "YYMMDD");
-    var data = getData(idHabit, date);
+    var data = db.getData(idHabit, date);
     
     /* habit method */
     switch( db.root.data.arrHabit[idxHabit].type ) {
@@ -520,20 +508,21 @@ function onclickEditData(event) {
             var pos = selectedCell.indexOf("_");
             var suffix = selectedCell.substr(pos);
             
+            /* grayed --> checked --> unchecked --> grayed */
             if(data == undefined) {
+                /* grayed --> checked */
                 var cell = document.getElementById( "datacell" + suffix );
                 createCheckbox(cell, true);
                 db.addData(idHabit, date, 1);
             }
             else {
-                var checkbox = document.getElementById("checkbox" + suffix);
-                if(data.value > 0) {
-                    checkbox.checked = false;
-                    db.editData(idHabit, date, 0);
+                if(data.value == 1) {
+                    /* checked --> unchecked */
+                    setCheckbox( "checkbox" + suffix, false );
                 }
                 else {
-                    checkbox.checked = true;
-                    db.editData(idHabit, date, 1);
+                    /* unchecked --> grayed */
+                    setCheckbox( "checkbox" + suffix, null );
                 }
             }
             break;
@@ -597,7 +586,7 @@ function onsubmitEditData(event) {
     var val = document.getElementById("textData").value;
 
     /* enter in database */
-    if (getData(idHabit, date)) {
+    if (db.getData(idHabit, date)) {
         db.editData(parseInt(idHabit), date, val);
     } else {
         db.addData(parseInt(idHabit), date, val);
@@ -610,6 +599,41 @@ function onsubmitEditData(event) {
 }
 
 
+/* set the checked status of checkbox */
+/* This will also edit the data in db */
+/* plus it will set the traffic light */
+/* status = true --> checked */
+/* status = false --> unchecked */
+/* status = null --> grayed */
+function setCheckbox(idCheckbox, status) {
+    /* local variables */
+    var checkbox = document.getElementById(idCheckbox);
+    var pos = idCheckbox.indexOf("_");
+    var suffix = idCheckbox.substr(pos);    
+    var cell = document.getElementById( "datacell" + suffix );
+    var date = moment(idCheckbox.split("_")[2], "YYMMDD");
+    var idHabit = parseInt( idCheckbox.split("_")[1] );
+    var idData = db.getData(idHabit, date).id;
+    
+    /* checkbox status change, plus edit the database */
+    if(status == null) {
+        createBar(cell, HEIGHT_DATA_CELL, COLOR_GRAY);
+        db.removeData(idHabit, idData);
+    } 
+    else if(status == false) {
+        checkbox.checked = false;
+        db.editData(idHabit, date, 0);
+    }
+    else {
+        checkbox.checked = true;
+        db.editData(idHabit, date, 1);
+    }    
+    
+    /* change traffic light color */
+    setColorLight(idHabit);
+}
+
+                
 /* display the main table */
 function showData() {
     "use strict";
@@ -636,11 +660,6 @@ function showData() {
 
     /* create habits and their data rows */
     for (var idxHabit = 0; idxHabit < db.root.data.arrHabit.length; idxHabit++) {
-        /* skip deleted habits */
-        if(db.root.data.arrHabit[idxHabit].isDeleted == true) {
-            continue;
-        }
-        
         /* local variables */
         var idHabit = db.root.data.arrHabit[idxHabit].id;
 
@@ -677,7 +696,7 @@ function showData() {
             cell = row.insertCell(j);
             var date = moment().subtract(numCol - (j + 1), "days");
             cell.id = "datacell_" + idHabit + "_" + date.format("YYMMDD");
-            arrData.push(getData(idHabit, date));
+            arrData.push(db.getData(idHabit, date));
             cell.onclick = onclickEditData;
             cell.classList.add("mybutton");
             cell.style.border = "1px solid";
@@ -693,7 +712,7 @@ function showData() {
         /* fill the chart */
         for (var j = 0; j < numCol; j++) {
             var date = moment().subtract(numCol - (j + 1), "days");
-            var data = getData(idHabit, date);
+            var data = db.getData(idHabit, date);
             cell = document.getElementById("datacell_" + idHabit + "_" + 
                                            date.format("YYMMDD"));
 

@@ -58,6 +58,7 @@ function createBar(cell, height, color) {
     var ns = "http://www.w3.org/2000/svg";
 
     /* create svg element */
+    cell.innerHTML = "";
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", "100%");
@@ -262,10 +263,7 @@ function setColorLight(idHabit) {
     }
     
     /* data available for longer days */
-    /* I am elaborating the else path for more clarity */
-    else if(arrDataRef.length == REF_HISTORY_DATA
-            && db.root.data.arrHabit[idxHabit].arrData.length > maxDataRef
-           ) {
+    else {
         /* calculate current average, which is the average of today's data
          * and reference data 
          */
@@ -297,11 +295,6 @@ function setColorLight(idHabit) {
         if (cntMax > 0) {
             oldavg = sumMax / cntMax;
         }
-    }
-    
-    /* unknown path */
-    else {
-        alert( "unknown path entered while displaying traffic light" );
     }
     
     /* decide the color based on old and new average */
@@ -515,23 +508,23 @@ function onclickEditData(event) {
             var pos = selectedCell.indexOf("_");
             var suffix = selectedCell.substr(pos);
             
+            /* grayed --> checked --> unchecked --> grayed */
             if(data == undefined) {
+                /* grayed --> checked */
                 var cell = document.getElementById( "datacell" + suffix );
                 createCheckbox(cell, true);
                 db.addData(idHabit, date, 1);
             }
             else {
-                var checkbox = document.getElementById("checkbox" + suffix);
-                if(data.value > 0) {
-                    checkbox.checked = false;
-                    db.editData(idHabit, date, 0);
+                if(data.value == 1) {
+                    /* checked --> unchecked */
+                    setCheckbox( "checkbox" + suffix, false );
                 }
                 else {
-                    checkbox.checked = true;
-                    db.editData(idHabit, date, 1);
+                    /* unchecked --> grayed */
+                    setCheckbox( "checkbox" + suffix, null );
                 }
             }
-            setColorLight(idHabit);
             break;
     }
 }
@@ -606,6 +599,41 @@ function onsubmitEditData(event) {
 }
 
 
+/* set the checked status of checkbox */
+/* This will also edit the data in db */
+/* plus it will set the traffic light */
+/* status = true --> checked */
+/* status = false --> unchecked */
+/* status = null --> grayed */
+function setCheckbox(idCheckbox, status) {
+    /* local variables */
+    var checkbox = document.getElementById(idCheckbox);
+    var pos = idCheckbox.indexOf("_");
+    var suffix = idCheckbox.substr(pos);    
+    var cell = document.getElementById( "datacell" + suffix );
+    var date = moment(idCheckbox.split("_")[2], "YYMMDD");
+    var idHabit = parseInt( idCheckbox.split("_")[1] );
+    var idData = db.getData(idHabit, date).id;
+    
+    /* checkbox status change, plus edit the database */
+    if(status == null) {
+        createBar(cell, HEIGHT_DATA_CELL, COLOR_GRAY);
+        db.removeData(idHabit, idData);
+    } 
+    else if(status == false) {
+        checkbox.checked = false;
+        db.editData(idHabit, date, 0);
+    }
+    else {
+        checkbox.checked = true;
+        db.editData(idHabit, date, 1);
+    }    
+    
+    /* change traffic light color */
+    setColorLight(idHabit);
+}
+
+                
 /* display the main table */
 function showData() {
     "use strict";

@@ -42,7 +42,6 @@ function DataEntry(idData, date, value) {
     /* inheriting the signature elements */
     this.id = idData;
     this.timestamp = moment();
-    this.isDeleted = false;
 }
 
 
@@ -58,7 +57,6 @@ function Habit(idHabit, name, type, target) {
     /* inheriting the signature elements */
     this.id = idHabit;
     this.timestamp = moment();
-    this.isDeleted = false;
 }
 
 
@@ -227,11 +225,8 @@ DB.prototype.addHabit = function (name, type, target) {
 DB.prototype.removeHabit = function (idHabit) {
     "use strict";
     
-    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id === idHabit);
-    });
-
-    this.root.data.arrHabit[idxHabit].isDeleted = true;
+    var idxHabit = getIdxHabit(idHabit);
+    this.root.data.arrHabit.splice( idxHabit, 1 );
     
     this.save();
 };
@@ -251,6 +246,19 @@ DB.prototype.editHabit = function (idHabit, name, type, target) {
 
     this.save();
 };
+
+
+DB.prototype.getData = function (idHabit, date) {
+    "use strict";
+    
+    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
+        return (habit.id == idHabit);
+    });
+
+    return this.root.data.arrHabit[idxHabit].arrData.find(function (data) {
+        return isDateMatching(moment(data.date), date);
+    });    
+}
 
 
 DB.prototype.addData = function (idHabit, date, value) {
@@ -278,16 +286,19 @@ DB.prototype.addData = function (idHabit, date, value) {
 
 DB.prototype.removeData = function (idHabit, idData) {
     "use strict";
-    // set the deleted flag
+    
+    var idxHabit = getIdxHabit(idHabit);
+    var idxData = getIdxData(idHabit, idData);
+    this.root.data.arrHabit[idxHabit].arrData.splice( idxData, 1 );
+    
+    this.save();
 };
 
 
 DB.prototype.editData = function (idHabit, date, value) {
     "use strict";
     /* find habit idx */
-    var idxHabit = this.root.data.arrHabit.findIndex(function (habit) {
-        return (habit.id === idHabit);
-    });
+    var idxHabit = getIdxHabit(idHabit);
 
     /* find entry idx */
     var idxData = this.root.data.arrHabit[idxHabit].arrData.findIndex(function (entry) {
