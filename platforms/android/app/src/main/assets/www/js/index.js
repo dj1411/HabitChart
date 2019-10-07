@@ -100,6 +100,30 @@ function createCheckbox(cell, status) {
 }
 
 
+/* deselect any selected habit and reset the toolbar */
+function deselectHabit() {
+    "use strict";
+    
+    /* reset selection */
+    ssReset("idHabitSelect");
+    
+    /* change toolbar */
+    document.getElementById("titleWindow").innerText = APP_NAME;
+    document.getElementById("divTitle").classList.add("w3-theme-dark");
+    document.getElementById("divTitle").classList.remove("w3-theme-d1");
+    document.getElementById("toolbarNormal").style.display = "block";
+    document.getElementById("toolbarSelect").style.display = "none";
+    
+    /* reset background of all habits */
+    for( var idx=0; idx < db.root.data.arrHabit.length; idx++ ) {
+        var row = document.getElementById( "rowHabitName_" + idx );
+        row.style.backgroundColor = "transparent";
+        var row = document.getElementById( "rowHabitData_" + idx );
+        row.style.backgroundColor = "transparent";
+    }
+}
+
+
 /* get the idxData from idHabit and idData */
 function getIdxData( idHabit, idData ) {
     var idxHabit = db.root.data.arrHabit.findIndex(function (habit) {
@@ -135,6 +159,12 @@ function getThemeColor( idColor ) {
 
 
 function handleGlobalEvents() {
+    /* handle click event on the data table */
+    /* This is primarily used for deselecting habit */
+    /* propagation is set to "capture", to prevent pressing any other buttons */
+    document.getElementById( "divBody" ).addEventListener( 
+        "click", onclickBody, true );
+    
     /* disable text selection and context menu */
     document.body.style.userSelect = "none";
     document.body.addEventListener("contextmenu", function(event) {
@@ -167,23 +197,6 @@ function handleGlobalEvents() {
         /* handle back button */
         document.addEventListener("backbutton", onBack);
     }
-}
-
-
-/* deselect any selected habit and reset the toolbar */
-function deselectHabit() {
-    "use strict";
-    
-    /* reset selection */
-    ssReset("idHabitSelect");
-    document.getElementById('overlayHabitSelectBG').style.display = 'none';
-    
-    /* change toolbar */
-    document.getElementById("titleWindow").innerText = APP_NAME;
-    document.getElementById("divTitle").classList.add("w3-theme-dark");
-    document.getElementById("divTitle").classList.remove("w3-theme-d1");
-    document.getElementById("toolbarNormal").style.display = "block";
-    document.getElementById("toolbarSelect").style.display = "none";
 }
 
 
@@ -242,6 +255,15 @@ function onclickAddEditHabit(event) {
 
     document.getElementById("modalAddEditHabit").style.display = "block";
     document.getElementById("textHabit").select();
+}
+
+
+function onclickBody(event) {
+    /* deselect if any habit is selected */
+    if(ssGet("idHabitSelect") != undefined) {
+        deselectHabit();
+        event.stopPropagation();
+    }
 }
 
 
@@ -314,7 +336,6 @@ function oncontextmenuHabit(event) {
     var idHabit = event.path[idxPath].id.split("_")[1];
     
     /* Select the habit */
-    ssSet("idHabitSelect", idHabit);
     selectHabit(idHabit);
 }
 
@@ -375,20 +396,17 @@ function onsubmitEditData(event) {
 function selectHabit(idHabit) {
     "use strict";
     
+    /* this will deselect any previously selected habit */
+    deselectHabit();
+    
+    /* set session storage */
+    ssSet("idHabitSelect", idHabit);
+    
     /* change background of habit */
-    /* this is purely a workaround. ideally, the background color of the row
-     * should have been changed, plus the border perhaps. But In our case,
-     * we are using the border for draw the chart. So, we cant play around with
-     * the border too much.
-     */
-    document.getElementById("overlayHabitSelectBG").style.display = "block";
-    var y = document.getElementById("rowHabitName_" + idHabit)
-        .getBoundingClientRect().top;
-    document.getElementById("overlayHabitSelect").style.top = y + "px";
-    var height = document.getElementById("rowHabitName_" + idHabit).clientHeight
-        + document.getElementById("rowHabitData_" + idHabit).clientHeight
-        + 10;
-    document.getElementById("overlayHabitSelect").style.height = height + "px";
+    var row = document.getElementById( "rowHabitName_" + idHabit );
+    row.style.backgroundColor = getThemeColor("w3-theme-l4");
+    row = document.getElementById( "rowHabitData_" + idHabit );
+    row.style.backgroundColor = getThemeColor("w3-theme-l4");
     
     /* change toolbar */
     document.getElementById("titleWindow").innerHTML = "";
@@ -680,8 +698,6 @@ function showData() {
         row.addEventListener( "contextmenu", function(event) {
             oncontextmenuHabit(event);
         } );
-        row.style.backgroundColor = "red";
-        table.style.borderCollapse = true;
 
         /* traffic light */
         var cell = row.insertCell(-1);
@@ -697,6 +713,11 @@ function showData() {
         cell.classList.add("w3-text-dark");
         cell.style.whiteSpace = "nowrap";
         cell.innerText = db.root.data.arrHabit[idxHabit].name;
+        
+        /* empty cells for the habit row */
+        for (var j = 2; j < numCol; j++) {
+            row.insertCell(-1);
+        }
         
         /* empty data cells */
         var arrData = [];

@@ -306,8 +306,8 @@ function onclickEditData(event) {
             if(data == undefined) {
                 /* grayed --> checked */
                 var cell = document.getElementById( "datacell" + getSuffix(selectedCell) );
-                createCheckbox(cell, true);
                 db.addData(idHabit, date, 1);
+                createCheckbox(cell, true);
             }
             else {
                 if(data.value == 1) {
