@@ -23,7 +23,7 @@
  *******************************************************************************/
 
 var APP_NAME = "Habit Chart";
-var APP_VER = "2.0.0";
+var APP_VER = "4.0.0";
 
 var Z_INDEX_TOP = 5;
 var Z_INDEX_MEDHI = 4;
