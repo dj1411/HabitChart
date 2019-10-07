@@ -54,7 +54,6 @@ function createBar(cell, height, color) {
     "use strict";
     
     /* local variables */
-    var suffix = cell.id.slice( 8 ); // todo: change the algorithm
     var ns = "http://www.w3.org/2000/svg";
 
     /* create svg element */
@@ -62,7 +61,7 @@ function createBar(cell, height, color) {
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", "100%");
-    svg.id = "datasvg" + suffix;
+    svg.id = "datasvg" + getSuffix(cell.id);
     cell.appendChild(svg);
     svg.style.display = "block"; // by this the entire cell is filled with SVG
     
@@ -73,7 +72,7 @@ function createBar(cell, height, color) {
     rect.setAttribute("x", 0);
     rect.setAttribute("y", HEIGHT_DATA_CELL - height);
     rect.setAttribute("fill", color);
-    rect.id = "datarect" + suffix;
+    rect.id = "datarect" + getSuffix(cell.id);
     svg.appendChild(rect);
 }
 
@@ -82,16 +81,21 @@ function createBar(cell, height, color) {
 function createCheckbox(cell, status) {
     /* create the checkbox */
     cell.innerHTML = "";
-    var input = document.createElement( "input" );
-    cell.appendChild( input );
-    input.classList.add( "w3-check" );
-    input.type = "checkbox";
-    input.checked = status;
+    var icon = document.createElement( "i" );
+    cell.appendChild( icon );
+    icon.id = "checkbox" + getSuffix(cell.id);
     
-    /* set the id */
-    var pos = cell.id.indexOf("_");
-    var suffix = cell.id.substr(pos);
-    input.id = "checkbox" + suffix;
+    /* checked or unchecked */
+    if(status)
+        icon.classList.add( "fas", "fa-check" );
+    else
+        icon.classList.add( "fas", "fa-times" );
+    
+    /* compute traffic light again */
+    /* this is necessary because createCehckbox() can be called from 
+     * outside showData() */
+    var idHabit = parseInt( cell.id.split("_")[1] );
+    setColorLight(idHabit);
 }
 
 
@@ -114,6 +118,13 @@ function getIdxHabit( idHabit ) {
     });
 }
 
+
+/* get the suffix of id of html element. */
+/* typically this is the string after the first underscore */
+function getSuffix(str) {
+    var pos = str.indexOf("_");
+    return str.substr(pos);    
+}
 
 /* get a corresponding color from the current theme */
 function getThemeColor( idColor ) {
@@ -157,6 +168,208 @@ function handleGlobalEvents() {
     }
 }
 
+
+/* deselect any selected habit and reset the toolbar */
+function deselectHabit() {
+    "use strict";
+    
+    /* reset selection */
+    ssReset("idHabitSelect");
+    document.getElementById('overlayHabitSelectBG').style.display = 'none';
+    
+    /* change toolbar */
+    document.getElementById("titleWindow").innerText = APP_NAME;
+    document.getElementById("divTitle").classList.add("w3-theme-dark");
+    document.getElementById("divTitle").classList.remove("w3-theme-d1");
+    document.getElementById("toolbarNormal").style.display = "block";
+    document.getElementById("toolbarSelect").style.display = "none";
+}
+
+
+/* handle back button for Android */
+function onBack() {
+    /* close any open modal */
+    var modals = document.getElementsByClassName("w3-modal");
+    for(var i=0; i<modals.length; i++) {
+        if(modals[i].style.display === "block") {
+            modals[i].style.display = "none";
+            return;
+        }
+    }
+    
+    /* deselect habit if any */
+    if(ssGet("idHabitSelect") != undefined) {
+        deselectHabit();
+        return;
+    }
+    
+    /* if not on main page, just go back to previous page */
+    var page = location.href.split('/').reverse()[0];
+    if (page != "index.html" && page != "index.html?") {
+        window.history.back();
+    }
+    /* else if on main page, exit app */
+    else {
+        navigator.app.exitApp();
+    }
+}
+
+
+/* display additional modal objects */
+function onchangeTarget(event) {
+    "use strict";
+    
+    if (event.target.value == "Maintain") {
+        document.getElementById("divMaintain").style.display = "block";
+        document.getElementById("textTimes").required = true;
+        document.getElementById("textDays").required = true;
+    } else {
+        document.getElementById("divMaintain").style.display = "none";
+        document.getElementById("textTimes").required = false;
+        document.getElementById("textDays").required = false;
+    }
+}
+
+function onclickAddEditHabit(event) {
+    "use strict";
+    
+    if (event.target == document.getElementById("buttonAdd") ||
+        event.target.parentNode == document.getElementById("buttonAdd")
+    ) {
+        document.getElementById("titleAddEditHabit").innerText = "Add Habit";
+    }
+
+    document.getElementById("modalAddEditHabit").style.display = "block";
+    document.getElementById("textHabit").select();
+}
+
+
+function onclickDeleteHabit() {
+    "use strict";
+    
+    db.removeHabit(parseInt(ssGet("idHabitSelect")));
+    deselectHabit();
+    showData();
+}
+
+
+function onclickEditData(event) {
+    "use strict";
+    
+    /* global variables */
+    selectedCell = event.target.id;
+    
+    /* local variables */
+    var idHabit = parseInt( selectedCell.split("_")[1] );
+    var idxHabit = getIdxHabit( idHabit );
+    var date = moment(selectedCell.split("_")[2], "YYMMDD");
+    var data = db.getData(idHabit, date);
+    
+    /* habit method */
+    switch( db.root.data.arrHabit[idxHabit].type ) {
+        case "value":
+            if (data) {
+                document.getElementById("textData").value = data.value;
+            } 
+            else {
+                document.getElementById("textData").value = null;
+            }
+            document.getElementById("modalEditData").style.display = "block";
+            document.getElementById("textData").select();     
+            break;
+            
+        case "checkbox":
+            /* grayed --> checked --> unchecked --> grayed */
+            if(data == undefined) {
+                /* grayed --> checked */
+                var cell = document.getElementById( "datacell" + getSuffix(selectedCell) );
+                createCheckbox(cell, true);
+                db.addData(idHabit, date, 1);
+            }
+            else {
+                if(data.value == 1) {
+                    /* checked --> unchecked */
+                    setCheckbox( "checkbox" + getSuffix(selectedCell), false );
+                }
+                else {
+                    /* unchecked --> grayed */
+                    setCheckbox( "checkbox" + getSuffix(selectedCell), null );
+                }
+            }
+            break;
+    }
+}
+
+
+/* do something upon selecting a habit */
+function oncontextmenuHabit(event) {
+    "use strict";
+    
+    /* determining the habit id */
+    var idxPath = event.path.findIndex(function(val, idx, arr) {
+        return (val.id.split("_")[0] === "rowHabitName" 
+                || val.id.split("_")[0] === "rowHabitData")
+    });
+    var idHabit = event.path[idxPath].id.split("_")[1];
+    
+    /* Select the habit */
+    ssSet("idHabitSelect", idHabit);
+    selectHabit(idHabit);
+}
+
+
+function onsubmitAddEditHabit() {
+    "use strict";
+    
+    document.getElementById("modalAddEditHabit").style.display = "none";
+
+    /* populate the "target" data structure */
+    var target = null;
+    var ot = document.getElementById("optionTarget").value;
+    if( ot == "Maintain" ) {
+        target = new TargetType(document.getElementById("optionTarget").value,
+                                document.getElementById("textTimes").value,
+                                document.getElementById("textDays").value,
+                                document.getElementById("optionMaintain").value
+                               );
+    }
+    else {
+        target = new TargetType(document.getElementById("optionTarget").value);
+    }
+    
+    /* add the habit to database */
+    db.addHabit(document.getElementById("textHabit").value,
+        document.getElementById("optionHabitType").value,
+        target
+    )
+}
+
+
+function onsubmitEditData(event) {
+    "use strict";
+    
+    /* hide the modal */
+    document.getElementById("modalEditData").style.display = "none";
+
+    /* some local variables */
+    var idHabit = selectedCell.split("_")[1];
+    var date = moment(selectedCell.split("_")[2], "YYMMDD");
+    var val = document.getElementById("textData").value;
+
+    /* enter in database */
+    if (db.getData(idHabit, date)) {
+        db.editData(parseInt(idHabit), date, val);
+    } else {
+        db.addData(parseInt(idHabit), date, val);
+    }
+
+    /* display the table and so some cleanup */
+    showData(); // todo: just refresh the cell, not entire table
+    document.getElementById("textData").value = null;
+    event.preventDefault(); // prevent page reload on submit
+}
+
+
 /* select a given habit by changing the background color */
 function selectHabit(idHabit) {
     "use strict";
@@ -183,6 +396,42 @@ function selectHabit(idHabit) {
     document.getElementById("toolbarNormal").style.display = "none";
     document.getElementById("toolbarSelect").style.display = "block";
 }
+
+
+/* set the checked status of checkbox */
+/* This will also edit the data in db */
+/* plus it will set the traffic light */
+/* status = true --> checked */
+/* status = false --> unchecked */
+/* status = null --> grayed */
+function setCheckbox(idCheckbox, status) {
+    /* local variables */
+    var icon = document.getElementById(idCheckbox);
+    var cell = document.getElementById( "datacell" + getSuffix(idCheckbox) );
+    var date = moment(idCheckbox.split("_")[2], "YYMMDD");
+    var idHabit = parseInt( idCheckbox.split("_")[1] );
+    var idData = db.getData(idHabit, date).id;
+    
+    /* checkbox status change, plus edit the database */
+    if(status == null) {
+        db.removeData(idHabit, idData);
+        createBar(cell, HEIGHT_DATA_CELL, COLOR_GRAY);
+    } 
+    else if(status == false) {
+        db.editData(idHabit, date, 0);
+        icon.classList.remove( "fa-check" );
+        icon.classList.add( "fa-times" );
+    }
+    else {
+        db.editData(idHabit, date, 1);
+        icon.classList.remove( "fa-times" );
+        icon.classList.add( "fa-check" );
+    }    
+    
+    /* change traffic light color */
+    setColorLight(idHabit);
+}
+
 
 /* set the color of traffic light for a given habit */
 function setColorLight(idHabit) {
@@ -394,246 +643,7 @@ function setStyle() {
     document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_MEDLO;
 }
 
-
-/* deselect any selected habit and reset the toolbar */
-function deselectHabit() {
-    "use strict";
-    
-    /* reset selection */
-    ssReset("idHabitSelect");
-    document.getElementById('overlayHabitSelectBG').style.display = 'none';
-    
-    /* change toolbar */
-    document.getElementById("titleWindow").innerText = APP_NAME;
-    document.getElementById("divTitle").classList.add("w3-theme-dark");
-    document.getElementById("divTitle").classList.remove("w3-theme-d1");
-    document.getElementById("toolbarNormal").style.display = "block";
-    document.getElementById("toolbarSelect").style.display = "none";
-}
-
-
-/* handle back button for Android */
-function onBack() {
-    /* close any open modal */
-    var modals = document.getElementsByClassName("w3-modal");
-    for(var i=0; i<modals.length; i++) {
-        if(modals[i].style.display === "block") {
-            modals[i].style.display = "none";
-            return;
-        }
-    }
-    
-    /* deselect habit if any */
-    if(ssGet("idHabitSelect") != undefined) {
-        deselectHabit();
-        return;
-    }
-    
-    /* if not on main page, just go back to previous page */
-    var page = location.href.split('/').reverse()[0];
-    if (page != "index.html" && page != "index.html?") {
-        window.history.back();
-    }
-    /* else if on main page, exit app */
-    else {
-        navigator.app.exitApp();
-    }
-}
-
-
-/* display additional modal objects */
-function onchangeTarget(event) {
-    "use strict";
-    
-    if (event.target.value == "Maintain") {
-        document.getElementById("divMaintain").style.display = "block";
-        document.getElementById("textTimes").required = true;
-        document.getElementById("textDays").required = true;
-    } else {
-        document.getElementById("divMaintain").style.display = "none";
-        document.getElementById("textTimes").required = false;
-        document.getElementById("textDays").required = false;
-    }
-}
-
-function onclickAddEditHabit(event) {
-    "use strict";
-    
-    if (event.target == document.getElementById("buttonAdd") ||
-        event.target.parentNode == document.getElementById("buttonAdd")
-    ) {
-        document.getElementById("titleAddEditHabit").innerText = "Add Habit";
-    }
-
-    document.getElementById("modalAddEditHabit").style.display = "block";
-    document.getElementById("textHabit").select();
-}
-
-
-function onclickDeleteHabit() {
-    "use strict";
-    
-    db.removeHabit(parseInt(ssGet("idHabitSelect")));
-    deselectHabit();
-    showData();
-}
-
-
-function onclickEditData(event) {
-    "use strict";
-    
-    /* global variables */
-    selectedCell = event.target.id;
-    
-    /* local variables */
-    var idHabit = parseInt( selectedCell.split("_")[1] );
-    var idxHabit = getIdxHabit( idHabit );
-    var date = moment(selectedCell.split("_")[2], "YYMMDD");
-    var data = db.getData(idHabit, date);
-    
-    /* habit method */
-    switch( db.root.data.arrHabit[idxHabit].type ) {
-        case "value":
-            if (data) {
-                document.getElementById("textData").value = data.value;
-            } 
-            else {
-                document.getElementById("textData").value = null;
-            }
-            document.getElementById("modalEditData").style.display = "block";
-            document.getElementById("textData").select();     
-            break;
-            
-        case "checkbox":
-            var pos = selectedCell.indexOf("_");
-            var suffix = selectedCell.substr(pos);
-            
-            /* grayed --> checked --> unchecked --> grayed */
-            if(data == undefined) {
-                /* grayed --> checked */
-                var cell = document.getElementById( "datacell" + suffix );
-                createCheckbox(cell, true);
-                db.addData(idHabit, date, 1);
-            }
-            else {
-                if(data.value == 1) {
-                    /* checked --> unchecked */
-                    setCheckbox( "checkbox" + suffix, false );
-                }
-                else {
-                    /* unchecked --> grayed */
-                    setCheckbox( "checkbox" + suffix, null );
-                }
-            }
-            break;
-    }
-}
-
-
-/* do something upon selecting a habit */
-function oncontextmenuHabit(event) {
-    "use strict";
-    
-    /* determining the habit id */
-    var idxPath = event.path.findIndex(function(val, idx, arr) {
-        return (val.id.split("_")[0] === "rowHabitName" 
-                || val.id.split("_")[0] === "rowHabitData")
-    });
-    var idHabit = event.path[idxPath].id.split("_")[1];
-    
-    /* Select the habit */
-    ssSet("idHabitSelect", idHabit);
-    selectHabit(idHabit);
-}
-
-
-function onsubmitAddEditHabit() {
-    "use strict";
-    
-    document.getElementById("modalAddEditHabit").style.display = "none";
-
-    /* populate the "target" data structure */
-    var target = null;
-    var ot = document.getElementById("optionTarget").value;
-    if( ot == "Maintain" ) {
-        target = new TargetType(document.getElementById("optionTarget").value,
-                                document.getElementById("textTimes").value,
-                                document.getElementById("textDays").value,
-                                document.getElementById("optionMaintain").value
-                               );
-    }
-    else {
-        target = new TargetType(document.getElementById("optionTarget").value);
-    }
-    
-    /* add the habit to database */
-    db.addHabit(document.getElementById("textHabit").value,
-        document.getElementById("optionHabitType").value,
-        target
-    )
-}
-
-
-function onsubmitEditData(event) {
-    "use strict";
-    
-    /* hide the modal */
-    document.getElementById("modalEditData").style.display = "none";
-
-    /* some local variables */
-    var idHabit = selectedCell.split("_")[1];
-    var date = moment(selectedCell.split("_")[2], "YYMMDD");
-    var val = document.getElementById("textData").value;
-
-    /* enter in database */
-    if (db.getData(idHabit, date)) {
-        db.editData(parseInt(idHabit), date, val);
-    } else {
-        db.addData(parseInt(idHabit), date, val);
-    }
-
-    /* display the table and so some cleanup */
-    showData(); // todo: just refresh the cell, not entire table
-    document.getElementById("textData").value = null;
-    event.preventDefault(); // prevent page reload on submit
-}
-
-
-/* set the checked status of checkbox */
-/* This will also edit the data in db */
-/* plus it will set the traffic light */
-/* status = true --> checked */
-/* status = false --> unchecked */
-/* status = null --> grayed */
-function setCheckbox(idCheckbox, status) {
-    /* local variables */
-    var checkbox = document.getElementById(idCheckbox);
-    var pos = idCheckbox.indexOf("_");
-    var suffix = idCheckbox.substr(pos);    
-    var cell = document.getElementById( "datacell" + suffix );
-    var date = moment(idCheckbox.split("_")[2], "YYMMDD");
-    var idHabit = parseInt( idCheckbox.split("_")[1] );
-    var idData = db.getData(idHabit, date).id;
-    
-    /* checkbox status change, plus edit the database */
-    if(status == null) {
-        createBar(cell, HEIGHT_DATA_CELL, COLOR_GRAY);
-        db.removeData(idHabit, idData);
-    } 
-    else if(status == false) {
-        checkbox.checked = false;
-        db.editData(idHabit, date, 0);
-    }
-    else {
-        checkbox.checked = true;
-        db.editData(idHabit, date, 1);
-    }    
-    
-    /* change traffic light color */
-    setColorLight(idHabit);
-}
-
-                
+        
 /* display the main table */
 function showData() {
     "use strict";
