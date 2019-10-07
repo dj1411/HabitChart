@@ -54,7 +54,6 @@ function createBar(cell, height, color) {
     "use strict";
     
     /* local variables */
-    var suffix = cell.id.slice( 8 ); // todo: change the algorithm
     var ns = "http://www.w3.org/2000/svg";
 
     /* create svg element */
@@ -62,7 +61,7 @@ function createBar(cell, height, color) {
     var svg = document.createElementNS(ns, "svg");
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", "100%");
-    svg.id = "datasvg" + suffix;
+    svg.id = "datasvg" + getSuffix(cell.id);
     cell.appendChild(svg);
     svg.style.display = "block"; // by this the entire cell is filled with SVG
     
@@ -73,7 +72,7 @@ function createBar(cell, height, color) {
     rect.setAttribute("x", 0);
     rect.setAttribute("y", HEIGHT_DATA_CELL - height);
     rect.setAttribute("fill", color);
-    rect.id = "datarect" + suffix;
+    rect.id = "datarect" + getSuffix(cell.id);
     svg.appendChild(rect);
 }
 
@@ -89,9 +88,7 @@ function createCheckbox(cell, status) {
     input.checked = status;
     
     /* set the id */
-    var pos = cell.id.indexOf("_");
-    var suffix = cell.id.substr(pos);
-    input.id = "checkbox" + suffix;
+    input.id = "checkbox" + getSuffix(cell.id);
 }
 
 
@@ -114,6 +111,13 @@ function getIdxHabit( idHabit ) {
     });
 }
 
+
+/* get the suffix of id of html element. */
+/* typically this is the string after the first underscore */
+function getSuffix(str) {
+    var pos = str.indexOf("_");
+    return str.substr(pos);    
+}
 
 /* get a corresponding color from the current theme */
 function getThemeColor( idColor ) {
@@ -505,24 +509,21 @@ function onclickEditData(event) {
             break;
             
         case "checkbox":
-            var pos = selectedCell.indexOf("_");
-            var suffix = selectedCell.substr(pos);
-            
             /* grayed --> checked --> unchecked --> grayed */
             if(data == undefined) {
                 /* grayed --> checked */
-                var cell = document.getElementById( "datacell" + suffix );
+                var cell = document.getElementById( "datacell" + getSuffix(selectedCell) );
                 createCheckbox(cell, true);
                 db.addData(idHabit, date, 1);
             }
             else {
                 if(data.value == 1) {
                     /* checked --> unchecked */
-                    setCheckbox( "checkbox" + suffix, false );
+                    setCheckbox( "checkbox" + getSuffix(selectedCell), false );
                 }
                 else {
                     /* unchecked --> grayed */
-                    setCheckbox( "checkbox" + suffix, null );
+                    setCheckbox( "checkbox" + getSuffix(selectedCell), null );
                 }
             }
             break;
@@ -608,9 +609,7 @@ function onsubmitEditData(event) {
 function setCheckbox(idCheckbox, status) {
     /* local variables */
     var checkbox = document.getElementById(idCheckbox);
-    var pos = idCheckbox.indexOf("_");
-    var suffix = idCheckbox.substr(pos);    
-    var cell = document.getElementById( "datacell" + suffix );
+    var cell = document.getElementById( "datacell" + getSuffix(idCheckbox) );
     var date = moment(idCheckbox.split("_")[2], "YYMMDD");
     var idHabit = parseInt( idCheckbox.split("_")[1] );
     var idData = db.getData(idHabit, date).id;
