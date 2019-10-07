@@ -115,10 +115,11 @@ function deselectHabit() {
     document.getElementById("toolbarSelect").style.display = "none";
     
     /* reset background of all habits */
-    for( var idx=0; idx < db.root.data.arrHabit.length; idx++ ) {
-        var row = document.getElementById( "rowHabitName_" + idx );
+    for( var idxHabit=0; idxHabit < db.root.data.arrHabit.length; idxHabit++ ) {
+        var idHabit = db.root.data.arrHabit[idxHabit].id;
+        var row = document.getElementById( "rowHabitName_" + idHabit );
         row.style.backgroundColor = "transparent";
-        var row = document.getElementById( "rowHabitData_" + idx );
+        var row = document.getElementById( "rowHabitData_" + idHabit );
         row.style.backgroundColor = "transparent";
     }
 }

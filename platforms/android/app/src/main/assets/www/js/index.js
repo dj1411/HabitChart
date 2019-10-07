@@ -105,7 +105,7 @@ function deselectHabit() {
     "use strict";
     
     /* reset selection */
-    ssReset("idHabitSelect");
+    ssReset("idSelectedHabit");
     
     /* change toolbar */
     document.getElementById("titleWindow").innerText = APP_NAME;
@@ -115,10 +115,11 @@ function deselectHabit() {
     document.getElementById("toolbarSelect").style.display = "none";
     
     /* reset background of all habits */
-    for( var idx=0; idx < db.root.data.arrHabit.length; idx++ ) {
-        var row = document.getElementById( "rowHabitName_" + idx );
+    for( var idxHabit=0; idxHabit < db.root.data.arrHabit.length; idxHabit++ ) {
+        var idHabit = db.root.data.arrHabit[idxHabit].id;
+        var row = document.getElementById( "rowHabitName_" + idHabit );
         row.style.backgroundColor = "transparent";
-        var row = document.getElementById( "rowHabitData_" + idx );
+        var row = document.getElementById( "rowHabitData_" + idHabit );
         row.style.backgroundColor = "transparent";
     }
 }
@@ -171,16 +172,6 @@ function handleGlobalEvents() {
         event.preventDefault();
     });
     
-    /* move the selection overlay upon scrolling */
-    document.addEventListener("scroll", function(event) {
-        var idHabit = ssGet("idHabitSelect");
-        if( idHabit != undefined) {
-            var y = document.getElementById("rowHabitName_" + idHabit)
-                .getBoundingClientRect().top;
-            document.getElementById("overlayHabitSelect").style.top = y + "px";
-        }
-    });
-    
     /* use cordova plugins on android */
     if(navigator.userAgent.indexOf("Android") >= 0) {
         /* button click sound */
@@ -212,7 +203,7 @@ function onBack() {
     }
     
     /* deselect habit if any */
-    if(ssGet("idHabitSelect") != undefined) {
+    if(ssGet("idSelectedHabit") != undefined) {
         deselectHabit();
         return;
     }
@@ -260,7 +251,7 @@ function onclickAddEditHabit(event) {
 
 function onclickBody(event) {
     /* deselect if any habit is selected */
-    if(ssGet("idHabitSelect") != undefined) {
+    if(ssGet("idSelectedHabit") != undefined) {
         deselectHabit();
         event.stopPropagation();
     }
@@ -270,7 +261,7 @@ function onclickBody(event) {
 function onclickDeleteHabit() {
     "use strict";
     
-    db.removeHabit(parseInt(ssGet("idHabitSelect")));
+    db.removeHabit(parseInt(ssGet("idSelectedHabit")));
     deselectHabit();
     showData();
 }
@@ -306,8 +297,8 @@ function onclickEditData(event) {
             if(data == undefined) {
                 /* grayed --> checked */
                 var cell = document.getElementById( "datacell" + getSuffix(selectedCell) );
-                createCheckbox(cell, true);
                 db.addData(idHabit, date, 1);
+                createCheckbox(cell, true);
             }
             else {
                 if(data.value == 1) {
@@ -400,7 +391,7 @@ function selectHabit(idHabit) {
     deselectHabit();
     
     /* set session storage */
-    ssSet("idHabitSelect", idHabit);
+    ssSet("idSelectedHabit", idHabit);
     
     /* change background of habit */
     var row = document.getElementById( "rowHabitName_" + idHabit );
@@ -653,13 +644,10 @@ function setStyle() {
     /* move the elements below header */
     document.getElementById("divBody").style.top =
         document.getElementById("divHeader").clientHeight + "px";
-    document.getElementById("overlayHabitSelectBG").style.top = 
-         document.getElementById("divTitle").clientHeight + "px";
 
     /* set z-index of all elements */
     document.getElementById("divHeader").style.zIndex = Z_INDEX_MED;
     $(".w3-modal").css("z-index", Z_INDEX_TOP);
-    document.getElementById("overlayHabitSelectBG").style.zIndex = Z_INDEX_MEDLO;
 }
 
         

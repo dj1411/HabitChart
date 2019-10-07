@@ -1,16 +1,11 @@
 - add habit
 - edit data
-- chart
-- checkbox
+	- chart
+	- checkbox
 - traffic light
 - delete habit
-- Maintain
-	- exactly
-	- more than 
-	- less than
 - back button
 	- close modal
 	- deselect
-	- go back if any other page
 	- exit
 - clicking outside modal should close it
