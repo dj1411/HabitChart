@@ -29,7 +29,8 @@ var selectedCell = null;
 /* on Android start main only when 'deviceready' */
 if (navigator.userAgent.indexOf("Android") >= 0) {
     document.addEventListener("deviceready", main);
-} else {
+} 
+else {
     main();
 }
 
@@ -679,6 +680,8 @@ function showData() {
         row.addEventListener( "contextmenu", function(event) {
             oncontextmenuHabit(event);
         } );
+        row.style.backgroundColor = "red";
+        table.style.borderCollapse = true;
 
         /* traffic light */
         var cell = row.insertCell(-1);
