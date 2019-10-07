@@ -81,14 +81,21 @@ function createBar(cell, height, color) {
 function createCheckbox(cell, status) {
     /* create the checkbox */
     cell.innerHTML = "";
-    var input = document.createElement( "input" );
-    cell.appendChild( input );
-    input.classList.add( "w3-check" );
-    input.type = "checkbox";
-    input.checked = status;
+    var icon = document.createElement( "i" );
+    cell.appendChild( icon );
+    icon.id = "checkbox" + getSuffix(cell.id);
     
-    /* set the id */
-    input.id = "checkbox" + getSuffix(cell.id);
+    /* checked or unchecked */
+    if(status)
+        icon.classList.add( "fas", "fa-check" );
+    else
+        icon.classList.add( "fas", "fa-times" );
+    
+    /* compute traffic light again */
+    /* this is necessary because createCehckbox() can be called from 
+     * outside showData() */
+    var idHabit = parseInt( cell.id.split("_")[1] );
+    setColorLight(idHabit);
 }
 
 
@@ -399,7 +406,7 @@ function selectHabit(idHabit) {
 /* status = null --> grayed */
 function setCheckbox(idCheckbox, status) {
     /* local variables */
-    var checkbox = document.getElementById(idCheckbox);
+    var icon = document.getElementById(idCheckbox);
     var cell = document.getElementById( "datacell" + getSuffix(idCheckbox) );
     var date = moment(idCheckbox.split("_")[2], "YYMMDD");
     var idHabit = parseInt( idCheckbox.split("_")[1] );
@@ -407,16 +414,18 @@ function setCheckbox(idCheckbox, status) {
     
     /* checkbox status change, plus edit the database */
     if(status == null) {
-        createBar(cell, HEIGHT_DATA_CELL, COLOR_GRAY);
         db.removeData(idHabit, idData);
+        createBar(cell, HEIGHT_DATA_CELL, COLOR_GRAY);
     } 
     else if(status == false) {
-        checkbox.checked = false;
         db.editData(idHabit, date, 0);
+        icon.classList.remove( "fa-check" );
+        icon.classList.add( "fa-times" );
     }
     else {
-        checkbox.checked = true;
         db.editData(idHabit, date, 1);
+        icon.classList.remove( "fa-times" );
+        icon.classList.add( "fa-check" );
     }    
     
     /* change traffic light color */
