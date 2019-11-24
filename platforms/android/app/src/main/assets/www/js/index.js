@@ -46,7 +46,7 @@ function main() {
     ssInit();
     showData();
     setStyle();
-    handleGlobalEvents(); // this may fail without real device
+    setEvents(); // this may fail without real device
 }
 
 
@@ -159,7 +159,7 @@ function getThemeColor( idColor ) {
 }
 
 
-function handleGlobalEvents() {
+function setEvents() {
     /* handle click event on the data table */
     /* This is primarily used for deselecting habit */
     /* propagation is set to "capture", to prevent pressing any other buttons */
@@ -352,8 +352,7 @@ function onsubmitAddEditHabit() {
     
     /* add the habit to database */
     db.addHabit(document.getElementById("textHabit").value,
-        document.getElementById("optionHabitType").value,
-        target
+        document.getElementById("optionHabitType").value, target
     )
 }
 
@@ -641,6 +640,12 @@ function setStyle() {
     document.title = APP_NAME;
     document.getElementById("titleWindow").innerText = APP_NAME;
 
+    /* button styling */
+    var style = document.createElement( "style" );
+    document.head.appendChild( style );
+    style.innerText = ".mybutton:active { background-color: " + 
+        getThemeColor("w3-theme-l3") + "; }";
+		
     /* move the elements below header */
     document.getElementById("divBody").style.top =
         document.getElementById("divHeader").clientHeight + "px";
